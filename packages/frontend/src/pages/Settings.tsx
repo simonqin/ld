@@ -19,7 +19,6 @@ import {
     IconRefresh,
     IconReportAnalytics,
     IconTableOptions,
-    IconTopologyRing2,
     IconUserCircle,
     IconUserCode,
     IconUserPlus,
@@ -162,15 +161,11 @@ const Settings: FC = () => {
     const routes = useMemo<RouteObject[]>(() => {
         const allowedRoutes: RouteObject[] = [
             {
-                index: true,
-                element: <Navigate to="profile" replace />,
-            },
-            {
-                path: 'appearance',
+                path: '/appearance',
                 element: <AppearanceSettingsPanel />,
             },
             {
-                path: 'profile',
+                path: '/profile',
                 element: (
                     <SettingsGridCard>
                         <Title order={4}>Profile settings</Title>
@@ -180,13 +175,13 @@ const Settings: FC = () => {
             },
             {
                 path: '*',
-                element: <Navigate to="profile" />,
+                element: <Navigate to="/generalSettings/profile" />,
             },
         ];
 
         if (allowPasswordAuthentication) {
             allowedRoutes.push({
-                path: 'password',
+                path: '/password',
                 element: (
                     <Stack spacing="xl">
                         <SettingsGridCard>
@@ -205,7 +200,7 @@ const Settings: FC = () => {
             });
         }
         allowedRoutes.push({
-            path: 'myWarehouseConnections',
+            path: '/myWarehouseConnections',
             element: (
                 <Stack spacing="xl">
                     <MyWarehouseConnectionsPanel />
@@ -214,7 +209,7 @@ const Settings: FC = () => {
         });
         if (user?.ability.can('manage', 'PersonalAccessToken')) {
             allowedRoutes.push({
-                path: 'organization',
+                path: '/organization',
                 element: (
                     <Stack spacing="xl">
                         <SettingsGridCard>
@@ -272,7 +267,7 @@ const Settings: FC = () => {
             )
         ) {
             allowedRoutes.push({
-                path: 'userManagement',
+                path: '/userManagement',
                 element: <UsersAndGroupsPanel />,
             });
         }
@@ -286,7 +281,7 @@ const Settings: FC = () => {
             )
         ) {
             allowedRoutes.push({
-                path: 'userAttributes',
+                path: '/userAttributes',
                 element: <UserAttributesPanel />,
             });
         }
@@ -299,7 +294,7 @@ const Settings: FC = () => {
             )
         ) {
             allowedRoutes.push({
-                path: 'warehouseCredentials',
+                path: '/warehouseCredentials',
                 element: <OrganizationWarehouseCredentialsPanel />,
             });
         }
@@ -309,7 +304,7 @@ const Settings: FC = () => {
             user?.ability.can('view', 'Project')
         ) {
             allowedRoutes.push({
-                path: 'projectManagement',
+                path: '/projectManagement',
                 element: <ProjectManagementPanel />,
             });
         }
@@ -327,7 +322,7 @@ const Settings: FC = () => {
             )
         ) {
             allowedRoutes.push({
-                path: 'projectManagement/:projectUuid/*',
+                path: '/projectManagement/:projectUuid/*',
                 element: (
                     <TrackPage name={PageName.PROJECT_SETTINGS}>
                         <ProjectSettings />
@@ -337,14 +332,14 @@ const Settings: FC = () => {
         }
         if (user?.ability.can('manage', 'PersonalAccessToken')) {
             allowedRoutes.push({
-                path: 'personalAccessTokens',
+                path: '/personalAccessTokens',
                 element: <AccessTokensPanel />,
             });
         }
 
         if (user?.ability.can('manage', 'Organization')) {
             allowedRoutes.push({
-                path: 'integrations',
+                path: '/integrations',
                 element: (
                     <Stack>
                         <Title order={4}>Integrations</Title>
@@ -366,7 +361,7 @@ const Settings: FC = () => {
             isScimTokenManagementEnabled?.enabled
         ) {
             allowedRoutes.push({
-                path: 'scimAccessTokens',
+                path: '/scimAccessTokens',
                 element: <ScimAccessTokensPanel />,
             });
         }
@@ -376,7 +371,7 @@ const Settings: FC = () => {
             isServiceAccountsEnabled
         ) {
             allowedRoutes.push({
-                path: 'serviceAccounts',
+                path: '/serviceAccounts',
                 element: <ServiceAccountsPage />,
             });
         }
@@ -386,15 +381,15 @@ const Settings: FC = () => {
             isCustomRolesEnabled
         ) {
             allowedRoutes.push({
-                path: 'customRoles',
+                path: '/customRoles',
                 element: <CustomRoles />,
             });
             allowedRoutes.push({
-                path: 'customRoles/create',
+                path: '/customRoles/create',
                 element: <CustomRoleCreate />,
             });
             allowedRoutes.push({
-                path: 'customRoles/:roleId',
+                path: '/customRoles/:roleId',
                 element: <CustomRoleEdit />,
             });
         }
@@ -460,7 +455,7 @@ const Settings: FC = () => {
         );
     }
 
-    if (!health || !user || !organization) return <PageSpinner />;
+    if (!health || !user || !organization) return null;
 
     return (
         <Page
@@ -722,17 +717,6 @@ const Settings: FC = () => {
                                         icon={
                                             <MantineIcon
                                                 icon={IconDatabaseCog}
-                                            />
-                                        }
-                                    />
-
-                                    <RouterNavLink
-                                        label="MetricFlow"
-                                        exact
-                                        to={`/generalSettings/projectManagement/${project.projectUuid}/metricflow`}
-                                        icon={
-                                            <MantineIcon
-                                                icon={IconTopologyRing2}
                                             />
                                         }
                                     />

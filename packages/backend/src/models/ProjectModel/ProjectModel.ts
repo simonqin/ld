@@ -476,8 +476,6 @@ export class ProjectModel {
                             ? copiedProjects[0].project_uuid
                             : null,
                     dbt_version: data.dbtVersion,
-                    metricflow_project_id: data.metricFlow?.projectId ?? null,
-                    metricflow_api_token: data.metricFlow?.apiToken ?? null,
                     ...(copiedProjects.length === 1
                         ? {
                               scheduler_timezone:
@@ -616,8 +614,6 @@ export class ProjectModel {
                   scheduler_timezone: string;
                   created_by_user_uuid: string | null;
                   organization_warehouse_credentials_uuid: string | null;
-                  metricflow_project_id: string | null;
-                  metricflow_api_token: string | null;
               }
             | {
                   name: string;
@@ -632,8 +628,6 @@ export class ProjectModel {
                   scheduler_timezone: string;
                   created_by_user_uuid: string | null;
                   organization_warehouse_credentials_uuid: string | null;
-                  metricflow_project_id: string | null;
-                  metricflow_api_token: string | null;
               }
         )[];
         return wrapSentryTransaction(
@@ -691,12 +685,6 @@ export class ProjectModel {
                         this.database
                             .ref('organization_warehouse_credentials_uuid')
                             .withSchema(ProjectTableName),
-                        this.database
-                            .ref('metricflow_project_id')
-                            .withSchema(ProjectTableName),
-                        this.database
-                            .ref('metricflow_api_token')
-                            .withSchema(ProjectTableName),
                     ])
                     .select<QueryResult>()
                     .where('projects.project_uuid', projectUuid);
@@ -736,18 +724,6 @@ export class ProjectModel {
                     organizationWarehouseCredentialsUuid:
                         project.organization_warehouse_credentials_uuid ??
                         undefined,
-                    metricFlow:
-                        project.metricflow_project_id ||
-                        project.metricflow_api_token
-                            ? {
-                                  projectId:
-                                      project.metricflow_project_id ??
-                                      undefined,
-                                  apiToken:
-                                      project.metricflow_api_token ?? undefined,
-                                  hasApiToken: !!project.metricflow_api_token,
-                              }
-                            : undefined,
                 };
 
                 // If project uses organization warehouse credentials, load them
@@ -947,12 +923,6 @@ export class ProjectModel {
             createdByUserUuid: project.createdByUserUuid ?? null,
             organizationWarehouseCredentialsUuid:
                 project.organizationWarehouseCredentialsUuid,
-            metricFlow: project.metricFlow
-                ? {
-                      projectId: project.metricFlow.projectId,
-                      hasApiToken: !!project.metricFlow.apiToken,
-                  }
-                : undefined,
         };
     }
 
@@ -1543,24 +1513,10 @@ export class ProjectModel {
         projectUuid: string,
         data: UpdateMetadata,
     ): Promise<void> {
-        const updates: Record<string, unknown> = {
-            copied_from_project_uuid: data.upstreamProjectUuid, // undefined -> no change; null -> unset
-        };
-
-        if (data.metricFlow !== undefined) {
-            updates.metricflow_project_id = data.metricFlow?.projectId ?? null;
-            updates.metricflow_api_token = data.metricFlow?.apiToken ?? null;
-        }
-
-        Object.entries(updates).forEach(([key, value]) => {
-            if (value === undefined) {
-                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-                delete updates[key];
-            }
-        });
-
         await this.database('projects')
-            .update(updates)
+            .update({
+                copied_from_project_uuid: data.upstreamProjectUuid, // if upstreamProjectUuid is undefined, it will do nothing, if it is null, it will be unset
+            })
             .where('project_uuid', projectUuid);
     }
 

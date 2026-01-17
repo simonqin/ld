@@ -86,8 +86,6 @@ type ExploreYamlModalProps = {
     onClose: () => void;
     projectUuid: string;
     exploreName: string;
-    mockContent?: string;
-    mockFilePath?: string;
 };
 
 const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
@@ -95,8 +93,6 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
     onClose,
     projectUuid,
     exploreName,
-    mockContent,
-    mockFilePath,
 }) => {
     const { user } = useApp();
     const { colorScheme } = useMantineColorScheme();
@@ -121,34 +117,21 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
         [user.data?.ability, user.data?.organizationUuid, projectUuid],
     );
 
-    const isMock = Boolean(mockContent);
     const {
         data: yamlFile,
         isLoading,
         error,
-    } = useExploreYamlFile(projectUuid, exploreName, opened && !isMock);
+    } = useExploreYamlFile(projectUuid, exploreName, opened);
 
     const { mutate: createPR, isLoading: isCreatingPR } =
         useCreateFilePullRequest(projectUuid);
 
-    const resolvedYamlFile = useMemo(
-        () =>
-            mockContent
-                ? {
-                      content: mockContent,
-                      filePath: mockFilePath ?? 'schema.yml',
-                      sha: 'mock-sha',
-                  }
-                : yamlFile,
-        [mockContent, mockFilePath, yamlFile],
-    );
-
     // Initialize content when data loads
     useEffect(() => {
-        if (resolvedYamlFile?.content) {
-            setCurrentContent(resolvedYamlFile.content);
+        if (yamlFile?.content) {
+            setCurrentContent(yamlFile.content);
         }
-    }, [resolvedYamlFile?.content]);
+    }, [yamlFile?.content]);
 
     // Reset state when modal closes
     useEffect(() => {
@@ -178,10 +161,10 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
 
     const hasChanges = useMemo(
         () =>
-            Boolean(resolvedYamlFile?.content) &&
+            Boolean(yamlFile?.content) &&
             Boolean(currentContent) &&
-            resolvedYamlFile?.content !== currentContent,
-        [resolvedYamlFile?.content, currentContent],
+            yamlFile?.content !== currentContent,
+        [yamlFile?.content, currentContent],
     );
 
     const handleBeforeMount: BeforeMount = useCallback((monaco) => {
@@ -253,31 +236,31 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
     }, []);
 
     const handleDiscardChanges = useCallback(() => {
-        if (resolvedYamlFile?.content) {
-            setCurrentContent(resolvedYamlFile.content);
+        if (yamlFile?.content) {
+            setCurrentContent(yamlFile.content);
         }
-    }, [resolvedYamlFile?.content]);
+    }, [yamlFile?.content]);
 
     const handleCreatePRClick = useCallback(() => {
-        if (!resolvedYamlFile || isMock) return;
+        if (!yamlFile) return;
 
         // Auto-generate title and description
-        const fileName = resolvedYamlFile.filePath.split('/').pop() ?? 'file';
+        const fileName = yamlFile.filePath.split('/').pop() ?? 'file';
         setPrTitle(`Update ${fileName}`);
         setPrDescription(
-            `This pull request updates the model configuration in \`${resolvedYamlFile.filePath}\`.\n\nChanges made via Lightdash.`,
+            `This pull request updates the model configuration in \`${yamlFile.filePath}\`.\n\nChanges made via Lightdash.`,
         );
         setShowPrForm(true);
-    }, [resolvedYamlFile, isMock]);
+    }, [yamlFile]);
 
     const handleSubmitPR = useCallback(() => {
-        if (!resolvedYamlFile || isMock) return;
+        if (!yamlFile) return;
 
         createPR(
             {
-                filePath: resolvedYamlFile.filePath,
+                filePath: yamlFile.filePath,
                 content: currentContent,
-                originalSha: resolvedYamlFile.sha,
+                originalSha: yamlFile.sha,
                 title: prTitle,
                 description: prDescription,
             },
@@ -288,21 +271,12 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                 },
             },
         );
-    }, [
-        createPR,
-        resolvedYamlFile,
-        currentContent,
-        prTitle,
-        prDescription,
-        onClose,
-        isMock,
-    ]);
+    }, [createPR, yamlFile, currentContent, prTitle, prDescription, onClose]);
 
-    const canEdit = isMock ? true : canManageSourceCode;
     const editorOptions = useMemo(
         () => ({
             ...MONACO_DEFAULT_OPTIONS,
-            readOnly: !canEdit,
+            readOnly: !canManageSourceCode,
             lineNumbers: 'on' as const,
             renderLineHighlight: 'all' as const,
             scrollBeyondLastLine: false,
@@ -313,23 +287,19 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                 verticalScrollbarSize: 8,
             },
         }),
-        [canEdit],
+        [canManageSourceCode],
     );
-
-    const canCreatePr = !isMock && canManageSourceCode;
-    const showLoading = !isMock && isLoading;
-    const showError = !isMock && error;
 
     return (
         <Modal.Root opened={opened} onClose={onClose} size="xl" centered>
             <Modal.Overlay />
             <Modal.Content className={styles.modalContent}>
                 <Modal.Header className={styles.modalHeader}>
-                    {resolvedYamlFile && (
+                    {yamlFile && (
                         <div className={styles.fileInfo}>
                             <MantineIcon icon={IconCode} size="sm" />
                             <Text fz="sm" fw={500}>
-                                {resolvedYamlFile.filePath.split('/').pop()}
+                                {yamlFile.filePath.split('/').pop()}
                             </Text>
                             {hasChanges && (
                                 <Text fz="xs" c="dimmed">
@@ -343,25 +313,25 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
 
                 <Modal.Body className={styles.modalBody}>
                     <div className={styles.bodyContent}>
-                        {showLoading && (
+                        {isLoading && (
                             <Stack align="center" justify="center" h="100%">
                                 <Loader size="lg" color="gray" />
                                 <Text c="dimmed">Loading source file...</Text>
                             </Stack>
                         )}
 
-                        {showError && (
+                        {error && (
                             <Alert
                                 icon={<IconAlertCircle size="1rem" />}
                                 title="Error loading file"
                                 color="red"
                                 variant="light"
                             >
-                                {showError.error.message}
+                                {error.error.message}
                             </Alert>
                         )}
 
-                        {resolvedYamlFile && !showLoading && !showPrForm && (
+                        {yamlFile && !isLoading && !showPrForm && (
                             <div className={styles.editorContainer}>
                                 <Editor
                                     height="100%"
@@ -404,7 +374,7 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                     </div>
                 </Modal.Body>
 
-                {resolvedYamlFile && !showLoading && (
+                {yamlFile && !isLoading && (
                     <div className={styles.modalFooter}>
                         {!showPrForm ? (
                             <Group position="apart" w="100%">
@@ -428,7 +398,7 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                                                 : 'issues'}
                                         </Text>
                                     )}
-                                    {canCreatePr && (
+                                    {canManageSourceCode && (
                                         <Button
                                             leftIcon={
                                                 <MantineIcon

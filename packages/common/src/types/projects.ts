@@ -534,7 +534,6 @@ export type Project = {
     schedulerTimezone: string;
     createdByUserUuid: string | null;
     organizationWarehouseCredentialsUuid?: string;
-    metricFlow?: MetricFlowProjectConfig;
 };
 
 export type ProjectSummary = Pick<
@@ -566,12 +565,6 @@ export type PreviewContentMapping = {
     savedSql: IdContentMapping[];
     savedSqlVersions: IdContentMapping[];
     aiAgents: IdContentMapping[];
-};
-
-export type MetricFlowProjectConfig = {
-    projectId: string;
-    apiToken?: string;
-    hasApiToken?: boolean;
 };
 
 export type UpdateSchedulerSettings = {

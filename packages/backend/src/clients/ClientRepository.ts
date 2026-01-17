@@ -6,7 +6,6 @@ import { S3Client } from './Aws/S3Client';
 import DbtCloudGraphqlClient from './dbtCloud/DbtCloudGraphqlClient';
 import EmailClient from './EmailClient/EmailClient';
 import { GoogleDriveClient } from './Google/GoogleDriveClient';
-import MetricFlowRestClient from './metricFlow/MetricFlowRestClient';
 import { MicrosoftTeamsClient } from './MicrosoftTeams/MicrosoftTeamsClient';
 import { LocalResultsFileStorageClient } from './ResultsFileStorageClients/LocalResultsFileStorageClient';
 import { type ResultsFileStorageClient } from './ResultsFileStorageClients/ResultsFileStorageClient';
@@ -22,7 +21,6 @@ export interface ClientManifest {
     dbtCloudGraphqlClient: DbtCloudGraphqlClient;
     emailClient: EmailClient;
     googleDriveClient: GoogleDriveClient;
-    metricFlowClient: MetricFlowRestClient;
     s3CacheClient: S3CacheClient;
     s3Client: S3Client;
     schedulerClient: SchedulerClient;
@@ -144,16 +142,6 @@ export class ClientRepository
             'googleDriveClient',
             () =>
                 new GoogleDriveClient({
-                    lightdashConfig: this.context.lightdashConfig,
-                }),
-        );
-    }
-
-    public getMetricFlowClient(): MetricFlowRestClient {
-        return this.getClient(
-            'metricFlowClient',
-            () =>
-                new MetricFlowRestClient({
                     lightdashConfig: this.context.lightdashConfig,
                 }),
         );
