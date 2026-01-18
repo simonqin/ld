@@ -102,6 +102,9 @@ flake.lock
 prometheus.yml
 data/
 
+# docker dev artifacts
+/docker/dev-configs/
+
 # environment
 .env*
 
