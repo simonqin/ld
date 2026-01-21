@@ -9,7 +9,10 @@ import ColumnConfiguration from './ColumnConfiguration';
 import DroppableItemsList from './DroppableItemsList';
 import { MAX_PIVOTS } from './constants';
 
-enum DroppableIds
+enum DroppableIds {
+    COLUMNS = 'columns',
+    ROWS = 'rows',
+}
 
 const GeneralSettings: FC = () => {
     const {

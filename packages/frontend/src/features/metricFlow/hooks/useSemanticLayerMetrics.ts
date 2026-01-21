@@ -1,7 +1,7 @@
 import { type ApiError } from '@lightdash/common';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import {
-    getSemanticLayerMetrics,
+    getMetricFlowMetricsForDimensions,
     type GetSemanticLayerMetricsResponse,
     type TimeGranularity,
 } from '../../../api/MetricFlowAPI';
@@ -17,7 +17,8 @@ const useSemanticLayerMetrics = (
     return useQuery<GetSemanticLayerMetricsResponse, ApiError>({
         queryKey: ['semantic_layer_metrics', projectUuid, dimensions],
         enabled: !!projectUuid,
-        queryFn: () => getSemanticLayerMetrics(projectUuid!, dimensions || {}),
+        queryFn: () =>
+            getMetricFlowMetricsForDimensions(projectUuid!, dimensions || {}),
         keepPreviousData:
             useQueryOptions?.keepPreviousData === undefined
                 ? true

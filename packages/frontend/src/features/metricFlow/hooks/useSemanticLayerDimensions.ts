@@ -2,7 +2,7 @@ import { type ApiError } from '@lightdash/common';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import uniqWith from 'lodash/uniqWith';
 import {
-    getSemanticLayerDimensions,
+    getMetricFlowFields,
     type GetMetricFlowFieldsResponse,
 } from '../../../api/MetricFlowAPI';
 
@@ -14,7 +14,7 @@ const useSemanticLayerDimensions = (
     return useQuery<GetMetricFlowFieldsResponse, ApiError>({
         queryKey: ['semantic_layer_dimensions', projectUuid, metrics],
         enabled: !!projectUuid,
-        queryFn: () => getSemanticLayerDimensions(projectUuid!, metrics || {}),
+        queryFn: () => getMetricFlowFields(projectUuid!, metrics || {}),
         keepPreviousData:
             useQueryOptions?.keepPreviousData === undefined
                 ? true
