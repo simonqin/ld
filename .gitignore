@@ -106,6 +106,7 @@ data/
 docker/dev-configs/
 docker/data/
 docker/gitea/
+docker/gitea.bak-*
 
 # environment
 .env*
