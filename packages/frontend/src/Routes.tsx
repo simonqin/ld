@@ -253,7 +253,7 @@ const SQL_RUNNER_ROUTES: RouteObject[] = [
 
 const METRIC_FLOW_ROUTES: RouteObject[] = [
     {
-        path: '/projects/:projectUuid/dbtsemanticlayer',
+        path: '/projects/:projectUuid/metricflow',
         element: (
             <>
                 <NavBar />

@@ -79,9 +79,9 @@ const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
                         {health.data?.hasDbtSemanticLayer && (
                             <LargeMenuItem
                                 component={Link}
-                                title="Query using dbt Semantic Layer"
-                                description="Build queries with dbt Semantic Layer"
-                                to={`/projects/${projectUuid}/dbtsemanticlayer`}
+                                title="Query using MetricFlow"
+                                description="Build queries with MetricFlow"
+                                to={`/projects/${projectUuid}/metricflow`}
                                 icon={IconLayersIntersect}
                             />
                         )}
