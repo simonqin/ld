@@ -2,8 +2,8 @@ import { readFileSync } from 'fs';
 import { describe, expect, test } from 'vitest';
 
 describe('Routes', () => {
-    test('dbtsemanticlayer route removed', () => {
+    test('metricflow route exists', () => {
         const content = readFileSync('src/Routes.tsx', 'utf8');
-        expect(content).not.toContain('/projects/:projectUuid/dbtsemanticlayer');
+        expect(content).toContain('/projects/:projectUuid/metricflow');
     });
 });
