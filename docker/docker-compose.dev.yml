@@ -101,30 +101,12 @@ services:
       - GITEA__database__DB_TYPE=sqlite3 # 使用 SQLite，无需额外安装数据库，最省资源
     restart: always
     volumes:
-      - ./gitea:/data
+      - ../.data/gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "3030:3000" # Web 访问端口
       - "222:22"    # SSH 访问端口
-
-  metricflow-service:
-    build:
-      context: ../packages/metricflow-service
-      dockerfile: Dockerfile
-    restart: always
-    depends_on:
-      - gitea
-    ports:
-      - '8070:8069'
-    environment:
-      ENVIRONMENTS_CONFIG: /opt/config/env.yml
-      DBT_HOST: ${DBT_HOST:-host.docker.internal}
-      DBT_PORT: ${DBT_PORT:-5433}
-    volumes:
-      - ./dev-configs/dbt_repos:/data/mf_repos
-      - ./dev-configs/mf_env.yml:/opt/config/env.yml
-      - ./dev-configs/mf_profile.yml:/root/.dbt/profiles.yml
 
   lightdash-dev:
     <<: *lightdash-base
@@ -168,7 +150,7 @@ services:
     ports:
       - '2222:2222'
     volumes:
-      - ./dev-configs/sshd_config:/config/sshd/sshd_config
+      - ../.data/dev-configs/sshd_config:/config/sshd/sshd_config
 
   headless-browser:
     image: ghcr.io/browserless/chromium:v2.24.3
@@ -182,7 +164,7 @@ services:
     ports:
       - '9091:9090'
     volumes:
-      - ./dev-configs/prometheus.dev.yml:/etc/prometheus/prometheus.yml
+      - ../.data/dev-configs/prometheus.dev.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
