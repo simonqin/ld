@@ -1,18 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import { type Mock, vi } from 'vitest';
-import { getMetricFlowFields, getSemanticLayerDimensions } from '../../../api/MetricFlowAPI';
+import { getMetricFlowFields } from '../../../api/MetricFlowAPI';
 import useSemanticLayerDimensions from './useSemanticLayerDimensions';
 
 vi.mock('../../../api/MetricFlowAPI', () => ({
     getMetricFlowFields: vi.fn(),
-    getSemanticLayerDimensions: vi.fn(),
 }));
 
 const mockedGetMetricFlowFields = getMetricFlowFields as unknown as Mock;
-const mockedGetSemanticLayerDimensions =
-    getSemanticLayerDimensions as unknown as Mock;
-
 describe('useSemanticLayerDimensions', () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -37,11 +33,6 @@ describe('useSemanticLayerDimensions', () => {
             dimensions: [],
             metricsForDimensions: [],
         });
-        mockedGetSemanticLayerDimensions.mockResolvedValue({
-            dimensions: [],
-            metricsForDimensions: [],
-        });
-
         renderHook(() => useSemanticLayerDimensions('proj', { metric_a: {} }), {
             wrapper: createWrapper(),
         });

@@ -1,7 +1,7 @@
 import { type ApiError, type ApiExploreResults } from '@lightdash/common';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import { lightdashApi } from '../api';
-import { getSemanticLayerDimensions } from '../api/MetricFlowAPI';
+import { getMetricFlowFields } from '../api/MetricFlowAPI';
 import {
     buildMetricFlowExplore,
     isMetricFlowExploreName,
@@ -26,7 +26,7 @@ const getMetricFlowExplore = async (
     projectUuid: string,
     exploreName: string,
 ): Promise<ApiExploreResults> => {
-    const metricFlowFields = await getSemanticLayerDimensions(projectUuid, {});
+    const metricFlowFields = await getMetricFlowFields(projectUuid, {});
     return buildMetricFlowExplore(exploreName, {
         dimensions: metricFlowFields.dimensions ?? [],
         metricsForDimensions: metricFlowFields.metricsForDimensions ?? [],

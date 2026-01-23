@@ -1,7 +1,7 @@
 import { type ApiError, type ApiExploresResults } from '@lightdash/common';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import { lightdashApi } from '../api';
-import { getSemanticLayerDimensions } from '../api/MetricFlowAPI';
+import { getMetricFlowFields } from '../api/MetricFlowAPI';
 import { buildMetricFlowExploreSummaries } from '../features/metricFlow/utils/metricFlowExplore';
 import useApp from '../providers/App/useApp';
 import useQueryError from './useQueryError';
@@ -36,7 +36,7 @@ export const useExplores = (
                 return getExplores(projectUuid!, filtered);
             }
             try {
-                const metricFlowFields = await getSemanticLayerDimensions(
+                const metricFlowFields = await getMetricFlowFields(
                     projectUuid!,
                     {},
                 );

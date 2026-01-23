@@ -736,18 +736,14 @@ export class ProjectModel {
                     organizationWarehouseCredentialsUuid:
                         project.organization_warehouse_credentials_uuid ??
                         undefined,
-                    metricFlow:
-                        project.metricflow_project_id ||
-                        project.metricflow_api_token
-                            ? {
-                                  projectId:
-                                      project.metricflow_project_id ??
-                                      undefined,
-                                  apiToken:
-                                      project.metricflow_api_token ?? undefined,
-                                  hasApiToken: !!project.metricflow_api_token,
-                              }
-                            : undefined,
+                    metricFlow: project.metricflow_project_id
+                        ? {
+                              projectId: project.metricflow_project_id,
+                              apiToken:
+                                  project.metricflow_api_token ?? undefined,
+                              hasApiToken: !!project.metricflow_api_token,
+                          }
+                        : undefined,
                 };
 
                 // If project uses organization warehouse credentials, load them
