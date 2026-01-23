@@ -100,5 +100,17 @@
         "filtered": "此字段已被过滤",
         "addFilter": "点击这里添加过滤器",
         "hiddenField": "该字段已在 dbt 项目中被隐藏，建议从查询中移除"
+    },
+    "filters": {
+        "title": "过滤器",
+        "noFilters": "此图表没有过滤器",
+        "active_one": "个已启用过滤器",
+        "active_other": "个已启用过滤器",
+        "editModeRequired": "必须处于“编辑”或“探索”模式才能修改过滤器",
+        "unknownField": "尝试引用未知字段 ID：{{fieldId}}"
+    },
+    "parameters": {
+        "title": "参数",
+        "noModel": "未选择模型"
     }
 }

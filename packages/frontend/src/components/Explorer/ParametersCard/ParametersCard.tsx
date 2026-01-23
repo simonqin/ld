@@ -1,5 +1,6 @@
 import { Box } from '@mantine-8/core';
 import { memo, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import {
     explorerActions,
@@ -18,6 +19,7 @@ import CollapsableCard from '../../common/CollapsableCard/CollapsableCard';
 
 const ParametersCard = memo(
     ({ parameterReferences }: { parameterReferences?: string[] }) => {
+        const { t } = useTranslation('explore');
         const { projectUuid } = useParams<{ projectUuid: string }>();
 
         const paramsIsOpen = useExplorerSelector(selectIsParametersExpanded);
@@ -70,9 +72,13 @@ const ParametersCard = memo(
         return (
             <CollapsableCard
                 isOpen={paramsIsOpen}
-                title="Parameters"
+                title={t('parameters.title', 'Parameters')}
                 disabled={!tableName}
-                toggleTooltip={!tableName ? 'No model selected' : ''}
+                toggleTooltip={
+                    !tableName
+                        ? t('parameters.noModel', 'No model selected')
+                        : ''
+                }
                 onToggle={() =>
                     toggleExpandedSection(ExplorerSection.PARAMETERS)
                 }

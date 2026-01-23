@@ -100,5 +100,17 @@
         "filtered": "This field is filtered",
         "addFilter": "Click here to add filter",
         "hiddenField": "This field has been hidden in the dbt project. It's recommend to remove it from the query"
+    },
+    "filters": {
+        "title": "Filters",
+        "noFilters": "This chart has no filters",
+        "active_one": "active filter",
+        "active_other": "active filters",
+        "editModeRequired": "You must be in 'edit' or 'explore' mode to change the filters",
+        "unknownField": "Tried to reference field with unknown id: {{fieldId}}"
+    },
+    "parameters": {
+        "title": "Parameters",
+        "noModel": "No model selected"
     }
 }
