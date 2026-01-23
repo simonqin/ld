@@ -8,7 +8,10 @@ const AppProvider: FC<React.PropsWithChildren<{}>> = ({ children }) => {
     const health = useHealth();
     const user = useUser(!!health?.data?.isAuthenticated);
 
-    useApplyPreferredLanguage(user.data?.preferredLanguage);
+    useApplyPreferredLanguage(
+        user.data?.preferredLanguage,
+        health?.data?.isAuthenticated,
+    );
 
     const value = {
         health,
