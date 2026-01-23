@@ -20,6 +20,7 @@ export function mockUserResponse(
         isSetupComplete: true,
         role: OrganizationMemberRole.ADMIN,
         isActive: true,
+        preferredLanguage: 'zh-CN',
         abilityRules: [
             {
                 action: 'view',
