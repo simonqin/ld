@@ -3,6 +3,7 @@ import { ExploreType, FeatureFlags, getItemMap } from '@lightdash/common';
 import { ActionIcon, Group, Popover } from '@mantine/core';
 import { IconShare2 } from '@tabler/icons-react';
 import { memo, useCallback, useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     explorerActions,
     selectAdditionalMetrics,
@@ -38,6 +39,7 @@ import MantineIcon from '../../common/MantineIcon';
 import { ExplorerResults } from './ExplorerResults';
 
 const ResultsCard: FC = memo(() => {
+    const { t } = useTranslation('explore');
     const projectUuid = useProjectUuid();
 
     const isEditMode = useExplorerSelector(selectIsEditMode);
@@ -90,7 +92,12 @@ const ResultsCard: FC = memo(() => {
 
     const getGsheetLink = async () => {
         if (isSemanticLayerExplore) {
-            throw new Error('Semantic layer exports are not supported');
+            throw new Error(
+                t(
+                    'results.exportUnsupported',
+                    'Semantic layer exports are not supported',
+                ),
+            );
         }
         if (projectUuid) {
             return uploadGsheet({
@@ -102,7 +109,9 @@ const ResultsCard: FC = memo(() => {
                 // No pivotConfig - ResultsCard only shows raw table data
             });
         } else {
-            throw new Error('Project UUID is missing');
+            throw new Error(
+                t('results.projectUuidMissing', 'Project UUID is missing'),
+            );
         }
     };
 
@@ -120,7 +129,7 @@ const ResultsCard: FC = memo(() => {
 
     return (
         <CollapsableCard
-            title="Results"
+            title={t('results.title', 'Results')}
             isOpen={resultsIsOpen}
             onToggle={toggleCard}
             disabled={!tableName}

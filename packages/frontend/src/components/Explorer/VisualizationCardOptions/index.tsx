@@ -23,6 +23,7 @@ import {
     IconTable,
 } from '@tabler/icons-react';
 import { memo, useMemo, type FC, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFeatureFlagEnabled } from '../../../hooks/useFeatureFlagEnabled';
 import { BetaBadge } from '../../common/BetaBadge';
 import {
@@ -44,6 +45,7 @@ import {
 import { useVisualizationContext } from '../../LightdashVisualization/useVisualizationContext';
 
 const VisualizationCardOptions: FC = memo(() => {
+    const { t, i18n } = useTranslation('explore');
     const {
         visualizationConfig,
         setChartType,
@@ -80,7 +82,7 @@ const VisualizationCardOptions: FC = memo(() => {
             case ChartType.CARTESIAN: {
                 if (!isChartTypeTheSameForAllSeries) {
                     return {
-                        text: 'Mixed',
+                        text: t('visualization.chartType.mixed', 'Mixed'),
                         icon: (
                             <MantineIcon
                                 icon={IconChartAreaLine}
@@ -96,7 +98,10 @@ const VisualizationCardOptions: FC = memo(() => {
                 switch (cartesianChartType) {
                     case CartesianSeriesType.AREA:
                         return {
-                            text: 'Area chart',
+                            text: t(
+                                'visualization.chartType.area',
+                                'Area chart',
+                            ),
                             icon: (
                                 <MantineIcon
                                     icon={IconChartArea}
@@ -106,7 +111,10 @@ const VisualizationCardOptions: FC = memo(() => {
                         };
                     case CartesianSeriesType.LINE:
                         return {
-                            text: 'Line chart',
+                            text: t(
+                                'visualization.chartType.line',
+                                'Line chart',
+                            ),
                             icon: (
                                 <MantineIcon
                                     icon={IconChartLine}
@@ -118,7 +126,10 @@ const VisualizationCardOptions: FC = memo(() => {
                     case CartesianSeriesType.BAR:
                         return cartesianFlipAxis
                             ? {
-                                  text: 'Horizontal bar chart',
+                                  text: t(
+                                      'visualization.chartType.barHorizontal',
+                                      'Horizontal bar chart',
+                                  ),
                                   icon: (
                                       <MantineIcon
                                           icon={IconChartBar}
@@ -128,7 +139,10 @@ const VisualizationCardOptions: FC = memo(() => {
                                   ),
                               }
                             : {
-                                  text: 'Bar chart',
+                                  text: t(
+                                      'visualization.chartType.bar',
+                                      'Bar chart',
+                                  ),
                                   icon: (
                                       <MantineIcon
                                           icon={IconChartBar}
@@ -138,7 +152,10 @@ const VisualizationCardOptions: FC = memo(() => {
                               };
                     case CartesianSeriesType.SCATTER:
                         return {
-                            text: 'Scatter chart',
+                            text: t(
+                                'visualization.chartType.scatter',
+                                'Scatter chart',
+                            ),
                             icon: (
                                 <MantineIcon
                                     icon={IconChartDots}
@@ -155,46 +172,46 @@ const VisualizationCardOptions: FC = memo(() => {
             }
             case ChartType.TABLE:
                 return {
-                    text: 'Table',
+                    text: t('visualization.chartType.table', 'Table'),
                     icon: <MantineIcon icon={IconTable} color="ldGray" />,
                 };
             case ChartType.BIG_NUMBER:
                 return {
-                    text: 'Big value',
+                    text: t('visualization.chartType.bigValue', 'Big value'),
                     icon: (
                         <MantineIcon icon={IconSquareNumber1} color="ldGray" />
                     ),
                 };
             case ChartType.PIE:
                 return {
-                    text: 'Pie chart',
+                    text: t('visualization.chartType.pie', 'Pie chart'),
                     icon: <MantineIcon icon={IconChartPie} color="ldGray" />,
                 };
             case ChartType.FUNNEL:
                 return {
-                    text: 'Funnel chart',
+                    text: t('visualization.chartType.funnel', 'Funnel chart'),
                     icon: <MantineIcon icon={IconFilter} color="ldGray" />,
                 };
             case ChartType.TREEMAP:
                 return {
-                    text: 'Treemap',
+                    text: t('visualization.chartType.treemap', 'Treemap'),
                     icon: (
                         <MantineIcon icon={IconChartTreemap} color="ldGray" />
                     ),
                 };
             case ChartType.GAUGE:
                 return {
-                    text: 'Gauge',
+                    text: t('visualization.chartType.gauge', 'Gauge'),
                     icon: <MantineIcon icon={IconGauge} color="ldGray" />,
                 };
             case ChartType.MAP:
                 return {
-                    text: 'Map (Beta)',
+                    text: t('visualization.chartType.mapBeta', 'Map (Beta)'),
                     icon: <MantineIcon icon={IconMap} color="ldGray" />,
                 };
             case ChartType.CUSTOM:
                 return {
-                    text: 'Custom',
+                    text: t('visualization.chartType.custom', 'Custom'),
                     icon: <MantineIcon icon={IconCode} color="ldGray" />,
                 };
             default: {
@@ -208,6 +225,8 @@ const VisualizationCardOptions: FC = memo(() => {
         visualizationConfig,
         isChartTypeTheSameForAllSeries,
         cartesianFlipAxis,
+        i18n.language,
+        t,
     ]);
 
     return (
@@ -251,7 +270,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.CARTESIAN);
                     }}
                 >
-                    Bar chart
+                    {t('visualization.chartType.bar', 'Bar chart')}
                 </Menu.Item>
                 <Menu.Item
                     disabled={disabled}
@@ -279,7 +298,10 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.CARTESIAN);
                     }}
                 >
-                    Horizontal bar chart
+                    {t(
+                        'visualization.chartType.barHorizontal',
+                        'Horizontal bar chart',
+                    )}
                 </Menu.Item>
                 <Menu.Item
                     disabled={disabled}
@@ -301,7 +323,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.CARTESIAN);
                     }}
                 >
-                    Line chart
+                    {t('visualization.chartType.line', 'Line chart')}
                 </Menu.Item>
                 <Menu.Item
                     disabled={disabled}
@@ -323,7 +345,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.CARTESIAN);
                     }}
                 >
-                    Area chart
+                    {t('visualization.chartType.area', 'Area chart')}
                 </Menu.Item>
                 <Menu.Item
                     disabled={disabled}
@@ -345,7 +367,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.CARTESIAN);
                     }}
                 >
-                    Scatter chart
+                    {t('visualization.chartType.scatter', 'Scatter chart')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -362,7 +384,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.PIE);
                     }}
                 >
-                    Pie chart
+                    {t('visualization.chartType.pie', 'Pie chart')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -379,7 +401,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.FUNNEL);
                     }}
                 >
-                    Funnel chart
+                    {t('visualization.chartType.funnel', 'Funnel chart')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -396,7 +418,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.TREEMAP);
                     }}
                 >
-                    Treemap
+                    {t('visualization.chartType.treemap', 'Treemap')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -413,7 +435,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.GAUGE);
                     }}
                 >
-                    Gauge
+                    {t('visualization.chartType.gauge', 'Gauge')}
                 </Menu.Item>
 
                 {isMapsEnabled && (
@@ -432,7 +454,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         }}
                     >
                         <Group spacing="xs">
-                            Map
+                            {t('visualization.chartType.map', 'Map')}
                             <BetaBadge />
                         </Group>
                     </Menu.Item>
@@ -452,7 +474,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.TABLE);
                     }}
                 >
-                    Table
+                    {t('visualization.chartType.table', 'Table')}
                 </Menu.Item>
                 <Menu.Item
                     disabled={disabled}
@@ -468,7 +490,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.BIG_NUMBER);
                     }}
                 >
-                    Big value
+                    {t('visualization.chartType.bigValue', 'Big value')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -485,7 +507,7 @@ const VisualizationCardOptions: FC = memo(() => {
                         setChartType(ChartType.CUSTOM);
                     }}
                 >
-                    Custom
+                    {t('visualization.chartType.custom', 'Custom')}
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>

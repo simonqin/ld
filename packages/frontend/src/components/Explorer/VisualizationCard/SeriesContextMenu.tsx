@@ -16,6 +16,7 @@ import {
     useState,
     type FC,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import useToaster from '../../../hooks/toaster/useToaster';
 import { Can } from '../../../providers/Ability';
@@ -35,6 +36,7 @@ export const SeriesContextMenu: FC<{
     series: EChartsSeries[] | undefined;
     explore: ApiExploreResults | undefined;
 }> = memo(({ echartsSeriesClickEvent, dimensions, series, explore }) => {
+    const { t } = useTranslation('explore');
     const { showToastSuccess } = useToaster();
     const clipboard = useClipboard({ timeout: 200 });
     const { track } = useTracking();
@@ -86,8 +88,10 @@ export const SeriesContextMenu: FC<{
         const value = underlyingData.value.formatted;
 
         clipboard.copy(value);
-        showToastSuccess({ title: 'Copied to clipboard!' });
-    }, [underlyingData, clipboard, showToastSuccess]);
+        showToastSuccess({
+            title: t('results.contextMenu.copied', 'Copied to clipboard!'),
+        });
+    }, [underlyingData, clipboard, showToastSuccess, t]);
 
     const handleViewUnderlyingData = useCallback(() => {
         if (underlyingData === undefined) return;
@@ -155,7 +159,7 @@ export const SeriesContextMenu: FC<{
                         icon={<MantineIcon icon={IconCopy} />}
                         onClick={handleCopyToClipboard}
                     >
-                        Copy value
+                        {t('results.contextMenu.copyValue', 'Copy value')}
                     </Menu.Item>
                 )}
 
@@ -171,7 +175,10 @@ export const SeriesContextMenu: FC<{
                             icon={<MantineIcon icon={IconStack} />}
                             onClick={handleViewUnderlyingData}
                         >
-                            View underlying data
+                            {t(
+                                'results.contextMenu.viewUnderlyingData',
+                                'View underlying data',
+                            )}
                         </Menu.Item>
                     )}
                 </Can>

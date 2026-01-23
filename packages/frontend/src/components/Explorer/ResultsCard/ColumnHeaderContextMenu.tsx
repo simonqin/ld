@@ -9,7 +9,7 @@ import {
     isTableCalculation,
     type TableCalculation,
 } from '@lightdash/common';
-import { ActionIcon, Menu, Text } from '@mantine/core';
+import { ActionIcon, Menu } from '@mantine/core';
 import {
     IconChevronDown,
     IconFilter,
@@ -18,6 +18,7 @@ import {
     IconTrash,
 } from '@tabler/icons-react';
 import { useMemo, useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     explorerActions,
     selectAdditionalMetrics,
@@ -49,6 +50,7 @@ const ContextMenu: FC<ContextMenuProps> = ({
     onToggleCalculationEditModal,
     onToggleCalculationDeleteModal,
 }) => {
+    const { t } = useTranslation('explore');
     const { addFilter, canFilterField } = useFilters();
     const { track } = useTracking();
 
@@ -87,10 +89,9 @@ const ContextMenu: FC<ContextMenuProps> = ({
                                 addFilter(item, undefined);
                             }}
                         >
-                            Filter by{' '}
-                            <Text span fw={500}>
-                                {getItemLabelWithoutTableName(item)}
-                            </Text>
+                            {t('results.contextMenu.filterBy', 'Filter by {{value}}', {
+                                value: getItemLabelWithoutTableName(item),
+                            })}
                         </Menu.Item>
 
                         <Menu.Divider />
@@ -117,7 +118,10 @@ const ContextMenu: FC<ContextMenuProps> = ({
                                         );
                                     }}
                                 >
-                                    View description
+                                    {t(
+                                        'results.contextMenu.viewDescription',
+                                        'View description',
+                                    )}
                                 </Menu.Item>
                                 <Menu.Divider />
                             </>
@@ -147,7 +151,10 @@ const ContextMenu: FC<ContextMenuProps> = ({
                             );
                         }}
                     >
-                        Edit custom metric
+                        {t(
+                            'results.contextMenu.editCustomMetric',
+                            'Edit custom metric',
+                        )}
                     </Menu.Item>
                 ) : null}
 
@@ -158,7 +165,7 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         dispatch(explorerActions.removeField(itemFieldId));
                     }}
                 >
-                    Remove
+                    {t('results.contextMenu.remove', 'Remove')}
                 </Menu.Item>
             </>
         );
@@ -172,7 +179,7 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         dispatch(explorerActions.removeField(header.column.id));
                     }}
                 >
-                    Remove
+                    {t('results.contextMenu.remove', 'Remove')}
                 </Menu.Item>
             </>
         );
@@ -188,10 +195,9 @@ const ContextMenu: FC<ContextMenuProps> = ({
                                 addFilter(item, undefined);
                             }}
                         >
-                            Filter by{' '}
-                            <Text span fw={500}>
-                                {getItemLabelWithoutTableName(item)}
-                            </Text>
+                            {t('results.contextMenu.filterBy', 'Filter by {{value}}', {
+                                value: getItemLabelWithoutTableName(item),
+                            })}
                         </Menu.Item>
 
                         <Menu.Divider />
@@ -209,7 +215,10 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         );
                     }}
                 >
-                    Edit custom dimension
+                    {t(
+                        'results.contextMenu.editCustomDimension',
+                        'Edit custom dimension',
+                    )}
                 </Menu.Item>
                 <Menu.Divider />
 
@@ -224,7 +233,7 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         dispatch(explorerActions.removeField(getItemId(item)));
                     }}
                 >
-                    Remove
+                    {t('results.contextMenu.remove', 'Remove')}
                 </Menu.Item>
             </>
         );
@@ -238,10 +247,9 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         addFilter(item, undefined);
                     }}
                 >
-                    Filter by{' '}
-                    <Text span fw={500}>
-                        {getItemLabelWithoutTableName(item)}
-                    </Text>
+                    {t('results.contextMenu.filterBy', 'Filter by {{value}}', {
+                        value: getItemLabelWithoutTableName(item),
+                    })}
                 </Menu.Item>
 
                 <Menu.Divider />
@@ -256,7 +264,10 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         onToggleCalculationEditModal(true);
                     }}
                 >
-                    Edit calculation
+                    {t(
+                        'results.contextMenu.editCalculation',
+                        'Edit calculation',
+                    )}
                 </Menu.Item>
 
                 <Menu.Divider />
@@ -276,7 +287,7 @@ const ContextMenu: FC<ContextMenuProps> = ({
                         onToggleCalculationDeleteModal(true);
                     }}
                 >
-                    Remove
+                    {t('results.contextMenu.remove', 'Remove')}
                 </Menu.Item>
             </>
         );

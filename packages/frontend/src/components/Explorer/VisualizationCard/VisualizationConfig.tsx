@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 import { lazy, Suspense, useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import MantineIcon from '../../common/MantineIcon';
 import { ConfigTabs as BigNumberConfigTabs } from '../../VisualizationConfigs/BigNumberConfig/BigNumberConfigTabs';
 import { ConfigTabs as ChartConfigTabs } from '../../VisualizationConfigs/ChartConfigPanel/ConfigTabs';
@@ -40,6 +41,7 @@ const VisualizationConfig: FC<Props> = ({
     onClose,
     disableScrollArea = false,
 }) => {
+    const { t } = useTranslation('explore');
     const ConfigTab = useMemo(() => {
         switch (chartType) {
             case ChartType.BIG_NUMBER:
@@ -77,10 +79,16 @@ const VisualizationConfig: FC<Props> = ({
         <>
             <Group position="apart">
                 <Text fz={16} fw={600}>
-                    Configure chart
+                    {t('visualization.config.title', 'Configure chart')}
                 </Text>
 
-                <Tooltip label="Close visualization config" position="right">
+                <Tooltip
+                    label={t(
+                        'visualization.config.close',
+                        'Close visualization config',
+                    )}
+                    position="right"
+                >
                     <ActionIcon size="sm" onClick={onClose}>
                         <MantineIcon icon={IconX} />
                     </ActionIcon>
@@ -90,7 +98,9 @@ const VisualizationConfig: FC<Props> = ({
             <Divider />
 
             <Group>
-                <Text fw={600}>Chart type</Text>
+                <Text fw={600}>
+                    {t('visualization.config.chartType', 'Chart type')}
+                </Text>
 
                 <VisualizationCardOptions />
             </Group>

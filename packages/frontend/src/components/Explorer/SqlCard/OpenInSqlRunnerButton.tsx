@@ -1,6 +1,7 @@
 import { Button } from '@mantine/core';
 import { IconTerminal2 } from '@tabler/icons-react';
 import { memo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useCompiledSql } from '../../../hooks/useCompiledSql';
 import { COLLAPSABLE_CARD_BUTTON_PROPS } from '../../common/CollapsableCard/constants';
@@ -14,6 +15,7 @@ interface OpenInSqlRunnerButtonProps {
 
 const OpenInSqlRunnerButton: FC<OpenInSqlRunnerButtonProps> = memo(
     ({ projectUuid, sql, isDisabled }) => {
+        const { t } = useTranslation('explore');
         const shouldFetchSql = sql === undefined;
         const { data, isInitialLoading, error } = useCompiledSql({
             enabled: shouldFetchSql,
@@ -34,7 +36,7 @@ const OpenInSqlRunnerButton: FC<OpenInSqlRunnerButtonProps> = memo(
                 leftIcon={<MantineIcon icon={IconTerminal2} color="ldGray.7" />}
                 disabled={isButtonDisabled}
             >
-                Open in SQL Runner
+                {t('sql.openInRunner', 'Open in SQL Runner')}
             </Button>
         );
     },

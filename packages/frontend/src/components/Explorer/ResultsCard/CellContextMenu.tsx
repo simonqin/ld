@@ -9,11 +9,12 @@ import {
     type ResultValue,
     type TableCalculation,
 } from '@lightdash/common';
-import { Menu, Text } from '@mantine/core';
+import { Menu } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy, IconEye, IconFilter, IconStack } from '@tabler/icons-react';
 import mapValues from 'lodash/mapValues';
 import { useCallback, useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import useToaster from '../../../hooks/toaster/useToaster';
 import { useFilters } from '../../../hooks/useFilters';
@@ -33,6 +34,7 @@ const CellContextMenu: FC<
         onExpand: (name: string, data: object) => void;
     }
 > = ({ cell, isEditMode, itemsMap, onExpand }) => {
+    const { t } = useTranslation('explore');
     const { addFilter, canFilterField } = useFilters();
     const { openUnderlyingDataModal, metricQuery } =
         useMetricQueryDataContext();
@@ -56,8 +58,10 @@ const CellContextMenu: FC<
 
     const handleCopyToClipboard = useCallback(() => {
         clipboard.copy(value.formatted);
-        showToastSuccess({ title: 'Copied to clipboard!' });
-    }, [value, clipboard, showToastSuccess]);
+        showToastSuccess({
+            title: t('results.contextMenu.copied', 'Copied to clipboard!'),
+        });
+    }, [value, clipboard, showToastSuccess, t]);
 
     const handleViewUnderlyingData = useCallback(() => {
         if (meta?.item === undefined) return;
@@ -127,7 +131,7 @@ const CellContextMenu: FC<
                 icon={<MantineIcon icon={IconCopy} />}
                 onClick={handleCopyToClipboard}
             >
-                Copy value
+                {t('results.contextMenu.copyValue', 'Copy value')}
             </Menu.Item>
             {parseResult !== null && (
                 <Menu.Item
@@ -141,7 +145,7 @@ const CellContextMenu: FC<
                         )
                     }
                 >
-                    Expand
+                    {t('results.contextMenu.expand', 'Expand')}
                 </Menu.Item>
             )}
             {item &&
@@ -159,7 +163,10 @@ const CellContextMenu: FC<
                             icon={<MantineIcon icon={IconStack} />}
                             onClick={handleViewUnderlyingData}
                         >
-                            View underlying data
+                            {t(
+                                'results.contextMenu.viewUnderlyingData',
+                                'View underlying data',
+                            )}
                         </Menu.Item>
                     </Can>
                 )}
@@ -175,10 +182,9 @@ const CellContextMenu: FC<
                         icon={<MantineIcon icon={IconFilter} />}
                         onClick={handleFilterByValue}
                     >
-                        Filter by{' '}
-                        <Text span fw={500}>
-                            {value.formatted}
-                        </Text>
+                        {t('results.contextMenu.filterBy', 'Filter by {{value}}', {
+                            value: value.formatted,
+                        })}
                     </Menu.Item>
                 )}
 

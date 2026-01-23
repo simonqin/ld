@@ -9,6 +9,7 @@ import {
 } from '@lightdash/common';
 import { Menu } from '@mantine/core';
 import { useCallback, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     explorerActions,
     selectSorts,
@@ -91,6 +92,7 @@ const isCalculationAvailable = (
 };
 
 const QuickCalculationMenuOptions: FC<Props> = ({ item }) => {
+    const { t } = useTranslation('explore');
     const dispatch = useExplorerDispatch();
     const { track } = useTracking();
 
@@ -114,7 +116,11 @@ const QuickCalculationMenuOptions: FC<Props> = ({ item }) => {
         templateType: TableCalculationTemplateType,
     ) => {
         const displayName = TemplateTypeLabels[templateType];
-        const name = `${displayName} of ${item.label}`;
+        const name = t(
+            'results.quickCalculations.name',
+            '{{displayName}} of {{label}}',
+            { displayName, label: item.label },
+        );
         const uniqueName = getUniqueTableCalculationName(
             name,
             tableCalculations,
@@ -140,7 +146,9 @@ const QuickCalculationMenuOptions: FC<Props> = ({ item }) => {
 
     return (
         <>
-            <Menu.Label>Add quick calculation</Menu.Label>
+            <Menu.Label>
+                {t('results.quickCalculations.label', 'Add quick calculation')}
+            </Menu.Label>
 
             {Object.values(TableCalculationTemplateType).map((templateType) => {
                 if (!isCalculationAvailable(templateType, item)) return null;

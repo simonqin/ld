@@ -112,5 +112,206 @@
     "parameters": {
         "title": "Parameters",
         "noModel": "No model selected"
+    },
+    "results": {
+        "title": "Results",
+        "exportUnsupported": "Semantic layer exports are not supported",
+        "projectUuidMissing": "Project UUID is missing",
+        "unknownField": "unknown",
+        "jsonViewerHeading": "Field: {{name}}",
+        "idle": {
+            "selectDimensionsPrefix": "Pick one or more ",
+            "dimensions": "dimensions",
+            "selectDimensionsSuffix": " to split your selected metric by.",
+            "selectMetricPrefix": "Pick a ",
+            "metric": "metric",
+            "selectMetricSuffix": " to make calculations across your selected dimensions.",
+            "runQuery": "Run query to view your results and visualize them as a chart."
+        },
+        "emptyStates": {
+            "noColumns": {
+                "title": "Pick a metric & select its dimensions",
+                "descriptionPrefix": "What’s your data question? Select the ",
+                "descriptionMetric": "metric",
+                "descriptionMiddle": " you want to calculate and the ",
+                "descriptionDimensions": "dimension(s)",
+                "descriptionSuffix": " you want to split it by.",
+                "examples": {
+                    "first": {
+                        "prefix": "eg. How many ",
+                        "metric": "total signups",
+                        "middle": " per ",
+                        "dimension": "day",
+                        "suffix": "?"
+                    },
+                    "second": {
+                        "prefix": "eg. What is the ",
+                        "metric": "total order count",
+                        "middle": " by ",
+                        "dimension": "location",
+                        "suffix": "?"
+                    },
+                    "third": {
+                        "prefix": "eg. How many ",
+                        "metric": "new followers",
+                        "middle": " every ",
+                        "dimension": "week",
+                        "suffix": "?"
+                    },
+                    "fourth": {
+                        "prefix": "eg. What is the ",
+                        "metric": "total order count",
+                        "middle": " split by ",
+                        "dimension": "status",
+                        "suffix": "?"
+                    }
+                }
+            },
+            "noTableSelected": {
+                "title": "Select a table",
+                "description": "To run a query, first select the table that you would like to explore."
+            },
+            "loadingTables": "Loading tables...",
+            "idle": "Run query to see your results",
+            "noResults": {
+                "title": "Query returned no results",
+                "description": "This query ran successfully but returned no results"
+            },
+            "loadingResults": "Loading results",
+            "errorLoading": {
+                "title": "Error loading results",
+                "fallback": "There was an error loading the results",
+                "docsLink": "Learn how to resolve this in our documentation →"
+            },
+            "missingRequiredParameters": {
+                "title": "Missing required parameters",
+                "description": "This query requires additional parameters to run.",
+                "listLabel": "Please provide the following {{label}}",
+                "parameter": "parameter:",
+                "parameters": "parameters:"
+            }
+        },
+        "contextMenu": {
+            "copied": "Copied to clipboard!",
+            "copyValue": "Copy value",
+            "expand": "Expand",
+            "viewUnderlyingData": "View underlying data",
+            "filterBy": "Filter by {{value}}",
+            "viewDescription": "View description",
+            "editCustomMetric": "Edit custom metric",
+            "remove": "Remove",
+            "editCustomDimension": "Edit custom dimension",
+            "editCalculation": "Edit calculation"
+        },
+        "urlMenu": {
+            "joiner": " and ",
+            "missingFields": "To use this action add {{fields}} to your query",
+            "unavailable": "Action not available for this query"
+        },
+        "sorting": {
+            "label": "Sorting",
+            "sort": "Sort"
+        },
+        "quickCalculations": {
+            "label": "Add quick calculation",
+            "name": "{{displayName}} of {{label}}"
+        }
+    },
+    "format": {
+        "menu": {
+            "label": "Format",
+            "edit": "Edit format"
+        },
+        "type": {
+            "label": "Type",
+            "default": "Default",
+            "percent": "Percent",
+            "currency": "Currency",
+            "number": "Number",
+            "bytesSi": "bytes (SI)",
+            "bytesIec": "bytes (IEC)",
+            "custom": "Custom"
+        },
+        "previewLabel": "Looks like: ",
+        "formatLabel": "Format: ",
+        "custom": {
+            "expressionLabel": "Format expression",
+            "expressionPlaceholder": "E.g. #.#0",
+            "descriptionPrefix": "To help you build your format expression, we recommend using"
+        },
+        "currency": {
+            "label": "Currency"
+        },
+        "round": {
+            "label": "Round",
+            "placeholder": "Number of decimal places"
+        },
+        "separator": {
+            "label": "Separator style",
+            "default": "Default separator"
+        },
+        "compact": {
+            "label": "Compact",
+            "bytesSiPlaceholder": "E.g. kilobytes (KB)",
+            "bytesIecPlaceholder": "E.g. kibibytes (KiB)",
+            "defaultPlaceholder": "E.g. thousands (K)"
+        },
+        "prefix": {
+            "label": "Prefix",
+            "placeholder": "E.g. GBP revenue:"
+        },
+        "suffix": {
+            "label": "Suffix",
+            "placeholder": "E.g. km/h"
+        },
+        "modal": {
+            "title": "Format metric",
+            "reset": "Reset",
+            "save": "Save changes"
+        }
+    },
+    "sql": {
+        "title": "SQL",
+        "copy": "Copy SQL",
+        "copied": "Copied to clipboard",
+        "openInRunner": "Open in SQL Runner"
+    },
+    "visualization": {
+        "titleEmpty": "Charts",
+        "title": "Chart",
+        "exportUnsupported": "Semantic layer exports are not supported",
+        "metricQueryMissing": "No metric query defined",
+        "configToggle": {
+            "open": "Configure",
+            "close": "Close configure"
+        },
+        "config": {
+            "title": "Configure chart",
+            "close": "Close visualization config",
+            "chartType": "Chart type"
+        },
+        "chartType": {
+            "mixed": "Mixed",
+            "area": "Area chart",
+            "line": "Line chart",
+            "bar": "Bar chart",
+            "barHorizontal": "Horizontal bar chart",
+            "scatter": "Scatter chart",
+            "table": "Table",
+            "bigValue": "Big value",
+            "pie": "Pie chart",
+            "funnel": "Funnel chart",
+            "treemap": "Treemap",
+            "gauge": "Gauge",
+            "map": "Map",
+            "mapBeta": "Map (Beta)",
+            "custom": "Custom"
+        },
+        "warning": {
+            "unusedDimensions": "Your query includes dimensions that are not used in the chart configuration (x-axis, y-axis, or group by). Remove them from the query to avoid incorrect results.",
+            "pivotMismatch": "Please re-run the query to fetch the latest data with correct group by settings.",
+            "columnLimit": "This query exceeds the maximum number of columns ({{limit}}). Showing the first {{limit}} columns.",
+            "badge": "Results may be incorrect"
+        }
     }
 }

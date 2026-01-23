@@ -25,6 +25,7 @@ import {
     useState,
     type FC,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import ErrorBoundary from '../../../features/errorBoundary/ErrorBoundary';
 import {
@@ -68,6 +69,7 @@ type Props = {
 };
 
 const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
+    const { t } = useTranslation('explore');
     const { health } = useApp();
     const { data: org } = useOrganization();
     const { colorScheme } = useMantineColorScheme();
@@ -210,7 +212,10 @@ const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
             ? queryError
             : // Mimicking an API Error Detail so it can be used in the EmptyState component
               ({
-                  message: 'Missing required parameters',
+                  message: t(
+                      'results.emptyStates.missingRequiredParameters.title',
+                      'Missing required parameters',
+                  ),
                   name: 'Error',
                   statusCode: 400,
                   data: {},
@@ -219,10 +224,16 @@ const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
         query.error?.error,
         queryResults.error?.error,
         missingRequiredParameters,
+        t,
     ]);
 
     if (!unsavedChartVersion.tableName) {
-        return <CollapsableCard title="Charts" disabled />;
+        return (
+            <CollapsableCard
+                title={t('visualization.titleEmpty', 'Charts')}
+                disabled
+            />
+        );
     }
 
     const getGsheetLink = async (
@@ -231,7 +242,12 @@ const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
         customLabels?: Record<string, string>,
     ) => {
         if (isSemanticLayerExplore) {
-            throw new Error('Semantic layer exports are not supported');
+            throw new Error(
+                t(
+                    'visualization.exportUnsupported',
+                    'Semantic layer exports are not supported',
+                ),
+            );
         }
         if (explore?.name && unsavedChartVersion?.metricQuery && projectUuid) {
             const gsheetResponse = await uploadGsheet({
@@ -248,7 +264,12 @@ const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
             });
             return gsheetResponse;
         }
-        throw new NotFoundError('no metric query defined');
+        throw new NotFoundError(
+            t(
+                'visualization.metricQueryMissing',
+                'No metric query defined',
+            ),
+        );
     };
 
     if (health.isInitialLoading || !health.data) {
@@ -282,7 +303,7 @@ const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
                 isDashboard={false}
             >
                 <CollapsableCard
-                    title="Chart"
+                    title={t('visualization.title', 'Chart')}
                     isOpen={isOpen}
                     isVisualizationCard
                     onToggle={toggleSection}
@@ -323,8 +344,14 @@ const VisualizationCard: FC<Props> = memo(({ projectUuid: fallBackUUid }) => {
                                         }
                                     >
                                         {isVisualizationConfigOpen
-                                            ? 'Close configure'
-                                            : 'Configure'}
+                                            ? t(
+                                                  'visualization.configToggle.close',
+                                                  'Close configure',
+                                              )
+                                            : t(
+                                                  'visualization.configToggle.open',
+                                                  'Configure',
+                                              )}
                                     </Button>
                                 ) : null}
 

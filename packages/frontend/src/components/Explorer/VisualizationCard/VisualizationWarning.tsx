@@ -11,6 +11,7 @@ import { Badge, List, Tooltip } from '@mantine-8/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import isEqual from 'lodash/isEqual';
 import { useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFeatureFlag } from '../../../hooks/useFeatureFlagEnabled';
 import { type InfiniteQueryResults } from '../../../hooks/useQueryResults';
 import MantineIcon from '../../common/MantineIcon';
@@ -36,6 +37,7 @@ const VisualizationWarning: FC<PivotMismatchWarningProps> = ({
     isLoading,
     maxColumnLimit,
 }) => {
+    const { t } = useTranslation('explore');
     const { data: useSqlPivotResults } = useFeatureFlag(
         FeatureFlags.UseSqlPivotResults,
     );
@@ -127,17 +129,27 @@ const VisualizationWarning: FC<PivotMismatchWarningProps> = ({
         const _messages: string[] = [];
         if (shouldShowUnusedDims) {
             _messages.push(
-                'Your query includes dimensions that are not used in the chart configuration (x-axis, y-axis, or group by). Remove them from the query to avoid incorrect results.',
+                t(
+                    'visualization.warning.unusedDimensions',
+                    'Your query includes dimensions that are not used in the chart configuration (x-axis, y-axis, or group by). Remove them from the query to avoid incorrect results.',
+                ),
             );
         }
         if (shouldShowPivotMismatch) {
             _messages.push(
-                'Please re-run the query to fetch the latest data with correct group by settings.',
+                t(
+                    'visualization.warning.pivotMismatch',
+                    'Please re-run the query to fetch the latest data with correct group by settings.',
+                ),
             );
         }
         if (shouldShowPivotColumnLimit && maxColumnLimit) {
             _messages.push(
-                `This query exceeds the maximum number of columns (${maxColumnLimit}). Showing the first ${maxColumnLimit} columns.`,
+                t(
+                    'visualization.warning.columnLimit',
+                    'This query exceeds the maximum number of columns ({{limit}}). Showing the first {{limit}} columns.',
+                    { limit: maxColumnLimit },
+                ),
             );
         }
         return _messages;
@@ -148,6 +160,7 @@ const VisualizationWarning: FC<PivotMismatchWarningProps> = ({
         shouldShowUnusedDims,
         shouldShowPivotColumnLimit,
         maxColumnLimit,
+        t,
     ]);
 
     if (messages.length === 0) return null;
@@ -174,7 +187,10 @@ const VisualizationWarning: FC<PivotMismatchWarningProps> = ({
                 variant="outline"
                 tt="none"
             >
-                Results may be incorrect
+                {t(
+                    'visualization.warning.badge',
+                    'Results may be incorrect',
+                )}
             </Badge>
         </Tooltip>
     );

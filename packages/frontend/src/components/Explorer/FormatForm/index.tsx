@@ -20,6 +20,7 @@ import {
 } from '@mantine/core';
 import { type GetInputProps } from '@mantine/form/lib/types';
 import { useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { type ValueOf } from 'type-fest';
 
 type Props = {
@@ -43,29 +44,6 @@ const formatTypeOptions = [
     CustomFormatType.CUSTOM,
 ];
 
-const formatSeparatorOptions = [
-    {
-        value: NumberSeparator.DEFAULT,
-        label: 'Default separator',
-    },
-    {
-        value: NumberSeparator.COMMA_PERIOD,
-        label: '100,000.00',
-    },
-    {
-        value: NumberSeparator.SPACE_PERIOD,
-        label: '100 000.00',
-    },
-    {
-        value: NumberSeparator.PERIOD_COMMA,
-        label: '100.000,00',
-    },
-    {
-        value: NumberSeparator.NO_SEPARATOR_PERIOD,
-        label: '100000.00',
-    },
-];
-
 const formatCurrencyOptions = currencies.map((c) => {
     const currencyFormat = Intl.NumberFormat(undefined, {
         style: 'currency',
@@ -85,7 +63,36 @@ export const FormatForm: FC<Props> = ({
     setFormatFieldValue,
     format,
 }) => {
+    const { t, i18n } = useTranslation('explore');
     const formatType = format.type;
+    const formatSeparatorOptions = useMemo(
+        () => [
+            {
+                value: NumberSeparator.DEFAULT,
+                label: t(
+                    'format.separator.default',
+                    'Default separator',
+                ),
+            },
+            {
+                value: NumberSeparator.COMMA_PERIOD,
+                label: '100,000.00',
+            },
+            {
+                value: NumberSeparator.SPACE_PERIOD,
+                label: '100 000.00',
+            },
+            {
+                value: NumberSeparator.PERIOD_COMMA,
+                label: '100.000,00',
+            },
+            {
+                value: NumberSeparator.NO_SEPARATOR_PERIOD,
+                label: '100000.00',
+            },
+        ],
+        [i18n.language, t],
+    );
 
     const validCompactValue = useMemo(() => {
         const currentCompact = format.compact;
@@ -105,14 +112,24 @@ export const FormatForm: FC<Props> = ({
                 <Select
                     withinPortal
                     w={200}
-                    label="Type"
+                    label={t('format.type.label', 'Type')}
                     data={formatTypeOptions.map((type) => ({
                         value: type,
                         label:
                             type === CustomFormatType.BYTES_SI
-                                ? 'bytes (SI)'
+                                ? t('format.type.bytesSi', 'bytes (SI)')
                                 : type === CustomFormatType.BYTES_IEC
-                                ? 'bytes (IEC)'
+                                ? t('format.type.bytesIec', 'bytes (IEC)')
+                                : type === CustomFormatType.DEFAULT
+                                ? t('format.type.default', 'Default')
+                                : type === CustomFormatType.PERCENT
+                                ? t('format.type.percent', 'Percent')
+                                : type === CustomFormatType.CURRENCY
+                                ? t('format.type.currency', 'Currency')
+                                : type === CustomFormatType.NUMBER
+                                ? t('format.type.number', 'Number')
+                                : type === CustomFormatType.CUSTOM
+                                ? t('format.type.custom', 'Custom')
                                 : type,
                     }))}
                     {...{
@@ -128,7 +145,7 @@ export const FormatForm: FC<Props> = ({
 
                 {formatType !== CustomFormatType.DEFAULT && (
                     <Text ml="md" mt={30} w={200} color="ldGray.6">
-                        {'Looks like: '}
+                        {t('format.previewLabel', 'Looks like: ')}
                         {applyCustomFormat(
                             CustomFormatType.PERCENT === formatType
                                 ? '0.754321'
@@ -145,19 +162,27 @@ export const FormatForm: FC<Props> = ({
                     CustomFormatType.BYTES_IEC,
                 ].includes(formatType) && (
                     <Text ml="md" mt={30} w={200} color="ldGray.6">
-                        {'Format: '}
+                        {t('format.formatLabel', 'Format: ')}
                         {convertCustomFormatToFormatExpression(format)}
                     </Text>
                 )}
             </Flex>
             {formatType === CustomFormatType.CUSTOM && (
                 <TextInput
-                    label="Format expression"
-                    placeholder="E.g. #.#0"
+                    label={t(
+                        'format.custom.expressionLabel',
+                        'Format expression',
+                    )}
+                    placeholder={t(
+                        'format.custom.expressionPlaceholder',
+                        'E.g. #.#0',
+                    )}
                     description={
                         <p>
-                            To help you build your format expression, we
-                            recommend using{' '}
+                            {t(
+                                'format.custom.descriptionPrefix',
+                                'To help you build your format expression, we recommend using',
+                            )}{' '}
                             <Anchor
                                 href="https://customformats.com"
                                 target="_blank"
@@ -176,7 +201,7 @@ export const FormatForm: FC<Props> = ({
                 CustomFormatType.PERCENT,
                 CustomFormatType.BYTES_SI,
                 CustomFormatType.BYTES_IEC,
-            ].includes(formatType) && (
+                ].includes(formatType) && (
                 <Flex>
                     {formatType === CustomFormatType.CURRENCY && (
                         <Select
@@ -184,7 +209,7 @@ export const FormatForm: FC<Props> = ({
                             mr="md"
                             w={200}
                             searchable
-                            label="Currency"
+                            label={t('format.currency.label', 'Currency')}
                             data={formatCurrencyOptions}
                             {...formatInputProps('currency')}
                         />
@@ -194,8 +219,11 @@ export const FormatForm: FC<Props> = ({
                         type="number"
                         min={0}
                         w={200}
-                        label="Round"
-                        placeholder="Number of decimal places"
+                        label={t('format.round.label', 'Round')}
+                        placeholder={t(
+                            'format.round.placeholder',
+                            'Number of decimal places',
+                        )}
                         {...{
                             ...formatInputProps('round'),
                             // Explicitly set value to undefined so the API doesn't received invalid values
@@ -211,7 +239,10 @@ export const FormatForm: FC<Props> = ({
                         withinPortal
                         w={200}
                         ml="md"
-                        label="Separator style"
+                        label={t(
+                            'format.separator.label',
+                            'Separator style',
+                        )}
                         data={formatSeparatorOptions}
                         {...formatInputProps('separator')}
                     />
@@ -229,13 +260,22 @@ export const FormatForm: FC<Props> = ({
                         mr="md"
                         w={200}
                         clearable
-                        label="Compact"
+                        label={t('format.compact.label', 'Compact')}
                         placeholder={
                             formatType === CustomFormatType.BYTES_SI
-                                ? 'E.g. kilobytes (KB)'
+                                ? t(
+                                      'format.compact.bytesSiPlaceholder',
+                                      'E.g. kilobytes (KB)',
+                                  )
                                 : formatType === CustomFormatType.BYTES_IEC
-                                ? 'E.g. kibibytes (KiB)'
-                                : 'E.g. thousands (K)'
+                                ? t(
+                                      'format.compact.bytesIecPlaceholder',
+                                      'E.g. kibibytes (KiB)',
+                                  )
+                                : t(
+                                      'format.compact.defaultPlaceholder',
+                                      'E.g. thousands (K)',
+                                  )
                         }
                         data={getCompactOptionsForFormatType(formatType).map(
                             (c) => ({
@@ -264,14 +304,20 @@ export const FormatForm: FC<Props> = ({
                             <TextInput
                                 w={200}
                                 mr="md"
-                                label="Prefix"
-                                placeholder="E.g. GBP revenue:"
+                                label={t('format.prefix.label', 'Prefix')}
+                                placeholder={t(
+                                    'format.prefix.placeholder',
+                                    'E.g. GBP revenue:',
+                                )}
                                 {...formatInputProps('prefix')}
                             />
                             <TextInput
                                 w={200}
-                                label="Suffix"
-                                placeholder="E.g. km/h"
+                                label={t('format.suffix.label', 'Suffix')}
+                                placeholder={t(
+                                    'format.suffix.placeholder',
+                                    'E.g. km/h',
+                                )}
                                 {...formatInputProps('suffix')}
                             />
                         </>

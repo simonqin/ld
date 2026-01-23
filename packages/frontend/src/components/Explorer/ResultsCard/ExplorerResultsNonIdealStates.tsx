@@ -2,6 +2,7 @@ import { type ApiErrorDetail } from '@lightdash/common';
 import { Anchor, createStyles, keyframes, Loader, Text } from '@mantine/core';
 import { IconTableOff } from '@tabler/icons-react';
 import { Fragment, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LD_FIELD_COLORS } from '../../../mantineTheme';
 import { TrackSection } from '../../../providers/Tracking/TrackingProvider';
 import NoTableIcon from '../../../svgs/emptystate-no-table.svg?react';
@@ -73,13 +74,17 @@ const ExploreDocumentationUrl =
     'https://docs.lightdash.com/get-started/exploring-data/using-explores/';
 
 export const EmptyStateNoColumns = () => {
+    const { t } = useTranslation('explore');
     const { classes } = useAnimatedTextStyles();
 
     return (
         <EmptyState
             title={
                 <>
-                    Pick a metric & select its dimensions{' '}
+                    {t(
+                        'results.emptyStates.noColumns.title',
+                        'Pick a metric & select its dimensions',
+                    )}{' '}
                     <DocumentationHelpButton
                         href={ExploreDocumentationUrl}
                         pos="relative"
@@ -90,65 +95,140 @@ export const EmptyStateNoColumns = () => {
             }
             description={
                 <>
-                    What’s your data question? Select the{' '}
+                    {t(
+                        'results.emptyStates.noColumns.descriptionPrefix',
+                        'What’s your data question? Select the ',
+                    )}
                     <Text span color={LD_FIELD_COLORS.metric.color}>
-                        metric
-                    </Text>{' '}
-                    you want to calculate and the{' '}
+                        {t(
+                            'results.emptyStates.noColumns.descriptionMetric',
+                            'metric',
+                        )}
+                    </Text>
+                    {t(
+                        'results.emptyStates.noColumns.descriptionMiddle',
+                        ' you want to calculate and the ',
+                    )}
                     <Text span color={LD_FIELD_COLORS.dimension.color}>
-                        dimension(s)
-                    </Text>{' '}
-                    you want to split it by.
+                        {t(
+                            'results.emptyStates.noColumns.descriptionDimensions',
+                            'dimension(s)',
+                        )}
+                    </Text>
+                    {t(
+                        'results.emptyStates.noColumns.descriptionSuffix',
+                        ' you want to split it by.',
+                    )}
                 </>
             }
         >
             <Text className={classes.root} color="dimmed">
                 <Text span>
-                    eg. How many{' '}
+                    {t(
+                        'results.emptyStates.noColumns.examples.first.prefix',
+                        'eg. How many ',
+                    )}
                     <Text span color={LD_FIELD_COLORS.metric.color}>
-                        total signups
-                    </Text>{' '}
-                    per{' '}
-                    <Text span color={LD_FIELD_COLORS.dimension.color}>
-                        day
+                        {t(
+                            'results.emptyStates.noColumns.examples.first.metric',
+                            'total signups',
+                        )}
                     </Text>
-                    ?
+                    {t(
+                        'results.emptyStates.noColumns.examples.first.middle',
+                        ' per ',
+                    )}
+                    <Text span color={LD_FIELD_COLORS.dimension.color}>
+                        {t(
+                            'results.emptyStates.noColumns.examples.first.dimension',
+                            'day',
+                        )}
+                    </Text>
+                    {t(
+                        'results.emptyStates.noColumns.examples.first.suffix',
+                        '?',
+                    )}
                 </Text>
 
                 <Text span>
-                    eg. What is the{' '}
+                    {t(
+                        'results.emptyStates.noColumns.examples.second.prefix',
+                        'eg. What is the ',
+                    )}
                     <Text span color={LD_FIELD_COLORS.metric.color}>
-                        total order count
-                    </Text>{' '}
-                    by{' '}
-                    <Text span color={LD_FIELD_COLORS.dimension.color}>
-                        location
+                        {t(
+                            'results.emptyStates.noColumns.examples.second.metric',
+                            'total order count',
+                        )}
                     </Text>
-                    ?
+                    {t(
+                        'results.emptyStates.noColumns.examples.second.middle',
+                        ' by ',
+                    )}
+                    <Text span color={LD_FIELD_COLORS.dimension.color}>
+                        {t(
+                            'results.emptyStates.noColumns.examples.second.dimension',
+                            'location',
+                        )}
+                    </Text>
+                    {t(
+                        'results.emptyStates.noColumns.examples.second.suffix',
+                        '?',
+                    )}
                 </Text>
 
                 <Text span>
-                    eg. How many{' '}
+                    {t(
+                        'results.emptyStates.noColumns.examples.third.prefix',
+                        'eg. How many ',
+                    )}
                     <Text span color={LD_FIELD_COLORS.metric.color}>
-                        new followers
-                    </Text>{' '}
-                    every{' '}
-                    <Text span color={LD_FIELD_COLORS.dimension.color}>
-                        week
+                        {t(
+                            'results.emptyStates.noColumns.examples.third.metric',
+                            'new followers',
+                        )}
                     </Text>
-                    ?
+                    {t(
+                        'results.emptyStates.noColumns.examples.third.middle',
+                        ' every ',
+                    )}
+                    <Text span color={LD_FIELD_COLORS.dimension.color}>
+                        {t(
+                            'results.emptyStates.noColumns.examples.third.dimension',
+                            'week',
+                        )}
+                    </Text>
+                    {t(
+                        'results.emptyStates.noColumns.examples.third.suffix',
+                        '?',
+                    )}
                 </Text>
 
                 <Text span>
-                    eg. What is the{' '}
+                    {t(
+                        'results.emptyStates.noColumns.examples.fourth.prefix',
+                        'eg. What is the ',
+                    )}
                     <Text span color={LD_FIELD_COLORS.metric.color}>
-                        total order count
-                    </Text>{' '}
-                    split by{' '}
-                    <Text span color={LD_FIELD_COLORS.dimension.color}>
-                        status
+                        {t(
+                            'results.emptyStates.noColumns.examples.fourth.metric',
+                            'total order count',
+                        )}
                     </Text>
-                    ?
+                    {t(
+                        'results.emptyStates.noColumns.examples.fourth.middle',
+                        ' split by ',
+                    )}
+                    <Text span color={LD_FIELD_COLORS.dimension.color}>
+                        {t(
+                            'results.emptyStates.noColumns.examples.fourth.dimension',
+                            'status',
+                        )}
+                    </Text>
+                    {t(
+                        'results.emptyStates.noColumns.examples.fourth.suffix',
+                        '?',
+                    )}
                 </Text>
             </Text>
         </EmptyState>
@@ -177,101 +257,168 @@ export const EmptyStateNoTableData: FC<{ description: React.ReactNode }> = ({
     </TrackSection>
 );
 
-export const NoTableSelected = () => (
-    <EmptyState
-        maw={500}
-        icon={<NoTableIcon />}
-        title="Select a table"
-        description={
-            <>
-                To run a query, first select the table that you would like to
-                explore.{' '}
-                <DocumentationHelpButton
-                    href={ExploreDocumentationUrl}
-                    pos="relative"
-                    top={2}
-                />
-            </>
-        }
-    />
-);
+export const NoTableSelected = () => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            maw={500}
+            icon={<NoTableIcon />}
+            title={t(
+                'results.emptyStates.noTableSelected.title',
+                'Select a table',
+            )}
+            description={
+                <>
+                    {t(
+                        'results.emptyStates.noTableSelected.description',
+                        'To run a query, first select the table that you would like to explore.',
+                    )}{' '}
+                    <DocumentationHelpButton
+                        href={ExploreDocumentationUrl}
+                        pos="relative"
+                        top={2}
+                    />
+                </>
+            }
+        />
+    );
+};
 
-export const EmptyStateExploreLoading = () => (
-    <EmptyState title="Loading tables...">
-        <Loader color="gray" />
-    </EmptyState>
-);
+export const EmptyStateExploreLoading = () => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            title={t('results.emptyStates.loadingTables', 'Loading tables...')}
+        >
+            <Loader color="gray" />
+        </EmptyState>
+    );
+};
 
-export const ExploreIdleState = () => (
-    <EmptyState title="Run query to see your results" />
-);
+export const ExploreIdleState = () => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            title={t(
+                'results.emptyStates.idle',
+                'Run query to see your results',
+            )}
+        />
+    );
+};
 
-export const ExploreEmptyQueryState = () => (
-    <EmptyState
-        title="Query returned no results"
-        description="This query ran successfully but returned no results"
-    />
-);
+export const ExploreEmptyQueryState = () => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            title={t(
+                'results.emptyStates.noResults.title',
+                'Query returned no results',
+            )}
+            description={t(
+                'results.emptyStates.noResults.description',
+                'This query ran successfully but returned no results',
+            )}
+        />
+    );
+};
 
-export const ExploreLoadingState = () => (
-    <EmptyState title="Loading results">
-        <Loader color="gray" data-testid="results-table-loading" />
-    </EmptyState>
-);
+export const ExploreLoadingState = () => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            title={t('results.emptyStates.loadingResults', 'Loading results')}
+        >
+            <Loader color="gray" data-testid="results-table-loading" />
+        </EmptyState>
+    );
+};
 
 export const ExploreErrorState = ({
     errorDetail,
 }: {
     errorDetail?: ApiErrorDetail | null;
-}) => (
-    <EmptyState
-        icon={<MantineIcon icon={IconTableOff} />}
-        title="Error loading results"
-        description={
-            <Fragment>
-                <Text style={{ whiteSpace: 'pre-wrap' }}>
-                    {errorDetail?.message ||
-                        'There was an error loading the results'}
-                </Text>
-                {errorDetail?.data.documentationUrl && (
-                    <Fragment>
-                        <br />
-                        <Anchor
-                            href={errorDetail.data.documentationUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Learn how to resolve this in our documentation →
-                        </Anchor>
-                    </Fragment>
-                )}
-            </Fragment>
-        }
-    />
-);
+}) => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            icon={<MantineIcon icon={IconTableOff} />}
+            title={t(
+                'results.emptyStates.errorLoading.title',
+                'Error loading results',
+            )}
+            description={
+                <Fragment>
+                    <Text style={{ whiteSpace: 'pre-wrap' }}>
+                        {errorDetail?.message ||
+                            t(
+                                'results.emptyStates.errorLoading.fallback',
+                                'There was an error loading the results',
+                            )}
+                    </Text>
+                    {errorDetail?.data.documentationUrl && (
+                        <Fragment>
+                            <br />
+                            <Anchor
+                                href={errorDetail.data.documentationUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {t(
+                                    'results.emptyStates.errorLoading.docsLink',
+                                    'Learn how to resolve this in our documentation →',
+                                )}
+                            </Anchor>
+                        </Fragment>
+                    )}
+                </Fragment>
+            }
+        />
+    );
+};
 
 export const MissingRequiredParameters = ({
     missingRequiredParameters,
 }: {
     missingRequiredParameters: string[];
-}) => (
-    <EmptyState
-        title="Missing required parameters"
-        description={
-            <>
-                This query requires additional parameters to run.{' '}
-                <Text>
-                    {`Please provide the following ${
-                        missingRequiredParameters.length === 1
-                            ? 'parameter:'
-                            : 'parameters:'
-                    }`}
-                </Text>
-                <br />
-                <Text span fw={500} size="sm">
-                    {missingRequiredParameters.join(', ')}
-                </Text>
-            </>
-        }
-    />
-);
+}) => {
+    const { t } = useTranslation('explore');
+    return (
+        <EmptyState
+            title={t(
+                'results.emptyStates.missingRequiredParameters.title',
+                'Missing required parameters',
+            )}
+            description={
+                <>
+                    {t(
+                        'results.emptyStates.missingRequiredParameters.description',
+                        'This query requires additional parameters to run.',
+                    )}
+                    <Text>
+                        {t(
+                            'results.emptyStates.missingRequiredParameters.listLabel',
+                            'Please provide the following {{label}}',
+                            {
+                                label:
+                                    missingRequiredParameters.length === 1
+                                        ? t(
+                                              'results.emptyStates.missingRequiredParameters.parameter',
+                                              'parameter:',
+                                          )
+                                        : t(
+                                              'results.emptyStates.missingRequiredParameters.parameters',
+                                              'parameters:',
+                                          ),
+                            },
+                        )}
+                    </Text>
+                    <br />
+                    <Text span fw={500} size="sm">
+                        {missingRequiredParameters.join(', ')}
+                    </Text>
+                </>
+            }
+        />
+    );
+};

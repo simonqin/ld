@@ -8,6 +8,7 @@ import {
 import { Menu, Text } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 import { useCallback, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     explorerActions,
     useExplorerDispatch,
@@ -25,6 +26,7 @@ type Props = {
 };
 
 const ColumnHeaderSortMenuOptions: FC<Props> = ({ item, sort }) => {
+    const { t } = useTranslation('explore');
     const itemFieldId = getItemId(item);
     const hasSort = !!sort;
     const selectedSortDirection = sort
@@ -54,7 +56,7 @@ const ColumnHeaderSortMenuOptions: FC<Props> = ({ item, sort }) => {
 
     return (
         <>
-            <Menu.Label>Sorting</Menu.Label>
+            <Menu.Label>{t('results.sorting.label', 'Sorting')}</Menu.Label>
             {item &&
                 getSortDirectionOrder(item).map((sortDirection) => (
                     <Menu.Item
@@ -70,7 +72,7 @@ const ColumnHeaderSortMenuOptions: FC<Props> = ({ item, sort }) => {
                         }
                         onClick={() => handleSortClick(sortDirection)}
                     >
-                        Sort{' '}
+                        {t('results.sorting.sort', 'Sort')}{' '}
                         <Text span fw={500}>
                             {getSortLabel(item, sortDirection)}
                         </Text>

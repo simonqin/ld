@@ -1,6 +1,7 @@
 import { FeatureFlags, getItemMap } from '@lightdash/common';
 import { Box, Text } from '@mantine/core';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
     explorerActions,
@@ -58,6 +59,7 @@ const getQueryStatus = (
 };
 
 export const ExplorerResults = memo(() => {
+    const { t } = useTranslation('explore');
     const dispatch = useExplorerDispatch();
     const columns = useColumns();
     const isEditMode = useExplorerSelector(selectIsEditMode);
@@ -202,29 +204,40 @@ export const ExplorerResults = memo(() => {
         const description =
             dimensions.length <= 0 ? (
                 <>
-                    Pick one or more{' '}
+                    {t(
+                        'results.idle.selectDimensionsPrefix',
+                        'Pick one or more ',
+                    )}
                     <Text span color="blue.9">
-                        dimensions
-                    </Text>{' '}
-                    to split your selected metric by.
+                        {t('results.idle.dimensions', 'dimensions')}
+                    </Text>
+                    {t(
+                        'results.idle.selectDimensionsSuffix',
+                        ' to split your selected metric by.',
+                    )}
                 </>
             ) : metrics.length <= 0 ? (
                 <>
-                    Pick a{' '}
+                    {t('results.idle.selectMetricPrefix', 'Pick a ')}
                     <Text span color="yellow.9">
-                        metric
-                    </Text>{' '}
-                    to make calculations across your selected dimensions.
+                        {t('results.idle.metric', 'metric')}
+                    </Text>
+                    {t(
+                        'results.idle.selectMetricSuffix',
+                        ' to make calculations across your selected dimensions.',
+                    )}
                 </>
             ) : (
                 <>
-                    Run query to view your results and visualize them as a
-                    chart.
+                    {t(
+                        'results.idle.runQuery',
+                        'Run query to view your results and visualize them as a chart.',
+                    )}
                 </>
             );
 
         return <EmptyStateNoTableData description={description} />;
-    }, [dimensions.length, metrics.length]);
+    }, [dimensions.length, metrics.length, t]);
 
     const pagination = useMemo(
         () => ({
@@ -277,7 +290,15 @@ export const ExplorerResults = memo(() => {
                     columnProperties={columnProperties}
                 />
                 <JsonViewerModal
-                    heading={`Field: ${expandData.name}`}
+                    heading={t(
+                        'results.jsonViewerHeading',
+                        'Field: {{name}}',
+                        {
+                            name:
+                                expandData.name ||
+                                t('results.unknownField', 'unknown'),
+                        },
+                    )}
                     jsonObject={expandData.jsonObject}
                     opened={isExpandModalOpened}
                     onClose={() => setIsExpandModalOpened(false)}

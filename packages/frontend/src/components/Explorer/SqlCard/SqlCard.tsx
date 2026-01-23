@@ -4,6 +4,7 @@ import { ActionIcon, CopyButton, Skeleton, Tooltip } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
 import { IconCheck, IconClipboard } from '@tabler/icons-react';
 import { lazy, memo, Suspense, useCallback, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     explorerActions,
     selectIsSqlExpanded,
@@ -33,6 +34,7 @@ const LazyRenderedSql = lazy(() =>
 );
 
 const SqlCard: FC<SqlCardProps> = memo(({ projectUuid }) => {
+    const { t } = useTranslation('explore');
     const { hovered, ref: headingRef } = useHover();
 
     const sqlIsOpen = useExplorerSelector(selectIsSqlExpanded);
@@ -65,7 +67,7 @@ const SqlCard: FC<SqlCardProps> = memo(({ projectUuid }) => {
         <CollapsableCard
             isVisualizationCard
             headingRef={headingRef}
-            title="SQL"
+            title={t('sql.title', 'SQL')}
             isOpen={sqlIsOpen}
             onToggle={() => toggleExpandedSection(ExplorerSection.SQL)}
             disabled={!unsavedChartVersionTableName}
@@ -76,7 +78,12 @@ const SqlCard: FC<SqlCardProps> = memo(({ projectUuid }) => {
                             <Tooltip
                                 variant="xs"
                                 label={
-                                    copied ? 'Copied to clipboard' : 'Copy SQL'
+                                    copied
+                                        ? t(
+                                              'sql.copied',
+                                              'Copied to clipboard',
+                                          )
+                                        : t('sql.copy', 'Copy SQL')
                                 }
                                 withArrow
                                 position="right"
