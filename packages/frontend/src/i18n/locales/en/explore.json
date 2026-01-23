@@ -45,5 +45,60 @@
         "googleSheetsSync": "Google Sheets Sync",
         "delete": "Delete",
         "queryWarnings": "Query warnings"
+    },
+    "sidebar": {
+        "searchPlaceholder": "Search metrics + dimensions",
+        "tables": "Tables",
+        "searchTables": "Search tables",
+        "virtualViews": "Virtual Views",
+        "loadFailed": "Could not load explores",
+        "missingFieldRemove": "Remove missing field \"{{fieldId}}\".",
+        "sections": {
+            "missingFields": "Missing fields",
+            "metrics": "Metrics",
+            "customMetrics": "Custom metrics",
+            "dimensions": "Dimensions",
+            "customDimensions": "Custom dimensions"
+        },
+        "empty": {
+            "noDimensions": "No dimensions defined in your dbt project"
+        },
+        "help": {
+            "metrics": "No metrics defined in your dbt project. Click to view docs and learn how to add a metric to your project.",
+            "customMetrics": "Add custom metrics by hovering over the dimension of your choice & selecting the three-dot Action Menu. Click to view docs."
+        },
+        "errors": {
+            "customMetricConflict": "A metric with this ID already exists in the table. Rename your custom metric to prevent conflicts."
+        },
+        "actions": {
+            "addCustomDimensionWithSql": "Add a custom dimension with SQL",
+            "add": "Add",
+            "writeBackCustomMetrics": "Write back custom metrics",
+            "writeBackCustomDimensions": "Write back custom dimensions"
+        }
+    },
+    "treeActions": {
+        "copyLabel": "Copy {{label}}",
+        "copyName": "Copy {{name}}",
+        "addFilter": "Add filter",
+        "editCustomMetric": "Edit custom metric",
+        "duplicateCustomMetric": "Duplicate custom metric",
+        "duplicateCustomMetricSuccess": "Copy of custom metric added successfully",
+        "writeBackToDbt": "Write back to dbt",
+        "removeCustomMetric": "Remove custom metric",
+        "viewDescription": "View description",
+        "editCustomDimension": "Edit custom dimension",
+        "duplicateCustomDimension": "Duplicate custom dimension",
+        "duplicateCustomDimensionSuccess": "Copy of custom dimension added successfully",
+        "removeCustomDimension": "Remove custom dimension",
+        "addCustomMetrics": "Add custom metrics",
+        "addCustomDimensions": "Add custom dimensions",
+        "viewOptions": "View options"
+    },
+    "treeNode": {
+        "missingField": "This field from '{{table}}' table is no longer available",
+        "filtered": "This field is filtered",
+        "addFilter": "Click here to add filter",
+        "hiddenField": "This field has been hidden in the dbt project. It's recommend to remove it from the query"
     }
 }

@@ -19,6 +19,7 @@ import {
     useTransition,
     type FC,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     selectActiveFields,
     selectAdditionalMetrics,
@@ -55,6 +56,7 @@ const ExploreTreeComponent: FC<ExploreTreeProps> = ({
     explore,
     onSelectedFieldChange,
 }) => {
+    const { t, i18n } = useTranslation('explore');
     const projectUuid = useProjectUuid();
     const additionalMetrics = useExplorerSelector(selectAdditionalMetrics);
     const customDimensions = useExplorerSelector(selectCustomDimensions);
@@ -72,6 +74,41 @@ const ExploreTreeComponent: FC<ExploreTreeProps> = ({
     const activeFields = useExplorerSelector(selectActiveFields);
     const selectedDimensions = useExplorerSelector(selectDimensions);
     const isSemanticLayerExplore = explore.type === ExploreType.SEMANTIC_LAYER;
+    const treeLabels = useMemo(
+        () => ({
+            sectionMissingFields: t(
+                'sidebar.sections.missingFields',
+                'Missing fields',
+            ),
+            sectionMetrics: t('sidebar.sections.metrics', 'Metrics'),
+            sectionCustomMetrics: t(
+                'sidebar.sections.customMetrics',
+                'Custom metrics',
+            ),
+            sectionDimensions: t('sidebar.sections.dimensions', 'Dimensions'),
+            sectionCustomDimensions: t(
+                'sidebar.sections.customDimensions',
+                'Custom dimensions',
+            ),
+            emptyDimensions: t(
+                'sidebar.empty.noDimensions',
+                'No dimensions defined in your dbt project',
+            ),
+            metricsHelp: t(
+                'sidebar.help.metrics',
+                'No metrics defined in your dbt project. Click to view docs and learn how to add a metric to your project.',
+            ),
+            customMetricsHelp: t(
+                'sidebar.help.customMetrics',
+                'Add custom metrics by hovering over the dimension of your choice & selecting the three-dot Action Menu. Click to view docs.',
+            ),
+            customMetricConflict: t(
+                'sidebar.errors.customMetricConflict',
+                'A metric with this ID already exists in the table. Rename your custom metric to prevent conflicts.',
+            ),
+        }),
+        [i18n.language, t],
+    );
 
     const metricFlowQuery = useMemo(() => {
         if (!isSemanticLayerExplore) return undefined;
@@ -344,6 +381,7 @@ const ExploreTreeComponent: FC<ExploreTreeProps> = ({
             selectedDimensions,
             activeFields,
             sectionNodeMaps,
+            labels: treeLabels,
         });
     }, [
         activeFields,
@@ -362,6 +400,7 @@ const ExploreTreeComponent: FC<ExploreTreeProps> = ({
         selectedDimensions,
         tableTrees,
         treeExplore.tables,
+        treeLabels,
     ]);
 
     return (
@@ -380,7 +419,10 @@ const ExploreTreeComponent: FC<ExploreTreeProps> = ({
                         </ActionIcon>
                     ) : null
                 }
-                placeholder="Search metrics + dimensions"
+                placeholder={t(
+                    'sidebar.searchPlaceholder',
+                    'Search metrics + dimensions',
+                )}
                 value={search}
                 onChange={handleSearchChange}
                 data-testid="ExploreTree/SearchInput"

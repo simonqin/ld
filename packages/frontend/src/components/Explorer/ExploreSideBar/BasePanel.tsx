@@ -9,6 +9,7 @@ import {
 } from '@tabler/icons-react';
 import Fuse from 'fuse.js';
 import { useMemo, useState, useTransition } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useOrganization } from '../../../hooks/organization/useOrganization';
 import { useExplores } from '../../../hooks/useExplores';
@@ -22,6 +23,7 @@ import { ItemDetailProvider } from '../ExploreTree/TableTree/ItemDetailProvider'
 import ExploreNavLink from './ExploreNavLink';
 
 const BasePanel = () => {
+    const { t } = useTranslation('explore');
     const navigate = useNavigate();
     const location = useLocation();
     const projectUuid = useProjectUuid();
@@ -123,7 +125,7 @@ const BasePanel = () => {
         return (
             <SuboptimalState
                 icon={IconAlertCircle}
-                title="Could not load explores"
+                title={t('sidebar.loadFailed', 'Could not load explores')}
             />
         );
     }
@@ -142,7 +144,15 @@ const BasePanel = () => {
                         >
                             <PageBreadcrumbs
                                 size="md"
-                                items={[{ title: 'Tables', active: true }]}
+                                items={[
+                                    {
+                                        title: t(
+                                            'sidebar.tables',
+                                            'Tables',
+                                        ),
+                                        active: true,
+                                    },
+                                ]}
                             />
                         </Can>
 
@@ -155,7 +165,10 @@ const BasePanel = () => {
                                     </ActionIcon>
                                 ) : null
                             }
-                            placeholder="Search tables"
+                            placeholder={t(
+                                'sidebar.searchTables',
+                                'Search tables',
+                            )}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
@@ -170,7 +183,10 @@ const BasePanel = () => {
                                     <Divider size={0.5} c="ldGray.5" my="xs" />
 
                                     <Text fw={500} fz="xs" c="ldGray.6" mb="xs">
-                                        Virtual Views
+                                        {t(
+                                            'sidebar.virtualViews',
+                                            'Virtual Views',
+                                        )}
                                     </Text>
                                 </>
                             ) : null}
@@ -185,7 +201,7 @@ const BasePanel = () => {
     return (
         <SuboptimalState
             icon={IconAlertTriangle}
-            title="Could not load explores"
+            title={t('sidebar.loadFailed', 'Could not load explores')}
         />
     );
 };

@@ -24,6 +24,7 @@ import {
     IconTrash,
 } from '@tabler/icons-react';
 import { useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -57,6 +58,7 @@ const TreeSingleNodeActions: FC<Props> = ({
     hasDescription,
     onViewDescription,
 }) => {
+    const { t } = useTranslation('explore');
     const { projectUuid } = useParams<{ projectUuid: string }>();
     const { user } = useApp();
     const { showToastSuccess } = useToaster();
@@ -89,7 +91,11 @@ const TreeSingleNodeActions: FC<Props> = ({
         } else {
             currentName = currentName + pattern + newIdSubstring;
         }
-        newDeepCopyItem.label = 'Copy ' + newDeepCopyItem.label;
+        newDeepCopyItem.label = t(
+            'treeActions.copyLabel',
+            'Copy {{label}}',
+            { label: newDeepCopyItem.label },
+        );
         newDeepCopyItem.uuid = newId;
         newDeepCopyItem.name = currentName;
         dispatch(explorerActions.addAdditionalMetric(newDeepCopyItem));
@@ -107,7 +113,9 @@ const TreeSingleNodeActions: FC<Props> = ({
         } else {
             currentId = currentId + pattern + newIdSubstring;
         }
-        newDeepCopyItem.name = 'Copy ' + newDeepCopyItem.name;
+        newDeepCopyItem.name = t('treeActions.copyName', 'Copy {{name}}', {
+            name: newDeepCopyItem.name,
+        });
         newDeepCopyItem.id = currentId;
         dispatch(explorerActions.addCustomDimension(newDeepCopyItem));
     };
@@ -136,7 +144,7 @@ const TreeSingleNodeActions: FC<Props> = ({
                             addFilter(item, undefined);
                         }}
                     >
-                        Add filter
+                        {t('treeActions.addFilter', 'Add filter')}
                     </Menu.Item>
                 ) : null}
 
@@ -160,7 +168,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                 );
                             }}
                         >
-                            Edit custom metric
+                            {t(
+                                'treeActions.editCustomMetric',
+                                'Edit custom metric',
+                            )}
                         </Menu.Item>
                         <Menu.Item
                             component="button"
@@ -174,11 +185,17 @@ const TreeSingleNodeActions: FC<Props> = ({
                                     name: EventName.ADD_CUSTOM_METRIC_CLICKED,
                                 });
                                 showToastSuccess({
-                                    title: 'Copy of Custom metric added successfully',
+                                    title: t(
+                                        'treeActions.duplicateCustomMetricSuccess',
+                                        'Copy of custom metric added successfully',
+                                    ),
                                 });
                             }}
                         >
-                            Duplicate custom metric
+                            {t(
+                                'treeActions.duplicateCustomMetric',
+                                'Duplicate custom metric',
+                            )}
                         </Menu.Item>
 
                         <Menu.Item
@@ -210,7 +227,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                 );
                             }}
                         >
-                            Write back to dbt
+                            {t(
+                                'treeActions.writeBackToDbt',
+                                'Write back to dbt',
+                            )}
                         </Menu.Item>
 
                         <Menu.Item
@@ -233,7 +253,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                 );
                             }}
                         >
-                            Remove custom metric
+                            {t(
+                                'treeActions.removeCustomMetric',
+                                'Remove custom metric',
+                            )}
                         </Menu.Item>
                     </>
                 ) : null}
@@ -247,7 +270,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                             onViewDescription();
                         }}
                     >
-                        View description
+                        {t(
+                            'treeActions.viewDescription',
+                            'View description',
+                        )}
                     </Menu.Item>
                 )}
 
@@ -268,7 +294,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                 );
                             }}
                         >
-                            Edit custom dimension
+                            {t(
+                                'treeActions.editCustomDimension',
+                                'Edit custom dimension',
+                            )}
                         </Menu.Item>
                         <Menu.Item
                             component="button"
@@ -282,11 +311,17 @@ const TreeSingleNodeActions: FC<Props> = ({
                                     name: EventName.ADD_CUSTOM_DIMENSION_CLICKED,
                                 });
                                 showToastSuccess({
-                                    title: 'Copy of Custom Dimension added successfully',
+                                    title: t(
+                                        'treeActions.duplicateCustomDimensionSuccess',
+                                        'Copy of custom dimension added successfully',
+                                    ),
                                 });
                             }}
                         >
-                            Duplicate custom dimension
+                            {t(
+                                'treeActions.duplicateCustomDimension',
+                                'Duplicate custom dimension',
+                            )}
                         </Menu.Item>
                         {(isCustomSqlDimension(item) ||
                             isWriteBackCustomBinDimensionsEnabled) && (
@@ -320,7 +355,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                     );
                                 }}
                             >
-                                Write back to dbt
+                                {t(
+                                    'treeActions.writeBackToDbt',
+                                    'Write back to dbt',
+                                )}
                             </Menu.Item>
                         )}
 
@@ -339,7 +377,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                 );
                             }}
                         >
-                            Remove custom dimension
+                            {t(
+                                'treeActions.removeCustomDimension',
+                                'Remove custom dimension',
+                            )}
                         </Menu.Item>
                     </>
                 )}
@@ -349,7 +390,12 @@ const TreeSingleNodeActions: FC<Props> = ({
                     <>
                         <Menu.Divider />
 
-                        <Menu.Label>Add custom metrics</Menu.Label>
+                        <Menu.Label>
+                            {t(
+                                'treeActions.addCustomMetrics',
+                                'Add custom metrics',
+                            )}
+                        </Menu.Label>
                         {customMetrics.map((metric) => (
                             <Menu.Item
                                 key={metric}
@@ -407,7 +453,10 @@ const TreeSingleNodeActions: FC<Props> = ({
                                 );
                             }}
                         >
-                            Add custom dimensions
+                            {t(
+                                'treeActions.addCustomDimensions',
+                                'Add custom dimensions',
+                            )}
                         </Menu.Item>
                     </>
                 ) : null}
@@ -425,7 +474,7 @@ const TreeSingleNodeActions: FC<Props> = ({
                     <Tooltip
                         openDelay={500}
                         position="top"
-                        label="View options"
+                        label={t('treeActions.viewOptions', 'View options')}
                         disabled={isOpened}
                     >
                         <ActionIcon variant="transparent">

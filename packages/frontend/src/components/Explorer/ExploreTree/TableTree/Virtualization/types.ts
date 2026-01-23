@@ -53,6 +53,18 @@ export const ITEM_HEIGHTS = {
     EMPTY_STATE: 60,
 } as const;
 
+export type FlattenTreeLabels = {
+    sectionMissingFields: string;
+    sectionMetrics: string;
+    sectionCustomMetrics: string;
+    sectionDimensions: string;
+    sectionCustomDimensions: string;
+    emptyDimensions: string;
+    metricsHelp: string;
+    customMetricsHelp: string;
+    customMetricConflict: string;
+};
+
 // Base type for all flattened items
 interface BaseFlattenedItem {
     id: string; // Unique identifier for React key
@@ -191,6 +203,9 @@ export interface FlattenTreeOptions {
 
     // Pre-computed node maps (key: `${tableName}-${sectionType}`)
     sectionNodeMaps: Map<string, NodeMap>;
+
+    // Optional UI copy overrides (i18n)
+    labels?: Partial<FlattenTreeLabels>;
 }
 
 // Section info for organizing nodes

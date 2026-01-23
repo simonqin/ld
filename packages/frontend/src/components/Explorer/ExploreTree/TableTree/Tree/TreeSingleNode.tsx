@@ -27,6 +27,7 @@ import {
     IconInfoCircle,
 } from '@tabler/icons-react';
 import { memo, useCallback, useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useToggle } from 'react-use';
 import {
     explorerActions,
@@ -73,6 +74,7 @@ type Props = {
 };
 
 const TreeSingleNodeComponent: FC<Props> = ({ node }) => {
+    const { t } = useTranslation('explore');
     const itemsMap = useTableTree((context) => {
         return context.itemsMap;
     });
@@ -336,7 +338,11 @@ const TreeSingleNodeComponent: FC<Props> = ({ node }) => {
                             onClick={handleDropdownClick}
                         >
                             {isMissing ? (
-                                `This field from '${item.table}' table is no longer available`
+                                t(
+                                    'treeNode.missingField',
+                                    "This field from '{{table}}' table is no longer available",
+                                    { table: item.table },
+                                )
                             ) : (
                                 <ItemDetailPreview
                                     onViewDescription={onOpenDescriptionView}
@@ -352,8 +358,14 @@ const TreeSingleNodeComponent: FC<Props> = ({ node }) => {
                             withinPortal
                             label={
                                 isFiltered
-                                    ? 'This field is filtered'
-                                    : 'Click here to add filter'
+                                    ? t(
+                                          'treeNode.filtered',
+                                          'This field is filtered',
+                                      )
+                                    : t(
+                                          'treeNode.addFilter',
+                                          'Click here to add filter',
+                                      )
                             }
                         >
                             <ActionIcon onClick={handleFilterClick}>
@@ -367,7 +379,10 @@ const TreeSingleNodeComponent: FC<Props> = ({ node }) => {
                     {isField(item) && item.hidden ? (
                         <Tooltip
                             withinPortal
-                            label="This field has been hidden in the dbt project. It's recommend to remove it from the query"
+                            label={t(
+                                'treeNode.hiddenField',
+                                "This field has been hidden in the dbt project. It's recommend to remove it from the query",
+                            )}
                         >
                             <MantineIcon
                                 icon={IconAlertTriangle}

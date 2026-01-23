@@ -45,5 +45,60 @@
         "googleSheetsSync": "Google Sheets 同步",
         "delete": "删除",
         "queryWarnings": "查询警告"
+    },
+    "sidebar": {
+        "searchPlaceholder": "搜索指标与维度",
+        "tables": "数据表",
+        "searchTables": "搜索数据表",
+        "virtualViews": "虚拟视图",
+        "loadFailed": "无法加载探索",
+        "missingFieldRemove": "移除缺失字段“{{fieldId}}”。",
+        "sections": {
+            "missingFields": "缺失字段",
+            "metrics": "指标",
+            "customMetrics": "自定义指标",
+            "dimensions": "维度",
+            "customDimensions": "自定义维度"
+        },
+        "empty": {
+            "noDimensions": "你的 dbt 项目中未定义维度"
+        },
+        "help": {
+            "metrics": "你的 dbt 项目中未定义指标。点击查看文档，了解如何为项目添加指标。",
+            "customMetrics": "在任意维度上悬停并选择三点“操作菜单”即可添加自定义指标。点击查看文档。"
+        },
+        "errors": {
+            "customMetricConflict": "该表中已存在相同 ID 的指标。请重命名自定义指标以避免冲突。"
+        },
+        "actions": {
+            "addCustomDimensionWithSql": "使用 SQL 添加自定义维度",
+            "add": "添加",
+            "writeBackCustomMetrics": "回写自定义指标",
+            "writeBackCustomDimensions": "回写自定义维度"
+        }
+    },
+    "treeActions": {
+        "copyLabel": "复制{{label}}",
+        "copyName": "复制{{name}}",
+        "addFilter": "添加过滤器",
+        "editCustomMetric": "编辑自定义指标",
+        "duplicateCustomMetric": "复制自定义指标",
+        "duplicateCustomMetricSuccess": "已成功添加自定义指标副本",
+        "writeBackToDbt": "回写到 dbt",
+        "removeCustomMetric": "删除自定义指标",
+        "viewDescription": "查看说明",
+        "editCustomDimension": "编辑自定义维度",
+        "duplicateCustomDimension": "复制自定义维度",
+        "duplicateCustomDimensionSuccess": "已成功添加自定义维度副本",
+        "removeCustomDimension": "删除自定义维度",
+        "addCustomMetrics": "添加自定义指标",
+        "addCustomDimensions": "添加自定义维度",
+        "viewOptions": "查看选项"
+    },
+    "treeNode": {
+        "missingField": "来自“{{table}}”表的该字段已不可用",
+        "filtered": "此字段已被过滤",
+        "addFilter": "点击这里添加过滤器",
+        "hiddenField": "该字段已在 dbt 项目中被隐藏，建议从查询中移除"
     }
 }
