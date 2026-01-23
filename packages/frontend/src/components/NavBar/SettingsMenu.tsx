@@ -5,6 +5,7 @@ import {
     IconSettings,
 } from '@tabler/icons-react';
 import { type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button, Menu } from '@mantine/core';
 import { Link } from 'react-router';
@@ -16,6 +17,7 @@ const SettingsMenu: FC = () => {
     const {
         user: { data: user },
     } = useApp();
+    const { t } = useTranslation('common');
     const { activeProjectUuid } = useActiveProjectUuid();
 
     if (!user || !activeProjectUuid) return null;
@@ -49,7 +51,7 @@ const SettingsMenu: FC = () => {
         >
             <Menu.Target>
                 <Button
-                    aria-label="Settings"
+                    aria-label={t('settings', 'Settings')}
                     variant="default"
                     size="xs"
                     data-testid="settings-menu"
@@ -65,7 +67,7 @@ const SettingsMenu: FC = () => {
                         icon={<MantineIcon icon={IconDatabase} />}
                         to={`/generalSettings/projectManagement/${activeProjectUuid}/settings`}
                     >
-                        Project settings
+                        {t('projectSettings', 'Project settings')}
                     </Menu.Item>
                 )}
 
@@ -75,7 +77,7 @@ const SettingsMenu: FC = () => {
                         icon={<MantineIcon icon={IconBuildingBank} />}
                         to={`/generalSettings/organization`}
                     >
-                        Organization settings
+                        {t('organizationSettings', 'Organization settings')}
                     </Menu.Item>
                 )}
             </Menu.Dropdown>

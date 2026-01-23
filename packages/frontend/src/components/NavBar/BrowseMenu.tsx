@@ -7,6 +7,7 @@ import {
     IconLayoutDashboard,
 } from '@tabler/icons-react';
 import { type FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useHasMetricsInCatalog } from '../../features/metricsCatalog/hooks/useMetricsCatalog';
 import { useSpaceSummaries } from '../../hooks/useSpaces';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const BrowseMenu: FC<Props> = ({ projectUuid }) => {
+    const { t } = useTranslation('common');
     // Track if menu has ever been opened to defer loading spaces
     const [hasBeenOpened, setHasBeenOpened] = useState(false);
 
@@ -56,7 +58,7 @@ const BrowseMenu: FC<Props> = ({ projectUuid }) => {
                         <MantineIcon color="#adb5bd" icon={IconCategory} />
                     }
                 >
-                    Browse
+                    {t('browse', 'Browse')}
                 </Button>
             </Menu.Target>
 
@@ -66,7 +68,7 @@ const BrowseMenu: FC<Props> = ({ projectUuid }) => {
                     to={`/projects/${projectUuid}/spaces`}
                     icon={<MantineIcon icon={IconFolders} />}
                 >
-                    All Spaces
+                    {t('allSpaces', 'All Spaces')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -74,7 +76,7 @@ const BrowseMenu: FC<Props> = ({ projectUuid }) => {
                     to={`/projects/${projectUuid}/dashboards`}
                     icon={<MantineIcon icon={IconLayoutDashboard} />}
                 >
-                    All dashboards
+                    {t('allDashboards', 'All dashboards')}
                 </Menu.Item>
 
                 <Menu.Item
@@ -82,7 +84,7 @@ const BrowseMenu: FC<Props> = ({ projectUuid }) => {
                     to={`/projects/${projectUuid}/saved`}
                     icon={<MantineIcon icon={IconChartAreaLine} />}
                 >
-                    All saved charts
+                    {t('allSavedCharts', 'All saved charts')}
                 </Menu.Item>
 
                 {!hasMetrics && (
@@ -92,7 +94,7 @@ const BrowseMenu: FC<Props> = ({ projectUuid }) => {
                 {isInitialLoading || (spaces && spaces.length > 0) ? (
                     <>
                         <Menu.Divider />
-                        <Menu.Label>Spaces</Menu.Label>
+                        <Menu.Label>{t('spaces', 'Spaces')}</Menu.Label>
 
                         {isInitialLoading ? (
                             <Center my="sm">

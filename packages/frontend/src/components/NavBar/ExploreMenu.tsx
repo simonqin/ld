@@ -10,6 +10,7 @@ import {
     IconTerminal2,
 } from '@tabler/icons-react';
 import { memo, useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { Can } from '../../providers/Ability';
 import useApp from '../../providers/App/useApp';
@@ -26,6 +27,7 @@ type Props = {
 const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { t } = useTranslation('common');
 
     const { user, health } = useApp();
 
@@ -64,23 +66,32 @@ const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
                             onClick={() => setIsOpen(!isOpen)}
                             data-testid="ExploreMenu/NewButton"
                         >
-                            New
+                            {t('new', 'New')}
                         </Button>
                     </Menu.Target>
 
                     <Menu.Dropdown>
                         <LargeMenuItem
                             component={Link}
-                            title="Query from tables"
-                            description="Build queries and save them as charts."
+                            title={t('queryFromTables', 'Query from tables')}
+                            description={t(
+                                'queryFromTablesDescription',
+                                'Build queries and save them as charts.',
+                            )}
                             to={`/projects/${projectUuid}/tables`}
                             icon={IconTable}
                         />
                         {health.data?.hasDbtSemanticLayer && (
                             <LargeMenuItem
                                 component={Link}
-                                title="Query using MetricFlow"
-                                description="Build queries with MetricFlow"
+                                title={t(
+                                    'queryUsingMetricflow',
+                                    'Query using MetricFlow',
+                                )}
+                                description={t(
+                                    'queryUsingMetricflowDescription',
+                                    'Build queries with MetricFlow',
+                                )}
                                 to={`/projects/${projectUuid}/metricflow`}
                                 icon={IconLayersIntersect}
                             />
@@ -95,8 +106,14 @@ const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
                         >
                             <LargeMenuItem
                                 component={Link}
-                                title="Query using SQL runner"
-                                description="Access your database to run ad-hoc queries."
+                                title={t(
+                                    'queryUsingSqlRunner',
+                                    'Query using SQL runner',
+                                )}
+                                description={t(
+                                    'queryUsingSqlRunnerDescription',
+                                    'Access your database to run ad-hoc queries.',
+                                )}
                                 to={`/projects/${projectUuid}/sql-runner`}
                                 onClick={(
                                     event: React.MouseEvent<HTMLAnchorElement>,
@@ -118,8 +135,11 @@ const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
                         </Can>
                         <LargeMenuItem
                             // Users who manage explores should be able to create dashboards in any space
-                            title="Dashboard"
-                            description="Arrange multiple charts into a single view."
+                            title={t('dashboard', 'Dashboard')}
+                            description={t(
+                                'dashboardDescription',
+                                'Arrange multiple charts into a single view.',
+                            )}
                             onClick={() => setIsCreateDashboardOpen(true)}
                             icon={IconLayoutDashboard}
                             data-testid="ExploreMenu/NewDashboardButton"
@@ -132,8 +152,11 @@ const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
                             })}
                         >
                             <LargeMenuItem
-                                title="Space"
-                                description="Organize your saved charts and dashboards."
+                                title={t('space', 'Space')}
+                                description={t(
+                                    'spaceDescription',
+                                    'Organize your saved charts and dashboards.',
+                                )}
                                 onClick={() => setIsCreateSpaceOpen(true)}
                                 icon={IconFolder}
                             />
@@ -146,8 +169,8 @@ const ExploreMenu: FC<Props> = memo(({ projectUuid }) => {
                 <SpaceActionModal
                     projectUuid={projectUuid}
                     actionType={ActionType.CREATE}
-                    title="Create new space"
-                    confirmButtonLabel="Create"
+                    title={t('createNewSpace', 'Create new space')}
+                    confirmButtonLabel={t('create', 'Create')}
                     icon={IconFolderPlus}
                     onClose={() => setIsCreateSpaceOpen(false)}
                     onSubmitForm={(space) => {

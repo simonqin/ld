@@ -27,6 +27,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { useTimeout } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
 import { Navigate, useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import MantineIcon from '../../../components/common/MantineIcon';
 import { ThirdPartySignInButton } from '../../../components/common/ThirdPartySignInButton';
@@ -46,17 +47,18 @@ const Login: FC<{}> = () => {
     const { health } = useApp();
     const { identify } = useTracking();
     const location = useLocation();
+    const { t } = useTranslation('auth');
 
     const { showToastError, showToastApiError } = useToaster();
     const flashMessages = useFlashMessages();
     useEffect(() => {
         if (flashMessages.data?.error) {
             showToastError({
-                title: 'Failed to authenticate',
+                title: t('loginFailed', 'Failed to authenticate'),
                 subtitle: flashMessages.data.error.join('\n'),
             });
         }
-    }, [flashMessages.data, showToastError]);
+    }, [flashMessages.data, showToastError, t]);
     const queryParams = new URLSearchParams(location.search);
     const redirectParam = queryParams.get('redirect');
 
@@ -133,7 +135,7 @@ const Login: FC<{}> = () => {
         },
         onError: ({ error }) => {
             showToastApiError({
-                title: `Failed to login`,
+                title: t('loginFailedSubmit', 'Failed to login'),
                 apiError: error,
             });
         },
@@ -205,7 +207,7 @@ const Login: FC<{}> = () => {
             </Box>
             <Card p="xl" radius="xs" withBorder shadow="xs">
                 <Title order={3} ta="center" mb="md">
-                    Sign in
+                    {t('signIn', 'Sign in')}
                 </Title>
                 <form
                     name="login"
@@ -213,9 +215,12 @@ const Login: FC<{}> = () => {
                 >
                     <Stack spacing="lg">
                         <TextInput
-                            label="Email address"
+                            label={t('emailLabel', 'Email address')}
                             name="email"
-                            placeholder="Your email address"
+                            placeholder={t(
+                                'emailPlaceholder',
+                                'Your email address',
+                            )}
                             required
                             {...form.getInputProps('email')}
                             disabled={isFormLoading}
@@ -238,16 +243,22 @@ const Login: FC<{}> = () => {
                         {isEmailLoginAvailable && formStage === 'login' && (
                             <>
                                 <PasswordInput
-                                    label="Password"
+                                    label={t('passwordLabel', 'Password')}
                                     name="password"
-                                    placeholder="Your password"
+                                    placeholder={t(
+                                        'passwordPlaceholder',
+                                        'Your password',
+                                    )}
                                     required
                                     autoFocus
                                     {...form.getInputProps('password')}
                                     disabled={isFormLoading}
                                 />
                                 <Anchor href="/recover-password" mx="auto">
-                                    Forgot your password?
+                                    {t(
+                                        'forgotPassword',
+                                        'Forgot your password?',
+                                    )}
                                 </Anchor>
                                 <Button
                                     type="submit"
@@ -255,7 +266,7 @@ const Login: FC<{}> = () => {
                                     disabled={isFormLoading}
                                     data-cy="signin-button"
                                 >
-                                    Sign in
+                                    {t('signIn', 'Sign in')}
                                 </Button>
                             </>
                         )}
@@ -266,7 +277,7 @@ const Login: FC<{}> = () => {
                                 disabled={isFormLoading}
                                 data-cy="signin-button"
                             >
-                                Continue
+                                {t('continue', 'Continue')}
                             </Button>
                         )}
                         {ssoOptions.length > 0 && (
@@ -282,7 +293,7 @@ const Login: FC<{}> = () => {
                                                 size="sm"
                                                 fw={500}
                                             >
-                                                OR
+                                                {t('or', 'OR')}
                                             </Text>
                                         }
                                     />
@@ -300,8 +311,10 @@ const Login: FC<{}> = () => {
                             </>
                         )}
                         <Text mx="auto" mt="md">
-                            Don't have an account?{' '}
-                            <Anchor href="/register">Sign up</Anchor>
+                            {t('noAccount', "Don't have an account?")}{' '}
+                            <Anchor href="/register">
+                                {t('signUp', 'Sign up')}
+                            </Anchor>
                         </Text>
                     </Stack>
                 </form>

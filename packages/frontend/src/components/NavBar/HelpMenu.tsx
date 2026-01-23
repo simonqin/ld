@@ -10,6 +10,7 @@ import {
     IconUsers,
 } from '@tabler/icons-react';
 import { type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useIntercom } from 'react-use-intercom';
 import useHealth from '../../hooks/health/useHealth';
 import SupportDrawerContent from '../../providers/SupportDrawer/SupportDrawerContent';
@@ -20,6 +21,7 @@ const HelpMenu: FC = () => {
     const health = useHealth();
     const isCloudCustomer = health.data?.mode === LightdashMode.CLOUD_BETA;
     const isDevelopment = health.data?.mode === LightdashMode.DEV;
+    const { t } = useTranslation('common');
 
     const { show: showIntercom } = useIntercom();
 
@@ -32,7 +34,7 @@ const HelpMenu: FC = () => {
             offset={-2}
         >
             <Menu.Target>
-                <Button aria-label="Help" variant="default" size="xs">
+                <Button aria-label={t('help', 'Help')} variant="default" size="xs">
                     <MantineIcon icon={IconHelp} />
                 </Button>
             </Menu.Target>
@@ -49,8 +51,11 @@ const HelpMenu: FC = () => {
                                 showIntercom();
                             }
                         }}
-                        title="Contact support"
-                        description="Drop us a message and we’ll get back to you asap!"
+                        title={t('contactSupport', 'Contact support')}
+                        description={t(
+                            'contactSupportDescription',
+                            'Drop us a message and we’ll get back to you asap!',
+                        )}
                         icon={IconMessages}
                     />
                 )}
@@ -59,8 +64,11 @@ const HelpMenu: FC = () => {
                     component="a"
                     href="https://docs.lightdash.com/"
                     target="_blank"
-                    title="View Docs"
-                    description="Learn how to deploy, use, contribute to Lightdash."
+                    title={t('viewDocs', 'View Docs')}
+                    description={t(
+                        'viewDocsDescription',
+                        'Learn how to deploy, use, contribute to Lightdash.',
+                    )}
                     icon={IconBook}
                 />
 
@@ -68,8 +76,11 @@ const HelpMenu: FC = () => {
                     component="a"
                     href="https://join.slack.com/t/lightdash-community/shared_invite/zt-2wgtavou8-VRhwXI%7EQbjCAHQs0WBac3w"
                     target="_blank"
-                    title="Join Slack community"
-                    description="Get advice share best practices with other users."
+                    title={t('joinSlackCommunity', 'Join Slack community')}
+                    description={t(
+                        'joinSlackCommunityDescription',
+                        'Get advice share best practices with other users.',
+                    )}
                     icon={IconUsers}
                 />
 
@@ -77,8 +88,11 @@ const HelpMenu: FC = () => {
                     component="a"
                     href="https://github.com/lightdash/lightdash/issues/new/choose"
                     target="_blank"
-                    title="Feedback on Lightdash"
-                    description="Submit a feature request or bug report to improve Lightdash."
+                    title={t('feedbackOnLightdash', 'Feedback on Lightdash')}
+                    description={t(
+                        'feedbackOnLightdashDescription',
+                        'Submit a feature request or bug report to improve Lightdash.',
+                    )}
                     icon={IconMessageCircle2}
                 />
                 {(isCloudCustomer || isDevelopment) && (
@@ -87,15 +101,24 @@ const HelpMenu: FC = () => {
                         onClick={() => {
                             modals.open({
                                 id: 'support-drawer',
-                                title: 'Share with Lightdash Support',
+                                title: t(
+                                    'shareWithSupport',
+                                    'Share with Lightdash Support',
+                                ),
                                 size: 'lg',
                                 children: <SupportDrawerContent />,
                                 yOffset: 100,
                                 zIndex: 1000,
                             });
                         }}
-                        title="Report an issue to Lightdash Support"
-                        description="Share a detailed issue report with Lightdash Support"
+                        title={t(
+                            'reportIssueToSupport',
+                            'Report an issue to Lightdash Support',
+                        )}
+                        description={t(
+                            'reportIssueToSupportDescription',
+                            'Share a detailed issue report with Lightdash Support',
+                        )}
                         icon={IconSos}
                     />
                 )}
