@@ -207,6 +207,22 @@ describe('UserService', () => {
             showOptions: ['okta'],
         });
     });
+    test('should pass preferredLanguage to userModel.updateUser', async () => {
+        const updateUser = jest.fn(async () => sessionUser);
+        (userModel as any).updateUser = updateUser;
+
+        await userService.updateUser(sessionUser, {
+            preferredLanguage: 'zh-CN',
+        });
+
+        expect(updateUser).toHaveBeenCalledWith(
+            sessionUser.userUuid,
+            sessionUser.email,
+            expect.objectContaining({
+                preferredLanguage: 'zh-CN',
+            }),
+        );
+    });
     test('should not redirect if only 1 sso is available but no email match', async () => {
         const service = createUserService({
             ...lightdashConfigMock,

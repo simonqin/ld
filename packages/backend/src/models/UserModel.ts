@@ -439,6 +439,7 @@ export class UserModel {
             isTrackingAnonymized,
             isSetupComplete,
             isActive,
+            preferredLanguage,
         }: Partial<UpdateUserArgs>,
     ): Promise<LightdashUser> {
         await this.database.transaction(async (trx) => {
@@ -453,6 +454,7 @@ export class UserModel {
                     is_tracking_anonymized: this.canTrackingBeAnonymized()
                         ? isTrackingAnonymized
                         : false,
+                    preferred_language: preferredLanguage,
                     updated_at: new Date(),
                 })
                 .returning('*');

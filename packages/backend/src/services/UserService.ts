@@ -1140,6 +1140,7 @@ export class UserService extends BaseService {
                 email: data.email,
                 isMarketingOptedIn: data.isMarketingOptedIn,
                 isTrackingAnonymized: data.isTrackingAnonymized,
+                preferredLanguage: data.preferredLanguage,
             },
         );
         this.identifyUser(updatedUser);
