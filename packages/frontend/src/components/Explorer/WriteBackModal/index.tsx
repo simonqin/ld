@@ -17,8 +17,10 @@ import {
 } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { IconGitBranch, IconInfoCircle } from '@tabler/icons-react';
+import { type TFunction } from 'i18next';
 import * as yaml from 'js-yaml';
-import { memo, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import {
@@ -36,31 +38,40 @@ import {
 } from './hooks';
 import { convertToDbt, getItemId, getItemLabel, match } from './utils';
 
-const prDisabledMessage =
-    'Pull requests can only be opened for Git connected projects (GitHub/GitLab)';
-const texts = {
-    customDimension: {
-        name: 'custom dimension',
-        baseName: 'dimension',
-        prDisabled: prDisabledMessage,
-    },
-    customMetric: {
-        name: 'custom metric',
-        baseName: 'metric',
-        prDisabled: prDisabledMessage,
-    },
-} as const;
-
-const parseError = (
-    error: unknown,
+const getWriteBackLabels = (
+    t: TFunction,
     type: 'customDimension' | 'customMetric',
-): string => {
-    const errorName = error instanceof Error ? error.name : 'unknown error';
-    const errorTitle =
-        error instanceof NotImplementedError
-            ? `Unsupported ${texts[type].baseName} definition`
-            : errorName;
-    return `Error: ${errorTitle}\n${getErrorMessage(error)}`;
+) => {
+    if (type === 'customDimension') {
+        return {
+            name: t('writeBack.items.customDimension.name', 'custom dimension'),
+            namePlural: t(
+                'writeBack.items.customDimension.namePlural',
+                'custom dimensions',
+            ),
+            baseName: t(
+                'writeBack.items.customDimension.baseName',
+                'dimension',
+            ),
+            baseNamePlural: t(
+                'writeBack.items.customDimension.baseNamePlural',
+                'dimensions',
+            ),
+        };
+    }
+
+    return {
+        name: t('writeBack.items.customMetric.name', 'custom metric'),
+        namePlural: t(
+            'writeBack.items.customMetric.namePlural',
+            'custom metrics',
+        ),
+        baseName: t('writeBack.items.customMetric.baseName', 'metric'),
+        baseNamePlural: t(
+            'writeBack.items.customMetric.baseNamePlural',
+            'metrics',
+        ),
+    };
 };
 
 export const SingleItemModalContent = ({
@@ -72,10 +83,16 @@ export const SingleItemModalContent = ({
     projectUuid: string;
     item: CustomDimension | AdditionalMetric;
 }) => {
+    const { t } = useTranslation('explore');
     const type = match(
         item,
         () => 'customDimension' as const,
         () => 'customMetric' as const,
+    );
+    const labels = useMemo(() => getWriteBackLabels(t, type), [t, type]);
+    const prDisabledMessage = t(
+        'writeBack.prDisabled',
+        'Pull requests can only be opened for Git connected projects (GitHub/GitLab)',
     );
 
     const {
@@ -106,6 +123,32 @@ export const SingleItemModalContent = ({
 
     const isGitProject = useIsGitProject(projectUuid);
 
+    const parseError = useCallback(
+        (errorValue: unknown) => {
+            const errorName =
+                errorValue instanceof Error
+                    ? errorValue.name
+                    : t('writeBack.errors.unknown', 'unknown error');
+            const errorTitle =
+                errorValue instanceof NotImplementedError
+                    ? t(
+                          'writeBack.errors.unsupportedDefinition',
+                          'Unsupported {{baseName}} definition',
+                          { baseName: labels.baseName },
+                      )
+                    : errorName;
+            return t(
+                'writeBack.errors.errorWithDetails',
+                'Error: {{title}}\n{{message}}',
+                {
+                    title: errorTitle,
+                    message: getErrorMessage(errorValue),
+                },
+            );
+        },
+        [labels.baseName, t],
+    );
+
     const previewCode = useMemo(() => {
         try {
             const { key, value } = convertToDbt(item);
@@ -117,10 +160,10 @@ export const SingleItemModalContent = ({
             setError(undefined);
             return code;
         } catch (e) {
-            setError(parseError(e, type));
+            setError(parseError(e));
             return '';
         }
-    }, [item, type]);
+    }, [item, parseError]);
 
     if (data) {
         // Return a simple confirmation modal with the PR URL
@@ -132,7 +175,11 @@ export const SingleItemModalContent = ({
     const disableErrorTooltip = isGitProject && !error;
 
     const errorTooltipLabel = error
-        ? `Unsupported ${texts[type].baseName} definition`
+        ? t(
+              'writeBack.errors.unsupportedDefinition',
+              'Unsupported {{baseName}} definition',
+              { baseName: labels.baseName },
+          )
         : prDisabledMessage;
 
     const buttonDisabled = isLoading || !disableErrorTooltip;
@@ -152,13 +199,22 @@ export const SingleItemModalContent = ({
                         size="lg"
                         color="ldGray.7"
                     />
-                    <Text fw={500}>Write back to dbt</Text>
+                    <Text fw={500}>
+                        {t('writeBack.title', 'Write back to dbt')}
+                    </Text>
                     <Tooltip
                         variant="xs"
                         withinPortal
                         multiline
                         maw={300}
-                        label={`Convert this ${texts[type].name} into a ${texts[type].baseName} in your dbt project. This will create a new branch and open a pull request.`}
+                        label={t(
+                            'writeBack.tooltip.single',
+                            'Convert this {{name}} into a {{baseName}} in your dbt project. This will create a new branch and open a pull request.',
+                            {
+                                name: labels.name,
+                                baseName: labels.baseName,
+                            },
+                        )}
                     >
                         <MantineIcon
                             color="ldGray.7"
@@ -175,8 +231,11 @@ export const SingleItemModalContent = ({
         >
             <Stack p="md">
                 <Text>
-                    Create a pull request in your dbt project's git repository
-                    for the following {texts[type].name}:
+                    {t(
+                        'writeBack.description.single',
+                        "Create a pull request in your dbt project's git repository for the following {{name}}:",
+                        { name: labels.name },
+                    )}
                 </Text>
                 <List spacing="xs" pl="xs">
                     <List.Item fz="xs" ff="monospace">
@@ -185,7 +244,9 @@ export const SingleItemModalContent = ({
                 </List>
                 <CollapsableCard
                     isOpen={showDiff}
-                    title={`Show ${texts[type].baseName} code`}
+                    title={t('writeBack.showCode', 'Show {{baseName}} code', {
+                        baseName: labels.baseName,
+                    })}
                     onToggle={() => setShowDiff(!showDiff)}
                 >
                     <Stack ml={36}>
@@ -204,7 +265,7 @@ export const SingleItemModalContent = ({
                     disabled={isLoading}
                     size="xs"
                 >
-                    Cancel
+                    {t('writeBack.cancel', 'Cancel')}
                 </Button>
 
                 <Tooltip
@@ -229,8 +290,11 @@ export const SingleItemModalContent = ({
                             }}
                         >
                             {isLoading
-                                ? 'Creating pull request...'
-                                : 'Open Pull Request'}
+                                ? t(
+                                      'writeBack.creatingPr',
+                                      'Creating pull request...',
+                                  )
+                                : t('writeBack.openPr', 'Open Pull Request')}
                         </Button>
                     </div>
                 </Tooltip>
@@ -248,10 +312,16 @@ const MultipleItemsModalContent = ({
     projectUuid: string;
     items: CustomDimension[] | AdditionalMetric[];
 }) => {
+    const { t } = useTranslation('explore');
     const type = match(
         items[0]!,
         () => 'customDimension' as const,
         () => 'customMetric' as const,
+    );
+    const labels = useMemo(() => getWriteBackLabels(t, type), [t, type]);
+    const prDisabledMessage = t(
+        'writeBack.prDisabled',
+        'Pull requests can only be opened for Git connected projects (GitHub/GitLab)',
     );
 
     const {
@@ -304,10 +374,31 @@ const MultipleItemsModalContent = ({
             setError(undefined);
             return code;
         } catch (e) {
-            setError(parseError(e, type));
+            const errorName =
+                e instanceof Error
+                    ? e.name
+                    : t('writeBack.errors.unknown', 'unknown error');
+            const errorTitle =
+                e instanceof NotImplementedError
+                    ? t(
+                          'writeBack.errors.unsupportedDefinition',
+                          'Unsupported {{baseName}} definition',
+                          { baseName: labels.baseName },
+                      )
+                    : errorName;
+            setError(
+                t(
+                    'writeBack.errors.errorWithDetails',
+                    'Error: {{title}}\n{{message}}',
+                    {
+                        title: errorTitle,
+                        message: getErrorMessage(e),
+                    },
+                ),
+            );
             return '';
         }
-    }, [selectedItems, type]);
+    }, [selectedItems, labels.baseName, t]);
 
     if (data) {
         // Return a simple confirmation modal with the PR URL
@@ -320,10 +411,18 @@ const MultipleItemsModalContent = ({
         isGitProject && selectedItemIds.length > 0 && !error;
 
     const errorTooltipLabel = error
-        ? `Unsupported ${texts[type].baseName} definition`
+        ? t(
+              'writeBack.errors.unsupportedDefinition',
+              'Unsupported {{baseName}} definition',
+              { baseName: labels.baseName },
+          )
         : !isGitProject
-        ? prDisabledMessage
-        : `Select ${texts[type].baseName}s to open a pull request`;
+          ? prDisabledMessage
+          : t(
+                'writeBack.errors.selectItems',
+                'Select {{baseNamePlural}} to open a pull request',
+                { baseNamePlural: labels.baseNamePlural },
+            );
 
     const buttonDisabled =
         isLoading || !disableErrorTooltip || selectedItemIds.length === 0;
@@ -340,7 +439,9 @@ const MultipleItemsModalContent = ({
                         size="lg"
                         color="ldGray.7"
                     />
-                    <Text fw={500}>Write back to dbt</Text>
+                    <Text fw={500}>
+                        {t('writeBack.title', 'Write back to dbt')}
+                    </Text>
                 </Group>
             }
             styles={() => ({
@@ -356,16 +457,25 @@ const MultipleItemsModalContent = ({
                     borderBottom: `1px solid ${theme.colors.ldGray[4]}`,
                 })}
             >
-                Create a pull request in your dbt project's git repository for
-                the following {texts[type].baseName}s
+                {t(
+                    'writeBack.description.multiple',
+                    "Create a pull request in your dbt project's git repository for the following {{baseNamePlural}}",
+                    { baseNamePlural: labels.baseNamePlural },
+                )}
             </Text>
 
             <Stack p="md">
                 <Group align="flex-start" h="305px">
                     <Stack w="30%" h="100%">
                         <Text>
-                            Available {texts[type].name}s (
-                            {selectedItemIds.length} selected)
+                            {t(
+                                'writeBack.availableItems',
+                                'Available {{namePlural}} ({{count}} selected)',
+                                {
+                                    namePlural: labels.namePlural,
+                                    count: selectedItemIds.length,
+                                },
+                            )}
                         </Text>
 
                         <Stack
@@ -424,8 +534,11 @@ const MultipleItemsModalContent = ({
                     </Stack>
                     <Stack w="calc(70% - 18px)" h="100%">
                         <Text>
-                            {capitalize(texts[type].baseName)} YAML to be
-                            created:
+                            {t(
+                                'writeBack.yamlPreviewTitle',
+                                '{{baseName}} YAML to be created:',
+                                { baseName: capitalize(labels.baseName) },
+                            )}
                         </Text>
 
                         <Stack
@@ -456,7 +569,7 @@ const MultipleItemsModalContent = ({
                     disabled={isLoading}
                     size="xs"
                 >
-                    Cancel
+                    {t('writeBack.cancel', 'Cancel')}
                 </Button>
 
                 <Tooltip
@@ -485,8 +598,11 @@ const MultipleItemsModalContent = ({
                             }}
                         >
                             {isLoading
-                                ? 'Creating pull request...'
-                                : 'Open Pull Request'}
+                                ? t(
+                                      'writeBack.creatingPr',
+                                      'Creating pull request...',
+                                  )
+                                : t('writeBack.openPr', 'Open Pull Request')}
                         </Button>
                     </div>
                 </Tooltip>

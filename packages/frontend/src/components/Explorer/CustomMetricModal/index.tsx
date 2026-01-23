@@ -27,6 +27,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { type ValueOf } from 'type-fest';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -49,6 +50,7 @@ import {
 } from './utils';
 
 export const CustomMetricModal = memo(() => {
+    const { t } = useTranslation('explore');
     const {
         isOpen,
         isEditing,
@@ -138,7 +140,10 @@ export const CustomMetricModal = memo(() => {
                         getItemId({ table: item.table, name: metricName }),
                     )
                 ) {
-                    return 'Metric with this ID already exists';
+                    return t(
+                        'customMetricModal.errors.duplicateId',
+                        'Metric with this ID already exists',
+                    );
                 }
 
                 if (isEditing && metricName === item.name) {
@@ -148,13 +153,19 @@ export const CustomMetricModal = memo(() => {
                 return additionalMetrics?.some(
                     (metric) => metric.name === metricName,
                 )
-                    ? 'Metric with this label already exists'
+                    ? t(
+                          'customMetricModal.errors.duplicateLabel',
+                          'Metric with this label already exists',
+                      )
                     : null;
             },
             percentile: (percentile) => {
                 if (!percentile) return null;
                 if (percentile < 0 || percentile > 100) {
-                    return 'Percentile must be a number between 0 and 100';
+                    return t(
+                        'customMetricModal.errors.percentileRange',
+                        'Percentile must be a number between 0 and 100',
+                    );
                 }
             },
         },
@@ -171,8 +182,8 @@ export const CustomMetricModal = memo(() => {
                 isEditing
                     ? label
                     : customMetricType
-                    ? `${friendlyName(customMetricType)} of ${label}`
-                    : '',
+                      ? `${friendlyName(customMetricType)} of ${label}`
+                      : '',
             );
         }
     }, [setFieldValue, item, customMetricType, isEditing]);
@@ -241,7 +252,10 @@ export const CustomMetricModal = memo(() => {
                     }),
                 );
                 showToastSuccess({
-                    title: 'Custom metric edited successfully',
+                    title: t(
+                        'customMetricModal.toast.edited',
+                        'Custom metric edited successfully',
+                    ),
                 });
             } else if (isDimension(item) && form.values.customMetricLabel) {
                 dispatch(
@@ -252,7 +266,10 @@ export const CustomMetricModal = memo(() => {
                     }),
                 );
                 showToastSuccess({
-                    title: 'Custom metric added successfully',
+                    title: t(
+                        'customMetricModal.toast.added',
+                        'Custom metric added successfully',
+                    ),
                 });
             } else if (isCustomDimension(item)) {
                 dispatch(
@@ -263,7 +280,10 @@ export const CustomMetricModal = memo(() => {
                     }),
                 );
                 showToastSuccess({
-                    title: 'Custom metric added successfully',
+                    title: t(
+                        'customMetricModal.toast.added',
+                        'Custom metric added successfully',
+                    ),
                 });
             }
             handleClose();
@@ -304,16 +324,24 @@ export const CustomMetricModal = memo(() => {
             onClose={handleClose}
             title={
                 <Title order={4}>
-                    {isEditing ? 'Edit' : 'Create'} Custom Metric
+                    {isEditing
+                        ? t('customMetricModal.titleEdit', 'Edit Custom Metric')
+                        : t(
+                              'customMetricModal.titleCreate',
+                              'Create Custom Metric',
+                          )}
                 </Title>
             }
         >
             <form onSubmit={handleOnSubmit}>
                 <Stack>
                     <TextInput
-                        label="Label"
+                        label={t('customMetricModal.label', 'Label')}
                         required
-                        placeholder="Enter custom metric label"
+                        placeholder={t(
+                            'customMetricModal.labelPlaceholder',
+                            'Enter custom metric label',
+                        )}
                         {...form.getInputProps('customMetricLabel')}
                     />
                     {customMetricType === MetricType.PERCENTILE && (
@@ -322,7 +350,10 @@ export const CustomMetricModal = memo(() => {
                             max={100}
                             min={0}
                             required
-                            label="Percentile"
+                            label={t(
+                                'customMetricModal.percentileLabel',
+                                'Percentile',
+                            )}
                             {...form.getInputProps('percentile')}
                         />
                     )}
@@ -331,7 +362,10 @@ export const CustomMetricModal = memo(() => {
                             <Accordion.Item value="format">
                                 <Accordion.Control>
                                     <Text fw={500} fz="sm">
-                                        Format
+                                        {t(
+                                            'customMetricModal.formatTitle',
+                                            'Format',
+                                        )}
                                     </Text>
                                 </Accordion.Control>
                                 <Accordion.Panel>
@@ -348,11 +382,20 @@ export const CustomMetricModal = memo(() => {
                         <Accordion.Item value="filters">
                             <Accordion.Control>
                                 <Text fw={500} fz="sm">
-                                    Filters
+                                    {t(
+                                        'customMetricModal.filtersTitle',
+                                        'Filters',
+                                    )}
                                     <Text span fw={400} fz="xs">
                                         {customMetricFiltersWithIds.length > 0
-                                            ? `(${customMetricFiltersWithIds.length}) `
-                                            : ' '}
+                                            ? t(
+                                                  'customMetricModal.filtersCount',
+                                                  ' ({{count}})',
+                                                  {
+                                                      count: customMetricFiltersWithIds.length,
+                                                  },
+                                              )
+                                            : ''}
                                     </Text>
                                     <Text
                                         span
@@ -360,7 +403,10 @@ export const CustomMetricModal = memo(() => {
                                         color="ldGray.5"
                                         fw={400}
                                     >
-                                        (optional)
+                                        {t(
+                                            'customMetricModal.filtersOptional',
+                                            ' (optional)',
+                                        )}
                                     </Text>
                                 </Text>
                             </Accordion.Control>
@@ -396,7 +442,9 @@ export const CustomMetricModal = memo(() => {
                         type="submit"
                         disabled={!form.isValid()}
                     >
-                        {isEditing ? 'Save changes' : 'Create'}
+                        {isEditing
+                            ? t('customMetricModal.saveChanges', 'Save changes')
+                            : t('customMetricModal.create', 'Create')}
                     </Button>
                 </Stack>
             </form>

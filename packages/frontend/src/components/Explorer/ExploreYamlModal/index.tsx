@@ -33,6 +33,7 @@ import {
     useRef,
     useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
     getLightdashMonacoTheme,
@@ -98,6 +99,7 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
     mockContent,
     mockFilePath,
 }) => {
+    const { t } = useTranslation('explore');
     const { user } = useApp();
     const { colorScheme } = useMantineColorScheme();
     const [currentContent, setCurrentContent] = useState<string>('');
@@ -263,12 +265,20 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
 
         // Auto-generate title and description
         const fileName = resolvedYamlFile.filePath.split('/').pop() ?? 'file';
-        setPrTitle(`Update ${fileName}`);
+        setPrTitle(
+            t('exploreYamlModal.prTitleDefault', 'Update {{fileName}}', {
+                fileName,
+            }),
+        );
         setPrDescription(
-            `This pull request updates the model configuration in \`${resolvedYamlFile.filePath}\`.\n\nChanges made via Lightdash.`,
+            t(
+                'exploreYamlModal.prDescriptionDefault',
+                'This pull request updates the model configuration in `{{filePath}}`.\n\nChanges made via Lightdash.',
+                { filePath: resolvedYamlFile.filePath },
+            ),
         );
         setShowPrForm(true);
-    }, [resolvedYamlFile, isMock]);
+    }, [resolvedYamlFile, isMock, t]);
 
     const handleSubmitPR = useCallback(() => {
         if (!resolvedYamlFile || isMock) return;
@@ -333,7 +343,10 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                             </Text>
                             {hasChanges && (
                                 <Text fz="xs" c="dimmed">
-                                    (modified)
+                                    {t(
+                                        'exploreYamlModal.modifiedLabel',
+                                        '(modified)',
+                                    )}
                                 </Text>
                             )}
                         </div>
@@ -346,14 +359,22 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                         {showLoading && (
                             <Stack align="center" justify="center" h="100%">
                                 <Loader size="lg" color="gray" />
-                                <Text c="dimmed">Loading source file...</Text>
+                                <Text c="dimmed">
+                                    {t(
+                                        'exploreYamlModal.loading',
+                                        'Loading source file...',
+                                    )}
+                                </Text>
                             </Stack>
                         )}
 
                         {showError && (
                             <Alert
                                 icon={<IconAlertCircle size="1rem" />}
-                                title="Error loading file"
+                                title={t(
+                                    'exploreYamlModal.errorLoadingTitle',
+                                    'Error loading file',
+                                )}
                                 color="red"
                                 variant="light"
                             >
@@ -383,15 +404,26 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
 
                         {showPrForm && (
                             <Stack spacing="md">
-                                <Text fw={600}>Create Pull Request</Text>
+                                <Text fw={600}>
+                                    {t(
+                                        'exploreYamlModal.prForm.title',
+                                        'Create Pull Request',
+                                    )}
+                                </Text>
                                 <TextInput
-                                    label="Title"
+                                    label={t(
+                                        'exploreYamlModal.prForm.titleLabel',
+                                        'Title',
+                                    )}
                                     value={prTitle}
                                     onChange={(e) => setPrTitle(e.target.value)}
                                     required
                                 />
                                 <Textarea
-                                    label="Description"
+                                    label={t(
+                                        'exploreYamlModal.prForm.descriptionLabel',
+                                        'Description',
+                                    )}
                                     value={prDescription}
                                     onChange={(e) =>
                                         setPrDescription(e.target.value)
@@ -415,7 +447,10 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                                             color="gray"
                                             onClick={handleDiscardChanges}
                                         >
-                                            Discard changes
+                                            {t(
+                                                'exploreYamlModal.discardChanges',
+                                                'Discard changes',
+                                            )}
                                         </Button>
                                     )}
                                 </Group>
@@ -423,9 +458,11 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                                     {validationErrors > 0 && (
                                         <Text fz="sm" c="dimmed">
                                             {validationErrors}{' '}
-                                            {validationErrors === 1
-                                                ? 'issue'
-                                                : 'issues'}
+                                            {t(
+                                                'exploreYamlModal.validationIssues',
+                                                'issue',
+                                                { count: validationErrors },
+                                            )}
                                         </Text>
                                     )}
                                     {canCreatePr && (
@@ -438,7 +475,10 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                                             disabled={!hasChanges}
                                             onClick={handleCreatePRClick}
                                         >
-                                            Create Pull Request
+                                            {t(
+                                                'exploreYamlModal.createPr',
+                                                'Create Pull Request',
+                                            )}
                                         </Button>
                                     )}
                                 </Group>
@@ -450,7 +490,7 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                                     color="gray"
                                     onClick={() => setShowPrForm(false)}
                                 >
-                                    Back
+                                    {t('exploreYamlModal.back', 'Back')}
                                 </Button>
                                 <Button
                                     leftIcon={<MantineIcon icon={IconCheck} />}
@@ -458,7 +498,10 @@ const ExploreYamlModal: FC<ExploreYamlModalProps> = ({
                                     onClick={handleSubmitPR}
                                     disabled={!prTitle.trim()}
                                 >
-                                    Submit Pull Request
+                                    {t(
+                                        'exploreYamlModal.submitPr',
+                                        'Submit Pull Request',
+                                    )}
                                 </Button>
                             </Group>
                         )}

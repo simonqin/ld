@@ -46,6 +46,200 @@
         "delete": "Delete",
         "queryWarnings": "Query warnings"
     },
+    "saveChartButton": {
+        "duplicateMetricIdTooltip": "A custom metric ID matches an existing table metric. Rename it to avoid conflicts.",
+        "saveChanges": "Save changes",
+        "saveChart": "Save chart"
+    },
+    "customMetricModal": {
+        "errors": {
+            "duplicateId": "Metric with this ID already exists",
+            "duplicateLabel": "Metric with this label already exists",
+            "percentileRange": "Percentile must be a number between 0 and 100"
+        },
+        "toast": {
+            "edited": "Custom metric edited successfully",
+            "added": "Custom metric added successfully"
+        },
+        "titleEdit": "Edit Custom Metric",
+        "titleCreate": "Create Custom Metric",
+        "label": "Label",
+        "labelPlaceholder": "Enter custom metric label",
+        "percentileLabel": "Percentile",
+        "formatTitle": "Format",
+        "filtersTitle": "Filters",
+        "filtersCount": " ({{count}})",
+        "filtersOptional": " (optional)",
+        "addFilter": "Add filter",
+        "saveChanges": "Save changes",
+        "create": "Create"
+    },
+    "customBinDimensionModal": {
+        "errors": {
+            "duplicateLabel": "Dimension with this label already exists"
+        },
+        "toast": {
+            "edited": "Custom dimension edited successfully",
+            "added": "Custom dimension added successfully"
+        },
+        "titleEdit": "Edit Custom Dimension",
+        "titleCreate": "Create Custom Dimension",
+        "titleSuffix": " - {{baseDimensionLabel}}",
+        "label": "Label",
+        "labelPlaceholder": "Enter custom dimension label",
+        "binTypeLabel": "Bin type",
+        "binType": {
+            "fixedNumber": "Fixed number of bins",
+            "fixedWidth": "Fixed Width",
+            "customRange": "Custom range"
+        },
+        "binNumberLabel": "Bin number",
+        "binWidthLabel": "Bin width",
+        "range": {
+            "title": "Range",
+            "lessThan": "<{{to}}",
+            "greaterOrEqual": "≥{{from}}",
+            "andAbove": "and above",
+            "between": "≥{{from}} and <{{to}}",
+            "toLabel": "to",
+            "addRange": "+ Add a range"
+        },
+        "saveChanges": "Save changes",
+        "create": "Create"
+    },
+    "customSqlDimensionModal": {
+        "errors": {
+            "duplicateLabel": "Dimension/Table calculation with this label already exists",
+            "sqlRequired": "SQL is required",
+            "invalidReferences": "Invalid field references in SQL. References must be of the format \"table.field\", e.g \"orders.id\"",
+            "createFailed": "Error creating custom dimension",
+            "createFailedFallback": "Invalid field reference in SQL or dimension name"
+        },
+        "toast": {
+            "edited": "Custom dimension edited successfully",
+            "added": "Custom dimension added successfully"
+        },
+        "titleEdit": "Edit Custom Dimension",
+        "titleCreate": "Create Custom Dimension",
+        "titleSuffix": " - {{itemName}}",
+        "label": "Label",
+        "labelPlaceholder": "Enter custom dimension label",
+        "dimensionTypeLabel": "Dimension Type",
+        "sqlPlaceholder": "Enter SQL",
+        "expandCollapse": "Expand/Collapse",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "create": "Create"
+    },
+    "exploreYamlModal": {
+        "prTitleDefault": "Update {{fileName}}",
+        "prDescriptionDefault": "This pull request updates the model configuration in `{{filePath}}`.\n\nChanges made via Lightdash.",
+        "modifiedLabel": "(modified)",
+        "loading": "Loading source file...",
+        "errorLoadingTitle": "Error loading file",
+        "prForm": {
+            "title": "Create Pull Request",
+            "titleLabel": "Title",
+            "descriptionLabel": "Description"
+        },
+        "discardChanges": "Discard changes",
+        "validationIssues_one": "issue",
+        "validationIssues_other": "issues",
+        "createPr": "Create Pull Request",
+        "back": "Back",
+        "submitPr": "Submit Pull Request"
+    },
+    "spaceBrowser": {
+        "resourceType": {
+            "dashboard": "Dashboard",
+            "chart": "Chart",
+            "dashboardPlural": "Dashboards",
+            "chartPlural": "Charts"
+        },
+        "addResource": {
+            "alreadyInSpace": "{{resourceType}} already added on this space {{spaceName}}",
+            "title": "Add {{resourceType}} to space",
+            "description": "Select the {{resourceTypePlural}} that you would like to move into ",
+            "descriptionSuffix": ":",
+            "searchPlaceholder": "Search for a {{resourceType}}",
+            "nothingFound": "No {{resourceTypePlural}} found",
+            "loadMore": "Load more",
+            "cancel": "Cancel",
+            "move": "Move {{resourceTypePlural}}"
+        },
+        "defaultDashboardName": "Untitled dashboard",
+        "menu": {
+            "rename": "Rename",
+            "unpin": "Unpin from homepage",
+            "pin": "Pin to homepage",
+            "move": "Move",
+            "deleteSpace": "Delete space"
+        }
+    },
+    "writeBack": {
+        "prDisabled": "Pull requests can only be opened for Git connected projects (GitHub/GitLab)",
+        "items": {
+            "customDimension": {
+                "name": "custom dimension",
+                "namePlural": "custom dimensions",
+                "baseName": "dimension",
+                "baseNamePlural": "dimensions"
+            },
+            "customMetric": {
+                "name": "custom metric",
+                "namePlural": "custom metrics",
+                "baseName": "metric",
+                "baseNamePlural": "metrics"
+            }
+        },
+        "errors": {
+            "unknown": "unknown error",
+            "unsupportedDefinition": "Unsupported {{baseName}} definition",
+            "errorWithDetails": "Error: {{title}}\n{{message}}",
+            "selectItems": "Select {{baseNamePlural}} to open a pull request"
+        },
+        "title": "Write back to dbt",
+        "tooltip": {
+            "single": "Convert this {{name}} into a {{baseName}} in your dbt project. This will create a new branch and open a pull request."
+        },
+        "description": {
+            "single": "Create a pull request in your dbt project's git repository for the following {{name}}:",
+            "multiple": "Create a pull request in your dbt project's git repository for the following {{baseNamePlural}}"
+        },
+        "showCode": "Show {{baseName}} code",
+        "cancel": "Cancel",
+        "creatingPr": "Creating pull request...",
+        "openPr": "Open Pull Request",
+        "availableItems": "Available {{namePlural}} ({{count}} selected)",
+        "yamlPreviewTitle": "{{baseName}} YAML to be created:",
+        "prCreated": {
+            "prefix": "Your pull request ",
+            "suffix": " was successfully created on git.",
+            "hint": "Once it is merged, refresh your dbt connection to see your updated metrics and dimensions."
+        },
+        "close": "Close"
+    },
+    "virtualView": {
+        "create": {
+            "tooltipSuggestion": " If you’re expecting to reuse this query regularly, we suggest writing it back to dbt.",
+            "tooltip": "Create a virtual view so others can reuse this query in Lightdash. The query won’t be saved to or managed in your dbt project.{{suggestion}}",
+            "title": "Create virtual view",
+            "nameLabel": "Name",
+            "submit": "Create"
+        },
+        "cancel": "Cancel",
+        "edit": {
+            "unsavedChangesTitle": "You have unsaved changes",
+            "unsavedChangesBody": "Are you sure you want to leave this page? Changes you've made to your query will not be saved.",
+            "discardContinue": "Discard & continue",
+            "loadingSqlRunner": "Loading SQL Runner..."
+        },
+        "delete": {
+            "title": "Delete virtual view",
+            "description": "Are you sure you want to delete this virtual view? This action cannot be undone and charts based on this virtual view will break.",
+            "confirm": "Delete"
+        }
+    },
     "sidebar": {
         "searchPlaceholder": "Search metrics + dimensions",
         "tables": "Tables",

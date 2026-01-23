@@ -30,6 +30,7 @@ import React, {
     useState,
     type FC,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useUpdateMultipleDashboard } from '../../../hooks/dashboard/useDashboards';
 import { useInfiniteContent } from '../../../hooks/useContent';
@@ -38,20 +39,6 @@ import { useSpace, useSpaceSummaries } from '../../../hooks/useSpaces';
 import useApp from '../../../providers/App/useApp';
 import MantineIcon from '../../common/MantineIcon';
 import { AddToSpaceResources } from './types';
-
-const getResourceTypeLabel = (resourceType: AddToSpaceResources) => {
-    switch (resourceType) {
-        case AddToSpaceResources.DASHBOARD:
-            return 'Dashboard';
-        case AddToSpaceResources.CHART:
-            return 'Chart';
-        default:
-            return assertUnreachable(
-                resourceType,
-                'Unexpected resource type when getting label',
-            );
-    }
-};
 
 type SelectItemData = {
     value: string;
@@ -94,6 +81,7 @@ type Props = Pick<ModalProps, 'onClose'> & {
 };
 
 const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
+    const { t } = useTranslation('explore');
     const { projectUuid, spaceUuid } = useParams<{
         projectUuid: string;
         spaceUuid: string;
@@ -164,6 +152,37 @@ const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
         projectUuid!,
     );
 
+    const resourceTypeLabel = useMemo(() => {
+        switch (resourceType) {
+            case AddToSpaceResources.DASHBOARD:
+                return t('spaceBrowser.resourceType.dashboard', 'Dashboard');
+            case AddToSpaceResources.CHART:
+                return t('spaceBrowser.resourceType.chart', 'Chart');
+            default:
+                return assertUnreachable(
+                    resourceType,
+                    'Unexpected resource type when getting label',
+                );
+        }
+    }, [resourceType, t]);
+
+    const resourceTypeLabelPlural = useMemo(() => {
+        switch (resourceType) {
+            case AddToSpaceResources.DASHBOARD:
+                return t(
+                    'spaceBrowser.resourceType.dashboardPlural',
+                    'Dashboards',
+                );
+            case AddToSpaceResources.CHART:
+                return t('spaceBrowser.resourceType.chartPlural', 'Charts');
+            default:
+                return assertUnreachable(
+                    resourceType,
+                    'Unexpected resource type when getting label',
+                );
+        }
+    }, [resourceType, t]);
+
     const form = useForm<AddItemForm>();
     const { reset } = form;
 
@@ -185,15 +204,20 @@ const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
                     label: name,
                     disabled,
                     title: disabled
-                        ? `${getResourceTypeLabel(
-                              resourceType,
-                          )} already added on this space ${itemSpaceName}`
+                        ? t(
+                              'spaceBrowser.addResource.alreadyInSpace',
+                              '{{resourceType}} already added on this space {{spaceName}}',
+                              {
+                                  resourceType: resourceTypeLabel,
+                                  spaceName: itemSpaceName,
+                              },
+                          )
                         : '',
                     spaceName: itemSpaceName,
                 };
             },
         );
-    }, [spaceUuid, allItems, resourceType]);
+    }, [spaceUuid, allItems, resourceTypeLabel, t]);
 
     const handleSubmit = form.onSubmit(({ items }) => {
         if (!spaceUuid) return;
@@ -239,17 +263,28 @@ const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
         <Modal
             opened
             onClose={closeModal}
-            title={<Title order={4}>{`Add ${resourceType} to space`}</Title>}
+            title={
+                <Title order={4}>
+                    {t(
+                        'spaceBrowser.addResource.title',
+                        'Add {{resourceType}} to space',
+                        { resourceType: resourceTypeLabel },
+                    )}
+                </Title>
+            }
         >
             <form name="add_items_to_space" onSubmit={handleSubmit}>
                 <Stack spacing="xs" pt="sm">
                     <Text>
-                        Select the {resourceType}s that you would like to move
-                        into{' '}
+                        {t(
+                            'spaceBrowser.addResource.description',
+                            'Select the {{resourceTypePlural}} that you would like to move into ',
+                            { resourceTypePlural: resourceTypeLabelPlural },
+                        )}
                         <Text span fw={500}>
                             {space?.name}
                         </Text>
-                        :
+                        {t('spaceBrowser.addResource.descriptionSuffix', ':')}
                     </Text>
 
                     <MultiSelect
@@ -259,8 +294,16 @@ const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
                         data={selectItems}
                         itemComponent={SelectItem}
                         disabled={isInitialLoading}
-                        placeholder={`Search for a ${resourceType}`}
-                        nothingFound={`No ${resourceType}s found`}
+                        placeholder={t(
+                            'spaceBrowser.addResource.searchPlaceholder',
+                            'Search for a {{resourceType}}',
+                            { resourceType: resourceTypeLabel },
+                        )}
+                        nothingFound={t(
+                            'spaceBrowser.addResource.nothingFound',
+                            'No {{resourceTypePlural}} found',
+                            { resourceTypePlural: resourceTypeLabelPlural },
+                        )}
                         clearable
                         searchValue={searchQuery}
                         onSearchChange={setSearchQuery}
@@ -284,7 +327,12 @@ const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
                                             }}
                                             disabled={isFetching}
                                         >
-                                            <Text>Load more</Text>
+                                            <Text>
+                                                {t(
+                                                    'spaceBrowser.addResource.loadMore',
+                                                    'Load more',
+                                                )}
+                                            </Text>
                                         </Button>
                                     )}
                                 </>
@@ -296,12 +344,15 @@ const AddResourceToSpaceModal: FC<Props> = ({ resourceType, onClose }) => {
 
                 <Group position="right" mt="sm">
                     <Button variant="outline" onClick={closeModal}>
-                        Cancel
+                        {t('spaceBrowser.addResource.cancel', 'Cancel')}
                     </Button>
-                    <Button
-                        disabled={isInitialLoading}
-                        type="submit"
-                    >{`Move ${resourceType}s`}</Button>
+                    <Button disabled={isInitialLoading} type="submit">
+                        {t(
+                            'spaceBrowser.addResource.move',
+                            'Move {{resourceTypePlural}}',
+                            { resourceTypePlural: resourceTypeLabelPlural },
+                        )}
+                    </Button>
                 </Group>
             </form>
         </Modal>

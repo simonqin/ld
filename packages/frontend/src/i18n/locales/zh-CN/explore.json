@@ -46,6 +46,200 @@
         "delete": "删除",
         "queryWarnings": "查询警告"
     },
+    "saveChartButton": {
+        "duplicateMetricIdTooltip": "自定义指标 ID 与现有表指标重复。请重命名以避免冲突。",
+        "saveChanges": "保存更改",
+        "saveChart": "保存图表"
+    },
+    "customMetricModal": {
+        "errors": {
+            "duplicateId": "该 ID 的指标已存在",
+            "duplicateLabel": "该名称的指标已存在",
+            "percentileRange": "百分位数必须在 0 到 100 之间"
+        },
+        "toast": {
+            "edited": "自定义指标已更新",
+            "added": "自定义指标已添加"
+        },
+        "titleEdit": "编辑自定义指标",
+        "titleCreate": "创建自定义指标",
+        "label": "名称",
+        "labelPlaceholder": "输入自定义指标名称",
+        "percentileLabel": "百分位数",
+        "formatTitle": "格式",
+        "filtersTitle": "过滤器",
+        "filtersCount": "（{{count}}）",
+        "filtersOptional": "（可选）",
+        "addFilter": "添加过滤器",
+        "saveChanges": "保存更改",
+        "create": "创建"
+    },
+    "customBinDimensionModal": {
+        "errors": {
+            "duplicateLabel": "该名称的维度已存在"
+        },
+        "toast": {
+            "edited": "自定义维度已更新",
+            "added": "自定义维度已添加"
+        },
+        "titleEdit": "编辑自定义维度",
+        "titleCreate": "创建自定义维度",
+        "titleSuffix": "（{{baseDimensionLabel}}）",
+        "label": "名称",
+        "labelPlaceholder": "输入自定义维度名称",
+        "binTypeLabel": "分箱类型",
+        "binType": {
+            "fixedNumber": "固定分箱数量",
+            "fixedWidth": "固定宽度",
+            "customRange": "自定义区间"
+        },
+        "binNumberLabel": "分箱数量",
+        "binWidthLabel": "分箱宽度",
+        "range": {
+            "title": "区间",
+            "lessThan": "<{{to}}",
+            "greaterOrEqual": "≥{{from}}",
+            "andAbove": "及以上",
+            "between": "≥{{from}} 且 <{{to}}",
+            "toLabel": "到",
+            "addRange": "+ 添加区间"
+        },
+        "saveChanges": "保存更改",
+        "create": "创建"
+    },
+    "customSqlDimensionModal": {
+        "errors": {
+            "duplicateLabel": "该名称的维度/表计算已存在",
+            "sqlRequired": "需要填写 SQL",
+            "invalidReferences": "SQL 中包含无效字段引用。引用格式必须为 \"table.field\"，例如 \"orders.id\"",
+            "createFailed": "创建自定义维度失败",
+            "createFailedFallback": "SQL 字段引用或维度名称无效"
+        },
+        "toast": {
+            "edited": "自定义维度已更新",
+            "added": "自定义维度已添加"
+        },
+        "titleEdit": "编辑自定义维度",
+        "titleCreate": "创建自定义维度",
+        "titleSuffix": "（{{itemName}}）",
+        "label": "名称",
+        "labelPlaceholder": "输入自定义维度名称",
+        "dimensionTypeLabel": "维度类型",
+        "sqlPlaceholder": "输入 SQL",
+        "expandCollapse": "展开/收起",
+        "cancel": "取消",
+        "saveChanges": "保存更改",
+        "create": "创建"
+    },
+    "exploreYamlModal": {
+        "prTitleDefault": "更新 {{fileName}}",
+        "prDescriptionDefault": "此拉取请求更新了 `{{filePath}}` 中的模型配置。\n\n由 Lightdash 发起的更改。",
+        "modifiedLabel": "（已修改）",
+        "loading": "正在加载源文件...",
+        "errorLoadingTitle": "文件加载失败",
+        "prForm": {
+            "title": "创建拉取请求",
+            "titleLabel": "标题",
+            "descriptionLabel": "描述"
+        },
+        "discardChanges": "丢弃更改",
+        "validationIssues_one": "个问题",
+        "validationIssues_other": "个问题",
+        "createPr": "创建拉取请求",
+        "back": "返回",
+        "submitPr": "提交拉取请求"
+    },
+    "spaceBrowser": {
+        "resourceType": {
+            "dashboard": "仪表板",
+            "chart": "图表",
+            "dashboardPlural": "仪表板",
+            "chartPlural": "图表"
+        },
+        "addResource": {
+            "alreadyInSpace": "此空间 {{spaceName}} 已包含该{{resourceType}}",
+            "title": "将{{resourceType}}添加到空间",
+            "description": "选择要移动到",
+            "descriptionSuffix": "：",
+            "searchPlaceholder": "搜索{{resourceType}}",
+            "nothingFound": "未找到{{resourceTypePlural}}",
+            "loadMore": "加载更多",
+            "cancel": "取消",
+            "move": "移动{{resourceTypePlural}}"
+        },
+        "defaultDashboardName": "未命名仪表板",
+        "menu": {
+            "rename": "重命名",
+            "unpin": "从首页取消置顶",
+            "pin": "置顶到首页",
+            "move": "移动",
+            "deleteSpace": "删除空间"
+        }
+    },
+    "writeBack": {
+        "prDisabled": "仅支持对已连接 Git 的项目（GitHub/GitLab）创建拉取请求",
+        "items": {
+            "customDimension": {
+                "name": "自定义维度",
+                "namePlural": "自定义维度",
+                "baseName": "维度",
+                "baseNamePlural": "维度"
+            },
+            "customMetric": {
+                "name": "自定义指标",
+                "namePlural": "自定义指标",
+                "baseName": "指标",
+                "baseNamePlural": "指标"
+            }
+        },
+        "errors": {
+            "unknown": "未知错误",
+            "unsupportedDefinition": "不支持的{{baseName}}定义",
+            "errorWithDetails": "错误：{{title}}\n{{message}}",
+            "selectItems": "请选择{{baseNamePlural}}以创建拉取请求"
+        },
+        "title": "写回到 dbt",
+        "tooltip": {
+            "single": "将此{{name}}转换为 dbt 项目中的{{baseName}}。这将创建新分支并打开拉取请求。"
+        },
+        "description": {
+            "single": "在 dbt 项目的 Git 仓库中为以下{{name}}创建拉取请求：",
+            "multiple": "在 dbt 项目的 Git 仓库中为以下{{baseNamePlural}}创建拉取请求"
+        },
+        "showCode": "显示{{baseName}}代码",
+        "cancel": "取消",
+        "creatingPr": "正在创建拉取请求...",
+        "openPr": "打开拉取请求",
+        "availableItems": "可用{{namePlural}}（已选择 {{count}} 个）",
+        "yamlPreviewTitle": "将创建的{{baseName}} YAML：",
+        "prCreated": {
+            "prefix": "你的拉取请求",
+            "suffix": "已在 Git 上创建成功。",
+            "hint": "合并后，请刷新 dbt 连接以查看更新后的指标与维度。"
+        },
+        "close": "关闭"
+    },
+    "virtualView": {
+        "create": {
+            "tooltipSuggestion": "如果你打算频繁复用此查询，建议将其写回到 dbt。",
+            "tooltip": "创建虚拟视图，以便他人在 Lightdash 中复用该查询。该查询不会保存到或由你的 dbt 项目管理。{{suggestion}}",
+            "title": "创建虚拟视图",
+            "nameLabel": "名称",
+            "submit": "创建"
+        },
+        "cancel": "取消",
+        "edit": {
+            "unsavedChangesTitle": "你有未保存的更改",
+            "unsavedChangesBody": "确定要离开此页面吗？你对查询所做的更改将不会被保存。",
+            "discardContinue": "丢弃并继续",
+            "loadingSqlRunner": "正在加载 SQL Runner..."
+        },
+        "delete": {
+            "title": "删除虚拟视图",
+            "description": "确定要删除此虚拟视图吗？此操作无法撤销，基于该虚拟视图的图表将失效。",
+            "confirm": "删除"
+        }
+    },
     "sidebar": {
         "searchPlaceholder": "搜索指标与维度",
         "tables": "数据表",

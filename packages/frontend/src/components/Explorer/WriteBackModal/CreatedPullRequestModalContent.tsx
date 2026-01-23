@@ -1,5 +1,6 @@
 import { Anchor, Button, Group, Modal, Stack, Text } from '@mantine/core';
 import { IconGitBranch } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 import MantineIcon from '../../common/MantineIcon';
 
 export const CreatedPullRequestModalContent = ({
@@ -9,6 +10,7 @@ export const CreatedPullRequestModalContent = ({
     onClose: () => void;
     data: { prUrl: string };
 }) => {
+    const { t } = useTranslation('explore');
     return (
         <Modal
             size="xl"
@@ -22,7 +24,9 @@ export const CreatedPullRequestModalContent = ({
                         size="lg"
                         color="ldGray.7"
                     />
-                    <Text fw={500}>Write back to dbt</Text>
+                    <Text fw={500}>
+                        {t('writeBack.title', 'Write back to dbt')}
+                    </Text>
                 </Group>
             }
             styles={(theme) => ({
@@ -32,14 +36,19 @@ export const CreatedPullRequestModalContent = ({
         >
             <Stack p="md">
                 <Text>
-                    Your pull request{' '}
+                    {t('writeBack.prCreated.prefix', 'Your pull request ')}
                     <Anchor href={data.prUrl} target="_blank" span fw={700}>
                         #{data.prUrl.split('/').pop()}
-                    </Anchor>{' '}
-                    was successfully created on git.
+                    </Anchor>
+                    {t(
+                        'writeBack.prCreated.suffix',
+                        ' was successfully created on git.',
+                    )}
                     <Text pt="md">
-                        Once it is merged, refresh your dbt connection to see
-                        your updated metrics and dimensions.
+                        {t(
+                            'writeBack.prCreated.hint',
+                            'Once it is merged, refresh your dbt connection to see your updated metrics and dimensions.',
+                        )}
                     </Text>
                 </Text>
             </Stack>
@@ -50,7 +59,7 @@ export const CreatedPullRequestModalContent = ({
                     variant="outline"
                     size="xs"
                 >
-                    Close
+                    {t('writeBack.close', 'Close')}
                 </Button>
             </Group>
         </Modal>

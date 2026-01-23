@@ -1,5 +1,6 @@
 import { assertUnreachable } from '@lightdash/common';
 import { useEffect, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import { useCreateMutation } from '../../../hooks/dashboard/useDashboard';
 import { AddToSpaceResources } from './types';
@@ -8,9 +9,8 @@ interface Props {
     resourceType: AddToSpaceResources;
 }
 
-const DEFAULT_DASHBOARD_NAME = 'Untitled dashboard';
-
 const CreateResourceToSpace: FC<Props> = ({ resourceType }) => {
+    const { t } = useTranslation('explore');
     const navigate = useNavigate();
     const { projectUuid, spaceUuid } = useParams<{
         projectUuid: string;
@@ -22,6 +22,10 @@ const CreateResourceToSpace: FC<Props> = ({ resourceType }) => {
         mutate: createDashboard,
         data: newDashboard,
     } = useCreateMutation(projectUuid);
+    const defaultDashboardName = t(
+        'spaceBrowser.defaultDashboardName',
+        'Untitled dashboard',
+    );
 
     useEffect(() => {
         if (hasCreatedDashboard && newDashboard) {
@@ -40,7 +44,7 @@ const CreateResourceToSpace: FC<Props> = ({ resourceType }) => {
                 return;
             case AddToSpaceResources.DASHBOARD:
                 return createDashboard({
-                    name: DEFAULT_DASHBOARD_NAME,
+                    name: defaultDashboardName,
                     tiles: [],
                     spaceUuid,
                     tabs: [],
@@ -51,7 +55,14 @@ const CreateResourceToSpace: FC<Props> = ({ resourceType }) => {
                     'Unexpected resource type during create',
                 );
         }
-    }, [navigate, resourceType, createDashboard, projectUuid, spaceUuid]);
+    }, [
+        navigate,
+        resourceType,
+        createDashboard,
+        projectUuid,
+        spaceUuid,
+        defaultDashboardName,
+    ]);
 
     return null;
 };

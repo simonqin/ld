@@ -2,6 +2,7 @@ import { getItemId, getMetrics } from '@lightdash/common';
 import { Button, Tooltip } from '@mantine-8/core';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useCallback, useMemo, useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import {
     useAmbientAiEnabled,
@@ -25,6 +26,7 @@ const SaveChartButton: FC<{ isExplorer?: boolean; disabled?: boolean }> = ({
     isExplorer,
     disabled,
 }) => {
+    const { t } = useTranslation('explore');
     const isAmbientAiEnabled = useAmbientAiEnabled();
     const { projectUuid } = useParams<{ projectUuid: string }>();
     const unsavedChartVersion = useExplorerSelector(selectUnsavedChartVersion);
@@ -114,9 +116,10 @@ const SaveChartButton: FC<{ isExplorer?: boolean; disabled?: boolean }> = ({
     return (
         <>
             <Tooltip
-                label={
-                    'A custom metric ID matches an existing table metric. Rename it to avoid conflicts.'
-                }
+                label={t(
+                    'saveChartButton.duplicateMetricIdTooltip',
+                    'A custom metric ID matches an existing table metric. Rename it to avoid conflicts.',
+                )}
                 disabled={!foundCustomMetricWithDuplicateId}
                 withinPortal
                 multiline
@@ -150,7 +153,9 @@ const SaveChartButton: FC<{ isExplorer?: boolean; disabled?: boolean }> = ({
                     }}
                     onClick={handleSaveChart}
                 >
-                    {savedChart ? 'Save changes' : 'Save chart'}
+                    {savedChart
+                        ? t('saveChartButton.saveChanges', 'Save changes')
+                        : t('saveChartButton.saveChart', 'Save chart')}
                 </Button>
             </Tooltip>
 

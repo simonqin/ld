@@ -26,6 +26,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { IconX } from '@tabler/icons-react';
 import cloneDeep from 'lodash/cloneDeep';
 import { useEffect, useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import {
     explorerActions,
@@ -51,6 +52,7 @@ export const CustomBinDimensionModal: FC<{
     isEditing: boolean;
     item: Dimension | CustomBinDimension;
 }> = ({ isEditing, item }) => {
+    const { t } = useTranslation('explore');
     const { showToastSuccess } = useToaster();
     const dispatch = useExplorerDispatch();
     const customDimensions = useExplorerSelector(selectCustomDimensions);
@@ -84,7 +86,12 @@ export const CustomBinDimensionModal: FC<{
                     (customDimension) => customDimension.id === dimensionName,
                 );
             },
-            { message: 'Dimension with this label already exists' },
+            {
+                message: t(
+                    'customBinDimensionModal.errors.duplicateLabel',
+                    'Dimension with this label already exists',
+                ),
+            },
         ),
         binType: z.nativeEnum(BinType),
         binConfig: z.object({
@@ -184,7 +191,10 @@ export const CustomBinDimensionModal: FC<{
                 );
 
                 showToastSuccess({
-                    title: 'Custom dimension edited successfully',
+                    title: t(
+                        'customBinDimensionModal.toast.edited',
+                        'Custom dimension edited successfully',
+                    ),
                 });
             } else {
                 dispatch(
@@ -202,7 +212,10 @@ export const CustomBinDimensionModal: FC<{
                 );
 
                 showToastSuccess({
-                    title: 'Custom dimension added successfully',
+                    title: t(
+                        'customBinDimensionModal.toast.added',
+                        'Custom dimension added successfully',
+                    ),
                 });
             }
         }
@@ -235,10 +248,21 @@ export const CustomBinDimensionModal: FC<{
             title={
                 <>
                     <Title order={4}>
-                        {isEditing ? 'Edit' : 'Create'} Custom Dimension
+                        {isEditing
+                            ? t(
+                                  'customBinDimensionModal.titleEdit',
+                                  'Edit Custom Dimension',
+                              )
+                            : t(
+                                  'customBinDimensionModal.titleCreate',
+                                  'Create Custom Dimension',
+                              )}
                         <Text span fw={400}>
-                            {' '}
-                            - {baseDimensionLabel}{' '}
+                            {t(
+                                'customBinDimensionModal.titleSuffix',
+                                ' - {{baseDimensionLabel}}',
+                                { baseDimensionLabel },
+                            )}
                         </Text>
                     </Title>
                 </>
@@ -247,14 +271,20 @@ export const CustomBinDimensionModal: FC<{
             <form onSubmit={handleOnSubmit}>
                 <Stack>
                     <TextInput
-                        label="Label"
+                        label={t('customBinDimensionModal.label', 'Label')}
                         required
-                        placeholder="Enter custom dimension label"
+                        placeholder={t(
+                            'customBinDimensionModal.labelPlaceholder',
+                            'Enter custom dimension label',
+                        )}
                         {...form.getInputProps('customDimensionLabel')}
                     />
 
                     <Radio.Group
-                        label="Bin type"
+                        label={t(
+                            'customBinDimensionModal.binTypeLabel',
+                            'Bin type',
+                        )}
                         withAsterisk
                         required
                         {...form.getInputProps('binType')}
@@ -262,15 +292,24 @@ export const CustomBinDimensionModal: FC<{
                         <Group mt="md">
                             <Radio
                                 value={BinType.FIXED_NUMBER}
-                                label="Fixed number of bins"
+                                label={t(
+                                    'customBinDimensionModal.binType.fixedNumber',
+                                    'Fixed number of bins',
+                                )}
                             />
                             <Radio
                                 value={BinType.FIXED_WIDTH}
-                                label="Fixed Width"
+                                label={t(
+                                    'customBinDimensionModal.binType.fixedWidth',
+                                    'Fixed Width',
+                                )}
                             />
                             <Radio
                                 value={BinType.CUSTOM_RANGE}
-                                label="Custom range"
+                                label={t(
+                                    'customBinDimensionModal.binType.customRange',
+                                    'Custom range',
+                                )}
                             />
                         </Group>
                     </Radio.Group>
@@ -278,7 +317,10 @@ export const CustomBinDimensionModal: FC<{
                     {form.values.binType === BinType.FIXED_NUMBER && (
                         <NumberInput
                             w={100}
-                            label="Bin number"
+                            label={t(
+                                'customBinDimensionModal.binNumberLabel',
+                                'Bin number',
+                            )}
                             required
                             min={MIN_OF_FIXED_NUMBER_BINS}
                             type="number"
@@ -291,7 +333,10 @@ export const CustomBinDimensionModal: FC<{
                     {form.values.binType === BinType.FIXED_WIDTH && (
                         <NumberInput
                             w={100}
-                            label="Bin width"
+                            label={t(
+                                'customBinDimensionModal.binWidthLabel',
+                                'Bin width',
+                            )}
                             required
                             min={MIN_OF_FIXED_NUMBER_BINS}
                             type="number"
@@ -303,7 +348,12 @@ export const CustomBinDimensionModal: FC<{
 
                     {form.values.binType === BinType.CUSTOM_RANGE && (
                         <>
-                            <Text fw={500}>Range</Text>
+                            <Text fw={500}>
+                                {t(
+                                    'customBinDimensionModal.range.title',
+                                    'Range',
+                                )}
+                            </Text>
                             {form.values.binConfig.customRange.map(
                                 (range, index) => {
                                     const toProps = form.getInputProps(
@@ -325,7 +375,13 @@ export const CustomBinDimensionModal: FC<{
                                                     color="ldGray.6"
                                                     fw="400"
                                                 >
-                                                    &lt;{toProps.value}{' '}
+                                                    {t(
+                                                        'customBinDimensionModal.range.lessThan',
+                                                        '<{{to}}',
+                                                        {
+                                                            to: toProps.value,
+                                                        },
+                                                    )}
                                                 </Text>
 
                                                 <TextInput
@@ -353,7 +409,13 @@ export const CustomBinDimensionModal: FC<{
                                                     color="ldGray.6"
                                                     fw="400"
                                                 >
-                                                    ≥{fromProps.value}{' '}
+                                                    {t(
+                                                        'customBinDimensionModal.range.greaterOrEqual',
+                                                        '≥{{from}}',
+                                                        {
+                                                            from: fromProps.value,
+                                                        },
+                                                    )}
                                                 </Text>
 
                                                 <TextInput
@@ -363,7 +425,10 @@ export const CustomBinDimensionModal: FC<{
                                                     {...fromProps}
                                                 />
                                                 <Text color="ldGray.6" fw="400">
-                                                    and above{' '}
+                                                    {t(
+                                                        'customBinDimensionModal.range.andAbove',
+                                                        'and above',
+                                                    )}
                                                 </Text>
                                             </Flex>
                                         );
@@ -379,8 +444,14 @@ export const CustomBinDimensionModal: FC<{
                                                     color="ldGray.6"
                                                     fw="400"
                                                 >
-                                                    ≥{fromProps.value} and &lt;
-                                                    {toProps.value}
+                                                    {t(
+                                                        'customBinDimensionModal.range.between',
+                                                        '≥{{from}} and <{{to}}',
+                                                        {
+                                                            from: fromProps.value,
+                                                            to: toProps.value,
+                                                        },
+                                                    )}
                                                 </Text>
 
                                                 <TextInput
@@ -390,7 +461,10 @@ export const CustomBinDimensionModal: FC<{
                                                     {...fromProps}
                                                 />
                                                 <Text color="ldGray.6" fw="400">
-                                                    to{' '}
+                                                    {t(
+                                                        'customBinDimensionModal.range.toLabel',
+                                                        'to',
+                                                    )}
                                                 </Text>
 
                                                 <TextInput
@@ -446,8 +520,10 @@ export const CustomBinDimensionModal: FC<{
                                     );
                                 }}
                             >
-                                {' '}
-                                + Add a range{' '}
+                                {t(
+                                    'customBinDimensionModal.range.addRange',
+                                    '+ Add a range',
+                                )}
                             </Text>
                         </>
                     )}
@@ -455,7 +531,12 @@ export const CustomBinDimensionModal: FC<{
                     {/* Add results preview */}
 
                     <Button ml="auto" type="submit">
-                        {isEditing ? 'Save changes' : 'Create'}
+                        {isEditing
+                            ? t(
+                                  'customBinDimensionModal.saveChanges',
+                                  'Save changes',
+                              )
+                            : t('customBinDimensionModal.create', 'Create')}
                     </Button>
                 </Stack>
             </form>

@@ -1,5 +1,6 @@
 import { Button, Group, Modal, Stack, Text } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 import MantineIcon from '../../../components/common/MantineIcon';
 import { useDeleteVirtualView } from '../../virtualView/hooks/useVirtualView';
 
@@ -14,6 +15,7 @@ export const DeleteVirtualViewModal = ({
     virtualViewName: string;
     projectUuid: string;
 }) => {
+    const { t } = useTranslation('explore');
     const { mutate, isLoading } = useDeleteVirtualView(projectUuid);
     const onDelete = () => {
         mutate({ projectUuid, name: virtualViewName });
@@ -28,7 +30,9 @@ export const DeleteVirtualViewModal = ({
             title={
                 <Group spacing="xs">
                     <MantineIcon icon={IconTrash} size="lg" color="ldGray.7" />
-                    <Text fw={500}>Delete virtual view</Text>
+                    <Text fw={500}>
+                        {t('virtualView.delete.title', 'Delete virtual view')}
+                    </Text>
                 </Group>
             }
             styles={(theme) => ({
@@ -37,18 +41,19 @@ export const DeleteVirtualViewModal = ({
         >
             <Stack pt="sm">
                 <Text>
-                    Are you sure you want to delete this virtual view? This
-                    action cannot be undone and charts based on this virtual
-                    view will break.
+                    {t(
+                        'virtualView.delete.description',
+                        'Are you sure you want to delete this virtual view? This action cannot be undone and charts based on this virtual view will break.',
+                    )}
                 </Text>
 
                 <Group position="right" mt="sm">
                     <Button color="dark" variant="outline" onClick={onClose}>
-                        Cancel
+                        {t('virtualView.cancel', 'Cancel')}
                     </Button>
 
                     <Button loading={isLoading} color="red" onClick={onDelete}>
-                        Delete
+                        {t('virtualView.delete.confirm', 'Delete')}
                     </Button>
                 </Group>
             </Stack>

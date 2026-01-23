@@ -18,6 +18,7 @@ import {
     useTransition,
     type FC,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import MantineIcon from '../../../components/common/MantineIcon';
 import {
@@ -43,6 +44,7 @@ export const EditVirtualViewModal: FC<Props> = ({
     activeTableName,
     explore,
 }) => {
+    const { t } = useTranslation('explore');
     const hasUnsavedChanges = !!useSearchParams('create_saved_chart_version');
     const [isPending, startTransition] = useTransition();
     const dispatch = useExplorerDispatch();
@@ -81,7 +83,12 @@ export const EditVirtualViewModal: FC<Props> = ({
                 modalStep === 'unsavedChanges' ? (
                     <Group spacing="xs">
                         <MantineIcon icon={IconAlertCircle} />
-                        <Text fw={500}>You have unsaved changes</Text>
+                        <Text fw={500}>
+                            {t(
+                                'virtualView.edit.unsavedChangesTitle',
+                                'You have unsaved changes',
+                            )}
+                        </Text>
                     </Group>
                 ) : null
             }
@@ -103,12 +110,14 @@ export const EditVirtualViewModal: FC<Props> = ({
             {modalStep === 'unsavedChanges' && (
                 <Stack>
                     <Text fz="sm">
-                        Are you sure you want to leave this page? Changes you've
-                        made to your query will not be saved.
+                        {t(
+                            'virtualView.edit.unsavedChangesBody',
+                            "Are you sure you want to leave this page? Changes you've made to your query will not be saved.",
+                        )}
                     </Text>
                     <Group position="right">
                         <Button variant="outline" onClick={onClose}>
-                            Cancel
+                            {t('virtualView.cancel', 'Cancel')}
                         </Button>
                         <Button
                             color="red"
@@ -120,7 +129,10 @@ export const EditVirtualViewModal: FC<Props> = ({
                             }}
                             loading={isPending}
                         >
-                            Discard & continue
+                            {t(
+                                'virtualView.edit.discardContinue',
+                                'Discard & continue',
+                            )}
                         </Button>
                     </Group>
                 </Stack>
@@ -131,7 +143,12 @@ export const EditVirtualViewModal: FC<Props> = ({
                         <Center h="95vh" w="95vw">
                             <Stack align="center" justify="center">
                                 <Loader variant="bars" />
-                                <Text fw={500}>Loading SQL Runner...</Text>
+                                <Text fw={500}>
+                                    {t(
+                                        'virtualView.edit.loadingSqlRunner',
+                                        'Loading SQL Runner...',
+                                    )}
+                                </Text>
                             </Stack>
                         </Center>
                     }

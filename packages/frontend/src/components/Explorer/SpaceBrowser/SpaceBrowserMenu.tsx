@@ -8,6 +8,7 @@ import {
     IconTrash,
 } from '@tabler/icons-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import useApp from '../../../providers/App/useApp';
 import MantineIcon from '../../common/MantineIcon';
@@ -28,6 +29,7 @@ export const SpaceBrowserMenu: React.FC<React.PropsWithChildren<Props>> = ({
     onTransferToSpace,
     children,
 }) => {
+    const { t } = useTranslation('explore');
     const { user } = useApp();
     const organizationUuid = user.data?.organizationUuid;
     const { projectUuid } = useParams<{ projectUuid: string }>();
@@ -54,7 +56,7 @@ export const SpaceBrowserMenu: React.FC<React.PropsWithChildren<Props>> = ({
                     icon={<MantineIcon icon={IconEdit} />}
                     onClick={onRename}
                 >
-                    Rename
+                    {t('spaceBrowser.menu.rename', 'Rename')}
                 </Menu.Item>
 
                 {user.data?.ability.can(
@@ -76,7 +78,12 @@ export const SpaceBrowserMenu: React.FC<React.PropsWithChildren<Props>> = ({
                         }
                         onClick={onTogglePin}
                     >
-                        {isPinned ? 'Unpin from homepage' : 'Pin to homepage'}
+                        {isPinned
+                            ? t(
+                                  'spaceBrowser.menu.unpin',
+                                  'Unpin from homepage',
+                              )
+                            : t('spaceBrowser.menu.pin', 'Pin to homepage')}
                     </Menu.Item>
                 )}
 
@@ -90,7 +97,7 @@ export const SpaceBrowserMenu: React.FC<React.PropsWithChildren<Props>> = ({
                         onTransferToSpace();
                     }}
                 >
-                    Move
+                    {t('spaceBrowser.menu.move', 'Move')}
                 </Menu.Item>
 
                 <Menu.Divider />
@@ -102,7 +109,7 @@ export const SpaceBrowserMenu: React.FC<React.PropsWithChildren<Props>> = ({
                     icon={<MantineIcon icon={IconTrash} />}
                     onClick={onDelete}
                 >
-                    Delete space
+                    {t('spaceBrowser.menu.deleteSpace', 'Delete space')}
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>

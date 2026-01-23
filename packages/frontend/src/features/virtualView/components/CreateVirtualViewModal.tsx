@@ -12,6 +12,7 @@ import {
 import { useForm, zodResolver } from '@mantine/form';
 import { IconInfoCircle, IconTableAlias } from '@tabler/icons-react';
 import { useCallback, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import MantineIcon from '../../../components/common/MantineIcon';
 import { useGitIntegration } from '../../../hooks/gitIntegration/useGitIntegration';
@@ -29,6 +30,7 @@ type FormValues = z.infer<typeof validationSchema>;
 type Props = ModalProps;
 
 export const CreateVirtualViewModal: FC<Props> = ({ opened, onClose }) => {
+    const { t } = useTranslation('explore');
     const health = useHealth();
     const projectUuid = useAppSelector((state) => state.sqlRunner.projectUuid);
     const sql = useAppSelector((state) => state.sqlRunner.sql);
@@ -58,6 +60,17 @@ export const CreateVirtualViewModal: FC<Props> = ({ opened, onClose }) => {
         gitIntegration?.enabled === true &&
         !isError &&
         project?.dbtConnection.type === DbtProjectType.GITHUB
+    );
+    const tooltipSuggestion = canWriteToDbtProject
+        ? t(
+              'virtualView.create.tooltipSuggestion',
+              ' If you’re expecting to reuse this query regularly, we suggest writing it back to dbt.',
+          )
+        : '';
+    const tooltipLabel = t(
+        'virtualView.create.tooltip',
+        'Create a virtual view so others can reuse this query in Lightdash. The query won’t be saved to or managed in your dbt project.{{suggestion}}',
+        { suggestion: tooltipSuggestion },
     );
 
     const handleSubmit = useCallback(
@@ -90,17 +103,15 @@ export const CreateVirtualViewModal: FC<Props> = ({ opened, onClose }) => {
                         size="lg"
                         color="ldGray.7"
                     />
-                    <Text fw={500}>Create virtual view</Text>
+                    <Text fw={500}>
+                        {t('virtualView.create.title', 'Create virtual view')}
+                    </Text>
                     <Tooltip
                         variant="xs"
                         withinPortal
                         multiline
                         maw={300}
-                        label={`Create a virtual view so others can reuse this query in Lightdash. The query won’t be saved to or managed in your dbt project. ${
-                            canWriteToDbtProject
-                                ? 'If you’re expecting to reuse this query regularly, we suggest writing it back to dbt.'
-                                : ''
-                        } `}
+                        label={tooltipLabel}
                     >
                         <MantineIcon
                             color="ldGray.7"
@@ -119,7 +130,7 @@ export const CreateVirtualViewModal: FC<Props> = ({ opened, onClose }) => {
                 <Stack p="md">
                     <TextInput
                         radius="md"
-                        label="Name"
+                        label={t('virtualView.create.nameLabel', 'Name')}
                         required
                         {...form.getInputProps('name')}
                         error={!!error?.error}
@@ -134,7 +145,7 @@ export const CreateVirtualViewModal: FC<Props> = ({ opened, onClose }) => {
                         disabled={isLoadingVirtual}
                         size="xs"
                     >
-                        Cancel
+                        {t('virtualView.cancel', 'Cancel')}
                     </Button>
 
                     <Button
@@ -143,7 +154,7 @@ export const CreateVirtualViewModal: FC<Props> = ({ opened, onClose }) => {
                         loading={isLoadingVirtual}
                         size="xs"
                     >
-                        Create
+                        {t('virtualView.create.submit', 'Create')}
                     </Button>
                 </Group>
             </form>

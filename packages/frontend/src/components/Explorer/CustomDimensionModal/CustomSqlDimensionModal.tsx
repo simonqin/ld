@@ -26,6 +26,7 @@ import {
 import { useForm } from '@mantine/form';
 import { IconMaximize, IconMinimize, IconSql } from '@tabler/icons-react';
 import { useEffect, useRef, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useToggle } from 'react-use';
 import {
     explorerActions,
@@ -51,6 +52,7 @@ export const CustomSqlDimensionModal: FC<{
     table: string;
     item?: CustomSqlDimension;
 }> = ({ isEditing, table, item }) => {
+    const { t } = useTranslation('explore');
     const theme = useMantineTheme();
     const { colors, colorScheme } = theme;
     const { showToastSuccess, showToastError } = useToaster();
@@ -91,7 +93,10 @@ export const CustomSqlDimensionModal: FC<{
                 );
 
                 return isInvalid
-                    ? 'Dimension/Table calculation with this label already exists'
+                    ? t(
+                          'customSqlDimensionModal.errors.duplicateLabel',
+                          'Dimension/Table calculation with this label already exists',
+                      )
                     : null;
             },
         },
@@ -114,7 +119,12 @@ export const CustomSqlDimensionModal: FC<{
 
         try {
             if (!values.sql) {
-                throw new Error('SQL is required');
+                throw new Error(
+                    t(
+                        'customSqlDimensionModal.errors.sqlRequired',
+                        'SQL is required',
+                    ),
+                );
             }
             // Validate all references in SQL
             const fieldIds = getAllReferences(values.sql).map((ref) => {
@@ -127,7 +137,10 @@ export const CustomSqlDimensionModal: FC<{
 
             if (fieldIds.some((id) => id === null)) {
                 throw new Error(
-                    'Invalid field references in SQL. References must be of the format "table.field", e.g "orders.id"',
+                    t(
+                        'customSqlDimensionModal.errors.invalidReferences',
+                        'Invalid field references in SQL. References must be of the format "table.field", e.g "orders.id"',
+                    ),
                 );
             }
 
@@ -150,12 +163,18 @@ export const CustomSqlDimensionModal: FC<{
                     explorerActions.setCustomDimensions(updatedDimensions),
                 );
                 showToastSuccess({
-                    title: 'Custom dimension edited successfully',
+                    title: t(
+                        'customSqlDimensionModal.toast.edited',
+                        'Custom dimension edited successfully',
+                    ),
                 });
             } else {
                 dispatch(explorerActions.addCustomDimension(customDim));
                 showToastSuccess({
-                    title: 'Custom dimension added successfully',
+                    title: t(
+                        'customSqlDimensionModal.toast.added',
+                        'Custom dimension added successfully',
+                    ),
                 });
             }
 
@@ -163,11 +182,17 @@ export const CustomSqlDimensionModal: FC<{
             toggleModal();
         } catch (error) {
             showToastError({
-                title: 'Error creating custom dimension',
+                title: t(
+                    'customSqlDimensionModal.errors.createFailed',
+                    'Error creating custom dimension',
+                ),
                 subtitle:
                     error instanceof Error
                         ? error.message
-                        : 'Invalid field reference in SQL or dimension name',
+                        : t(
+                              'customSqlDimensionModal.errors.createFailedFallback',
+                              'Invalid field reference in SQL or dimension name',
+                          ),
             });
         }
     });
@@ -207,11 +232,22 @@ export const CustomSqlDimensionModal: FC<{
                             <MantineIcon icon={IconSql} size="sm" />
                         </Paper>
                         <Text fw={700} fz="md">
-                            {isEditing ? 'Edit' : 'Create'} Custom Dimension
+                            {isEditing
+                                ? t(
+                                      'customSqlDimensionModal.titleEdit',
+                                      'Edit Custom Dimension',
+                                  )
+                                : t(
+                                      'customSqlDimensionModal.titleCreate',
+                                      'Create Custom Dimension',
+                                  )}
                             {item ? (
                                 <Text span fw={400}>
-                                    {' '}
-                                    - {item.name}
+                                    {t(
+                                        'customSqlDimensionModal.titleSuffix',
+                                        ' - {{itemName}}',
+                                        { itemName: item.name },
+                                    )}
                                 </Text>
                             ) : null}
                         </Text>
@@ -238,9 +274,15 @@ export const CustomSqlDimensionModal: FC<{
                         <Stack p="sm" spacing="xs">
                             <Group position="apart">
                                 <TextInput
-                                    label="Label"
+                                    label={t(
+                                        'customSqlDimensionModal.label',
+                                        'Label',
+                                    )}
                                     required
-                                    placeholder="Enter custom dimension label"
+                                    placeholder={t(
+                                        'customSqlDimensionModal.labelPlaceholder',
+                                        'Enter custom dimension label',
+                                    )}
                                     style={{ flex: 1 }}
                                     {...form.getInputProps(
                                         'customDimensionLabel',
@@ -252,7 +294,10 @@ export const CustomSqlDimensionModal: FC<{
                                         alignSelf: 'flex-start',
                                     }}
                                     withinPortal={true}
-                                    label="Dimension Type"
+                                    label={t(
+                                        'customSqlDimensionModal.dimensionTypeLabel',
+                                        'Dimension Type',
+                                    )}
                                     data={Object.values(DimensionType).map(
                                         (type) => ({
                                             value: type,
@@ -270,7 +315,10 @@ export const CustomSqlDimensionModal: FC<{
                             >
                                 <SqlEditor
                                     mode="sql"
-                                    placeholder="Enter SQL"
+                                    placeholder={t(
+                                        'customSqlDimensionModal.sqlPlaceholder',
+                                        'Enter SQL',
+                                    )}
                                     theme={
                                         colorScheme === 'dark'
                                             ? 'tomorrow_night'
@@ -307,7 +355,13 @@ export const CustomSqlDimensionModal: FC<{
                         })}
                     >
                         <Group position="apart">
-                            <Tooltip label="Expand/Collapse" variant="xs">
+                            <Tooltip
+                                label={t(
+                                    'customSqlDimensionModal.expandCollapse',
+                                    'Expand/Collapse',
+                                )}
+                                variant="xs"
+                            >
                                 <ActionIcon
                                     variant="outline"
                                     onClick={toggleExpanded}
@@ -330,14 +384,25 @@ export const CustomSqlDimensionModal: FC<{
                                         form.reset();
                                     }}
                                 >
-                                    Cancel
+                                    {t(
+                                        'customSqlDimensionModal.cancel',
+                                        'Cancel',
+                                    )}
                                 </Button>
                                 <Button
                                     h={32}
                                     type="submit"
                                     ref={submitButtonRef}
                                 >
-                                    {isEditing ? 'Save changes' : 'Create'}
+                                    {isEditing
+                                        ? t(
+                                              'customSqlDimensionModal.saveChanges',
+                                              'Save changes',
+                                          )
+                                        : t(
+                                              'customSqlDimensionModal.create',
+                                              'Create',
+                                          )}
                                 </Button>
                             </Group>
                         </Group>
