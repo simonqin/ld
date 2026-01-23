@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState, type FC } from 'react';
 
 import {
-    getEmailSchema,
     isOpenIdIdentityIssuerType,
     LightdashMode,
     LocalIssuerTypes,
@@ -34,6 +33,7 @@ import { ThirdPartySignInButton } from '../../../components/common/ThirdPartySig
 import LightdashLogo from '../../../components/LightdashLogo/LightdashLogo';
 import PageSpinner from '../../../components/PageSpinner';
 import useToaster from '../../../hooks/toaster/useToaster';
+import { emailSchema } from '../../../utils/validation';
 import { useFlashMessages } from '../../../hooks/useFlashMessages';
 import useApp from '../../../providers/App/useApp';
 import useTracking from '../../../providers/Tracking/useTracking';
@@ -48,6 +48,7 @@ const Login: FC<{}> = () => {
     const { identify } = useTracking();
     const location = useLocation();
     const { t } = useTranslation('auth');
+    const { t: tValidation } = useTranslation('validation');
 
     const { showToastError, showToastApiError } = useToaster();
     const flashMessages = useFlashMessages();
@@ -79,7 +80,7 @@ const Login: FC<{}> = () => {
         },
         validate: zodResolver(
             z.object({
-                email: getEmailSchema(),
+                email: emailSchema(tValidation),
             }),
         ),
     });

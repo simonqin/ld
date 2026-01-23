@@ -1,1 +1,5 @@
-{}
+{
+    "required": "Required",
+    "emailInvalid": "Email address is not valid",
+    "emailWhitespace": "Email address must not contain whitespaces"
+}

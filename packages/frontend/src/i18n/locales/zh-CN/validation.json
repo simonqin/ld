@@ -1,1 +1,5 @@
-{}
+{
+    "required": "必填",
+    "emailInvalid": "邮箱格式不正确",
+    "emailWhitespace": "邮箱不能包含空格"
+}
