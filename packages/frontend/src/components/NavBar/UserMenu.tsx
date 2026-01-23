@@ -8,6 +8,7 @@ import useLogoutMutation from '../../hooks/user/useUserLogoutMutation';
 import useApp from '../../providers/App/useApp';
 import { UserAvatar } from '../UserAvatar';
 import MantineIcon from '../common/MantineIcon';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const UserMenu: FC = () => {
     const { user } = useApp();
@@ -50,6 +51,8 @@ const UserMenu: FC = () => {
                         Invite user
                     </Menu.Item>
                 ) : null}
+
+                <LanguageSwitcher />
 
                 <Menu.Item
                     role="menuitem"
