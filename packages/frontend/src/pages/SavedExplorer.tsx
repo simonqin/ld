@@ -1,6 +1,7 @@
 import { lazy, memo, Suspense, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import ErrorState from '../components/common/ErrorState';
 import Page from '../components/common/Page/Page';
 import SuboptimalState from '../components/common/SuboptimalState/SuboptimalState';
@@ -48,6 +49,7 @@ const SavedExplorerContent = memo(() => {
 });
 
 const SavedExplorer = () => {
+    const { t } = useTranslation('explore');
     const { health } = useApp();
 
     const { savedQueryUuid, mode } = useParams<{
@@ -110,7 +112,10 @@ const SavedExplorer = () => {
     if (isInitialLoading || !data) {
         return (
             <div style={{ marginTop: '20px' }}>
-                <SuboptimalState title="Loading..." loading />
+                <SuboptimalState
+                    title={t('loading', 'Loading...')}
+                    loading
+                />
             </div>
         );
     }

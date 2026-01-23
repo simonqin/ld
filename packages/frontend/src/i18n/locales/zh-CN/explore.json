@@ -1,1 +1,13 @@
-{}
+{
+    "pageTitleSemantic": "探索",
+    "pageTitleTablesFallback": "数据表",
+    "loading": "加载中...",
+    "semanticLayer": {
+        "loading": "加载语义层",
+        "loadFailed": "无法加载探索",
+        "empty": "没有语义层探索"
+    },
+    "chartHistory": {
+        "title": "图表版本历史"
+    }
+}

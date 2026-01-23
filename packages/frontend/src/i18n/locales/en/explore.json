@@ -1,1 +1,13 @@
-{}
+{
+    "pageTitleSemantic": "Explore",
+    "pageTitleTablesFallback": "Tables",
+    "loading": "Loading...",
+    "semanticLayer": {
+        "loading": "Loading semantic layer",
+        "loadFailed": "Could not load explores",
+        "empty": "No semantic layer explores"
+    },
+    "chartHistory": {
+        "title": "Chart version history"
+    }
+}

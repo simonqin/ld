@@ -24,6 +24,7 @@ import {
 import React, { memo, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { EmptyState } from '../components/common/EmptyState';
 import ErrorState from '../components/common/ErrorState';
 import MantineIcon from '../components/common/MantineIcon';
@@ -104,6 +105,7 @@ const ChartHistoryExplorer = memo<{ selectedVersionUuid: string | undefined }>(
 
 const ChartHistory = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation('explore');
     const { savedQueryUuid, projectUuid } = useParams<{
         savedQueryUuid: string;
         projectUuid: string;
@@ -133,7 +135,10 @@ const ChartHistory = () => {
     if (historyQuery.isInitialLoading || chartQuery.isInitialLoading) {
         return (
             <div style={{ marginTop: '20px' }}>
-                <SuboptimalState title="Loading..." loading />
+                <SuboptimalState
+                    title={t('loading', 'Loading...')}
+                    loading
+                />
             </div>
         );
     }
@@ -147,7 +152,7 @@ const ChartHistory = () => {
 
     return (
         <Page
-            title="Chart version history"
+            title={t('chartHistory.title', 'Chart version history')}
             withSidebarFooter
             withFullHeight
             withPaddedContent

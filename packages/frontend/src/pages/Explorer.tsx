@@ -3,6 +3,7 @@ import { IconAlertTriangle } from '@tabler/icons-react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import { ExploreType, type SummaryExplore } from '@lightdash/common';
 import { useHotkeys } from '@mantine/hooks';
@@ -39,12 +40,15 @@ const ExplorerContent = memo(() => {
 
     const dispatch = useExplorerDispatch();
     const navigate = useNavigate();
+    const { t } = useTranslation('explore');
 
     // Get table name from Redux
     const tableId = useExplorerSelector(selectTableName);
     const { data } = useExplore(tableId);
     const isSemanticLayerExplore = data?.type === ExploreType.SEMANTIC_LAYER;
-    const pageTitle = isSemanticLayerExplore ? '探索' : data?.label || 'Tables';
+    const pageTitle = isSemanticLayerExplore
+        ? t('pageTitleSemantic', 'Explore')
+        : data?.label || t('pageTitleTablesFallback', 'Tables');
 
     const handleClearQuery = useCallback(() => {
         dispatch(
@@ -106,6 +110,7 @@ const ExplorerPage = memo(() => {
     const navigate = useNavigate();
 
     const { user, health } = useApp();
+    const { t } = useTranslation('explore');
     const hasSemanticLayer = !!health.data?.hasDbtSemanticLayer;
     const shouldResolveSemanticLayer =
         hasSemanticLayer && !tableId && !!projectUuid;
@@ -163,13 +168,23 @@ const ExplorerPage = memo(() => {
 
     if (shouldResolveSemanticLayer) {
         if (exploresResult.isLoading) {
-            return <LoadingState title="Loading semantic layer" />;
+            return (
+                <LoadingState
+                    title={t(
+                        'semanticLayer.loading',
+                        'Loading semantic layer',
+                    )}
+                />
+            );
         }
         if (exploresResult.isError) {
             return (
                 <SuboptimalState
                     icon={IconAlertTriangle}
-                    title="Could not load explores"
+                    title={t(
+                        'semanticLayer.loadFailed',
+                        'Could not load explores',
+                    )}
                 />
             );
         }
@@ -177,11 +192,18 @@ const ExplorerPage = memo(() => {
             return (
                 <SuboptimalState
                     icon={IconAlertTriangle}
-                    title="No semantic layer explores"
+                    title={t(
+                        'semanticLayer.empty',
+                        'No semantic layer explores',
+                    )}
                 />
             );
         }
-        return <LoadingState title="Loading semantic layer" />;
+        return (
+            <LoadingState
+                title={t('semanticLayer.loading', 'Loading semantic layer')}
+            />
+        );
     }
 
     // Key ensures component remounts when navigating between tables
