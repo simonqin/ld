@@ -5,6 +5,7 @@ import { IconAlertCircle, IconArrowLeft } from '@tabler/icons-react';
 import { useFeatureFlagEnabled } from 'posthog-js/react';
 import { memo, useEffect, useMemo, type FC } from 'react';
 import { useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import useEmbed from '../../../ee/providers/Embed/useEmbed';
 import {
     explorerActions,
@@ -36,6 +37,7 @@ const ExplorerHeader: FC = memo(() => {
     const { user } = useApp();
     const { onBackToDashboard } = useEmbed();
     const ability = useAbilityContext();
+    const { t } = useTranslation('explore');
 
     // Get state from Redux and new hook
     const limit = useExplorerSelector(selectQueryLimit);
@@ -92,11 +94,14 @@ const ExplorerHeader: FC = memo(() => {
 
         // Edge case: there are no public spaces and the user does not have permissions to create spaces
         if (!userCanCreateChartsInSpace && !userCanCreateSpace) {
-            return 'There are no public spaces to save this chart to';
+            return t(
+                'header.noPublicSpaces',
+                'There are no public spaces to save this chart to',
+            );
         }
 
         return null;
-    }, [userCanCreateChartsInSpace, userCanCreateSpace]);
+    }, [userCanCreateChartsInSpace, userCanCreateSpace, t]);
 
     const urlToShare = useMemo(() => {
         if (unsavedChartVersion) {
@@ -115,8 +120,10 @@ const ExplorerHeader: FC = memo(() => {
     useEffect(() => {
         const checkReload = (event: BeforeUnloadEvent) => {
             if (getHasDashboardChanges()) {
-                const message =
-                    'You have unsaved changes to your dashboard! Are you sure you want to leave without saving?';
+                const message = t(
+                    'header.unsavedDashboardWarning',
+                    'You have unsaved changes to your dashboard! Are you sure you want to leave without saving?',
+                );
                 event.returnValue = message;
                 return message;
             }
@@ -125,7 +132,7 @@ const ExplorerHeader: FC = memo(() => {
         return () => {
             window.removeEventListener('beforeunload', checkReload);
         };
-    }, [getHasDashboardChanges]);
+    }, [getHasDashboardChanges, t]);
 
     // FEATURE FLAG: this component doesn't appear when the feature flag is disabled
     const userTimeZonesEnabled = useFeatureFlagEnabled(
@@ -142,7 +149,7 @@ const ExplorerHeader: FC = memo(() => {
                     leftIcon={<MantineIcon icon={IconArrowLeft} />}
                     onClick={onBackToDashboard}
                 >
-                    Back to Dashboard
+                    {t('header.backToDashboard', 'Back to Dashboard')}
                 </Button>
             )}
 
@@ -154,7 +161,11 @@ const ExplorerHeader: FC = memo(() => {
                 {showLimitWarning && (
                     <Tooltip
                         width={400}
-                        label={`Query limit of ${limit} reached. There may be additional results that have not been displayed. To see more, increase the query limit or try narrowing filters.`}
+                        label={t(
+                            'header.limitWarning',
+                            'Query limit of {{limit}} reached. There may be additional results that have not been displayed. To see more, increase the query limit or try narrowing filters.',
+                            { limit },
+                        )}
                         multiline
                         position={'bottom'}
                     >
@@ -170,7 +181,10 @@ const ExplorerHeader: FC = memo(() => {
                             tt="none"
                             sx={{ cursor: 'help' }}
                         >
-                            Results may be incomplete
+                            {t(
+                                'header.resultsIncomplete',
+                                'Results may be incomplete',
+                            )}
                         </Badge>
                     </Tooltip>
                 )}

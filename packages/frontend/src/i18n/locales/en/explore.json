@@ -9,5 +9,41 @@
     },
     "chartHistory": {
         "title": "Chart version history"
+    },
+    "breadcrumbs": {
+        "spaceLabel": "Space:",
+        "dashboardLabel": "Dashboard:"
+    },
+    "header": {
+        "backToDashboard": "Back to Dashboard",
+        "limitWarning": "Query limit of {{limit}} reached. There may be additional results that have not been displayed. To see more, increase the query limit or try narrowing filters.",
+        "resultsIncomplete": "Results may be incomplete",
+        "noPublicSpaces": "There are no public spaces to save this chart to",
+        "unsavedDashboardWarning": "You have unsaved changes to your dashboard! Are you sure you want to leave without saving?",
+        "unsavedChartWarning": "You have unsaved changes to your chart! Are you sure you want to leave without saving?",
+        "stay": "Stay",
+        "leavePage": "Leave page",
+        "editChart": "Edit chart",
+        "cancel": "Cancel",
+        "cancelChanges": "Cancel changes",
+        "returnToDashboard": "Return to dashboard",
+        "manage": "Manage",
+        "saveChartAs": "Save chart as",
+        "duplicate": "Duplicate",
+        "addToDashboard": "Add to dashboard",
+        "moveToSpace": "Move to space",
+        "pinToHomepage": "Pin to homepage",
+        "unpinFromHomepage": "Unpin from homepage",
+        "moveChart": "Move chart",
+        "versionHistory": "Version history",
+        "promoteChart": "Promote chart",
+        "promoteDisabledNoUpstream": "You must first enable an upstream project in settings > Data ops",
+        "promoteDisabledNoPermission": "You don't have permissions to promote this chart on the upstream project",
+        "integrations": "Integrations",
+        "scheduledDeliveries": "Scheduled deliveries",
+        "alerts": "Alerts",
+        "googleSheetsSync": "Google Sheets Sync",
+        "delete": "Delete",
+        "queryWarnings": "Query warnings"
     }
 }

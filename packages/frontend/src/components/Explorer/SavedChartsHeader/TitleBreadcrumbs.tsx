@@ -2,6 +2,7 @@ import { ActionIcon, Anchor, Group, Text, Tooltip } from '@mantine/core';
 import { IconFolder } from '@tabler/icons-react';
 import { type FC } from 'react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import MantineIcon from '../../common/MantineIcon';
 
 type Props = {
@@ -28,6 +29,7 @@ export const TitleBreadCrumbs: FC<Props> = ({
     dashboardName,
 }) => {
     const isChartWithinDashboard = !!(dashboardUuid && dashboardName);
+    const { t } = useTranslation('explore');
     return (
         <>
             {spaceName && spaceUuid ? (
@@ -40,7 +42,10 @@ export const TitleBreadCrumbs: FC<Props> = ({
                             position="bottom"
                             label={
                                 <Text fz="xs">
-                                    Space:{' '}
+                                    {t(
+                                        'breadcrumbs.spaceLabel',
+                                        'Space:',
+                                    )}{' '}
                                     <Text span fw={500}>
                                         {spaceName}
                                     </Text>
@@ -87,15 +92,18 @@ export const TitleBreadCrumbs: FC<Props> = ({
                         maw={300}
                         multiline
                         withinPortal
-                        position="bottom"
-                        label={
-                            <Text fz="xs">
-                                Dashboard:{' '}
-                                <Text span fw={500}>
-                                    {dashboardName}
+                            position="bottom"
+                            label={
+                                <Text fz="xs">
+                                    {t(
+                                        'breadcrumbs.dashboardLabel',
+                                        'Dashboard:',
+                                    )}{' '}
+                                    <Text span fw={500}>
+                                        {dashboardName}
+                                    </Text>
                                 </Text>
-                            </Text>
-                        }
+                            }
                     >
                         <Anchor
                             fw={500}

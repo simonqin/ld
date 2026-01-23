@@ -12,6 +12,7 @@ import { IconAlertCircle } from '@tabler/icons-react';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import { Fragment, useState, type FC } from 'react';
 import rehypeExternalLinks from 'rehype-external-links';
+import { useTranslation } from 'react-i18next';
 import MantineIcon from '../../common/MantineIcon';
 import PaginateControl from '../../common/PaginateControl';
 
@@ -24,6 +25,7 @@ type QueryWarningsProps = {
 const QueryWarnings: FC<QueryWarningsProps> = ({ queryWarnings }) => {
     const [warningsPopoverOpened, setWarningsPopoverOpened] = useState(false);
     const [warningsPage, setWarningsPage] = useState(1);
+    const { t } = useTranslation('explore');
 
     return (
         <Popover
@@ -34,7 +36,7 @@ const QueryWarnings: FC<QueryWarningsProps> = ({ queryWarnings }) => {
             withArrow
         >
             <Popover.Target>
-                <Tooltip label="Query warnings">
+                <Tooltip label={t('header.queryWarnings', 'Query warnings')}>
                     <ActionIcon
                         color="yellow"
                         variant="subtle"
@@ -51,7 +53,7 @@ const QueryWarnings: FC<QueryWarningsProps> = ({ queryWarnings }) => {
             </Popover.Target>
             <Popover.Dropdown>
                 <Title order={6} fw={600}>
-                    Query warnings
+                    {t('header.queryWarnings', 'Query warnings')}
                 </Title>
                 <Stack spacing="xs" mt={'md'}>
                     {queryWarnings

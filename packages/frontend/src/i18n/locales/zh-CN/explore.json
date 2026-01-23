@@ -9,5 +9,41 @@
     },
     "chartHistory": {
         "title": "图表版本历史"
+    },
+    "breadcrumbs": {
+        "spaceLabel": "空间：",
+        "dashboardLabel": "仪表板："
+    },
+    "header": {
+        "backToDashboard": "返回仪表板",
+        "limitWarning": "已达到查询上限 {{limit}}。可能还有更多结果未显示。要查看更多，请提高查询上限或缩小过滤范围。",
+        "resultsIncomplete": "结果可能不完整",
+        "noPublicSpaces": "没有可用于保存图表的公共空间",
+        "unsavedDashboardWarning": "仪表板有未保存的更改！确定要离开而不保存吗？",
+        "unsavedChartWarning": "图表有未保存的更改！确定要离开而不保存吗？",
+        "stay": "留下",
+        "leavePage": "离开页面",
+        "editChart": "编辑图表",
+        "cancel": "取消",
+        "cancelChanges": "取消更改",
+        "returnToDashboard": "返回仪表板",
+        "manage": "管理",
+        "saveChartAs": "另存为图表",
+        "duplicate": "复制",
+        "addToDashboard": "添加到仪表板",
+        "moveToSpace": "移动到空间",
+        "pinToHomepage": "固定到首页",
+        "unpinFromHomepage": "从首页取消固定",
+        "moveChart": "移动图表",
+        "versionHistory": "版本历史",
+        "promoteChart": "提升图表",
+        "promoteDisabledNoUpstream": "请先在设置 > Data ops 中启用上游项目",
+        "promoteDisabledNoPermission": "你没有权限在上游项目中提升该图表",
+        "integrations": "集成",
+        "scheduledDeliveries": "定时发送",
+        "alerts": "告警",
+        "googleSheetsSync": "Google Sheets 同步",
+        "delete": "删除",
+        "queryWarnings": "查询警告"
     }
 }

@@ -41,6 +41,7 @@ import {
 } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useState, type FC } from 'react';
 import { useBlocker, useLocation, useNavigate, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
     explorerActions,
     selectHasUnsavedChanges,
@@ -101,6 +102,7 @@ const SavedChartsHeader: FC = () => {
     const userTimeZonesEnabled = useFeatureFlagEnabled(
         FeatureFlags.EnableUserTimezones,
     );
+    const { t } = useTranslation('explore');
 
     const { search } = useLocation();
     const { projectUuid } = useParams<{
@@ -203,15 +205,17 @@ const SavedChartsHeader: FC = () => {
     useEffect(() => {
         const checkReload = (event: BeforeUnloadEvent) => {
             if (hasUnsavedChanges && isEditMode) {
-                const message =
-                    'You have unsaved changes to your dashboard! Are you sure you want to leave without saving?';
+                const message = t(
+                    'header.unsavedDashboardWarning',
+                    'You have unsaved changes to your dashboard! Are you sure you want to leave without saving?',
+                );
                 event.returnValue = message;
                 return message;
             }
         };
         window.addEventListener('beforeunload', checkReload);
         return () => window.removeEventListener('beforeunload', checkReload);
-    }, [hasUnsavedChanges, isEditMode]);
+    }, [hasUnsavedChanges, isEditMode, t]);
 
     // Block navigating away if there are unsaved changes
     const blocker = useBlocker(({ nextLocation }) => {
@@ -327,8 +331,10 @@ const SavedChartsHeader: FC = () => {
                         }
                         color="red"
                     >
-                        You have unsaved changes to your chart! Are you sure you
-                        want to leave without saving?
+                        {t(
+                            'header.unsavedChartWarning',
+                            'You have unsaved changes to your chart! Are you sure you want to leave without saving?',
+                        )}
                     </Alert>
                     <Group position="right" mt="sm">
                         <Button
@@ -338,7 +344,7 @@ const SavedChartsHeader: FC = () => {
                                 blocker.reset();
                             }}
                         >
-                            Stay
+                            {t('header.stay', 'Stay')}
                         </Button>
                         <Button
                             color="red"
@@ -346,7 +352,7 @@ const SavedChartsHeader: FC = () => {
                                 blocker.proceed();
                             }}
                         >
-                            Leave page
+                            {t('header.leavePage', 'Leave page')}
                         </Button>
                     </Group>
                 </Modal>
@@ -447,7 +453,7 @@ const SavedChartsHeader: FC = () => {
                                                 })
                                             }
                                         >
-                                            Edit chart
+                                            {t('header.editChart', 'Edit chart')}
                                         </Button>
                                         <ShareShortLinkButton
                                             disabled={!isValidQuery}
@@ -465,14 +471,21 @@ const SavedChartsHeader: FC = () => {
                                             }
                                             onClick={handleCancelClick}
                                         >
-                                            Cancel{' '}
-                                            {isFromDashboard ? 'changes' : ''}
+                                            {isFromDashboard
+                                                ? t(
+                                                      'header.cancelChanges',
+                                                      'Cancel changes',
+                                                  )
+                                                : t('header.cancel', 'Cancel')}
                                         </Button>
 
                                         {isFromDashboard && (
                                             <Tooltip
                                                 offset={-1}
-                                                label="Return to dashboard"
+                                                label={t(
+                                                    'header.returnToDashboard',
+                                                    'Return to dashboard',
+                                                )}
                                                 withinPortal
                                                 position="bottom"
                                             >
@@ -500,7 +513,9 @@ const SavedChartsHeader: FC = () => {
                             disabled={!unsavedChartVersion.tableName}
                         >
                             <Menu.Dropdown>
-                                <Menu.Label>Manage</Menu.Label>
+                                <Menu.Label>
+                                    {t('header.manage', 'Manage')}
+                                </Menu.Label>
                                 {userCanManageChart && hasUnsavedChanges && (
                                     <Menu.Item
                                         icon={
@@ -510,7 +525,10 @@ const SavedChartsHeader: FC = () => {
                                         }
                                         onClick={queryModalHandlers.open}
                                     >
-                                        Save chart as
+                                        {t(
+                                            'header.saveChartAs',
+                                            'Save chart as',
+                                        )}
                                     </Menu.Item>
                                 )}
                                 {userCanManageChart &&
@@ -520,13 +538,13 @@ const SavedChartsHeader: FC = () => {
                                             icon={
                                                 <MantineIcon icon={IconCopy} />
                                             }
-                                            onClick={
-                                                chartDuplicateModalHandlers.open
-                                            }
-                                        >
-                                            Duplicate
-                                        </Menu.Item>
-                                    )}
+                                        onClick={
+                                            chartDuplicateModalHandlers.open
+                                        }
+                                    >
+                                        {t('header.duplicate', 'Duplicate')}
+                                    </Menu.Item>
+                                )}
                                 {userCanManageChart &&
                                     !chartBelongsToDashboard && (
                                         <Menu.Item
@@ -535,13 +553,16 @@ const SavedChartsHeader: FC = () => {
                                                     icon={IconLayoutGridAdd}
                                                 />
                                             }
-                                            onClick={
-                                                addToDashboardModalHandlers.open
-                                            }
-                                        >
-                                            Add to dashboard
-                                        </Menu.Item>
-                                    )}
+                                        onClick={
+                                            addToDashboardModalHandlers.open
+                                        }
+                                    >
+                                        {t(
+                                            'header.addToDashboard',
+                                            'Add to dashboard',
+                                        )}
+                                    </Menu.Item>
+                                )}
                                 {userCanManageChart &&
                                     savedChart?.dashboardUuid && (
                                         <Menu.Item
@@ -550,13 +571,16 @@ const SavedChartsHeader: FC = () => {
                                                     icon={IconFolders}
                                                 />
                                             }
-                                            onClick={() =>
-                                                setIsMovingChart(true)
-                                            }
-                                        >
-                                            Move to space
-                                        </Menu.Item>
-                                    )}
+                                        onClick={() =>
+                                            setIsMovingChart(true)
+                                        }
+                                    >
+                                        {t(
+                                            'header.moveToSpace',
+                                            'Move to space',
+                                        )}
+                                    </Menu.Item>
+                                )}
 
                                 {!chartBelongsToDashboard &&
                                     userCanPinChart && (
@@ -577,8 +601,14 @@ const SavedChartsHeader: FC = () => {
                                             onClick={onChartPinning}
                                         >
                                             {isPinned
-                                                ? 'Unpin from homepage'
-                                                : 'Pin to homepage'}
+                                                ? t(
+                                                      'header.unpinFromHomepage',
+                                                      'Unpin from homepage',
+                                                  )
+                                                : t(
+                                                      'header.pinToHomepage',
+                                                      'Pin to homepage',
+                                                  )}
                                         </Menu.Item>
                                     )}
 
@@ -590,13 +620,13 @@ const SavedChartsHeader: FC = () => {
                                                     icon={IconFolderSymlink}
                                                 />
                                             }
-                                            onClick={
-                                                transferToSpaceModalHandlers.open
-                                            }
-                                        >
-                                            Move chart
-                                        </Menu.Item>
-                                    )}
+                                        onClick={
+                                            transferToSpaceModalHandlers.open
+                                        }
+                                    >
+                                        {t('header.moveChart', 'Move chart')}
+                                    </Menu.Item>
+                                )}
 
                                 {userCanManageChart && (
                                     <Menu.Item
@@ -609,15 +639,24 @@ const SavedChartsHeader: FC = () => {
                                             })
                                         }
                                     >
-                                        Version history
+                                        {t(
+                                            'header.versionHistory',
+                                            'Version history',
+                                        )}
                                     </Menu.Item>
                                 )}
                                 {
                                     <Tooltip
                                         label={
                                             userCanPromoteChart
-                                                ? 'You must enable first an upstream project in settings > Data ops'
-                                                : "You don't have permissions to promote this chart on the upstream project"
+                                                ? t(
+                                                      'header.promoteDisabledNoUpstream',
+                                                      'You must first enable an upstream project in settings > Data ops',
+                                                  )
+                                                : t(
+                                                      'header.promoteDisabledNoPermission',
+                                                      "You don't have permissions to promote this chart on the upstream project",
+                                                  )
                                         }
                                         disabled={!promoteDisabled}
                                         withinPortal
@@ -639,14 +678,19 @@ const SavedChartsHeader: FC = () => {
                                                         );
                                                 }}
                                             >
-                                                Promote chart
+                                                {t(
+                                                    'header.promoteChart',
+                                                    'Promote chart',
+                                                )}
                                             </Menu.Item>
                                         </div>
                                     </Tooltip>
                                 }
 
                                 <Menu.Divider />
-                                <Menu.Label>Integrations</Menu.Label>
+                                <Menu.Label>
+                                    {t('header.integrations', 'Integrations')}
+                                </Menu.Label>
                                 {userCanCreateDeliveriesAndAlerts && (
                                     <Menu.Item
                                         icon={<MantineIcon icon={IconSend} />}
@@ -654,7 +698,10 @@ const SavedChartsHeader: FC = () => {
                                             scheduledDeliveriesModalHandlers.open
                                         }
                                     >
-                                        Scheduled deliveries
+                                        {t(
+                                            'header.scheduledDeliveries',
+                                            'Scheduled deliveries',
+                                        )}
                                     </Menu.Item>
                                 )}
                                 {userCanCreateDeliveriesAndAlerts && (
@@ -664,7 +711,7 @@ const SavedChartsHeader: FC = () => {
                                             thresholdAlertsModalHandlers.open
                                         }
                                     >
-                                        Alerts
+                                        {t('header.alerts', 'Alerts')}
                                     </Menu.Item>
                                 )}
                                 {userCanManageChart &&
@@ -685,14 +732,17 @@ const SavedChartsHeader: FC = () => {
                                                         }
                                                     />
                                                 }
-                                                onClick={
-                                                    syncWithGoogleSheetsModalHandlers.open
-                                                }
-                                            >
-                                                Google Sheets Sync
-                                            </Menu.Item>
-                                        </Can>
-                                    )}
+                                            onClick={
+                                                syncWithGoogleSheetsModalHandlers.open
+                                            }
+                                        >
+                                            {t(
+                                                'header.googleSheetsSync',
+                                                'Google Sheets Sync',
+                                            )}
+                                        </Menu.Item>
+                                    </Can>
+                                )}
 
                                 {userCanManageChart && (
                                     <>
@@ -707,11 +757,11 @@ const SavedChartsHeader: FC = () => {
                                                     />
                                                 }
                                                 color="red"
-                                                onClick={
-                                                    deleteModalHandlers.open
-                                                }
-                                            >
-                                                Delete
+                                            onClick={
+                                                deleteModalHandlers.open
+                                            }
+                                        >
+                                                {t('header.delete', 'Delete')}
                                             </Menu.Item>
                                         </Box>
                                     </>
