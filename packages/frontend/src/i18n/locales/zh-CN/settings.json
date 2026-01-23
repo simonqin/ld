@@ -1,1 +1,55 @@
-{}
+{
+    "page": {
+        "title": "设置"
+    },
+    "breadcrumbs": {
+        "settings": "设置"
+    },
+    "routes": {
+        "profileTitle": "个人资料设置",
+        "passwordTitle": "密码设置",
+        "socialLoginsTitle": "社交登录"
+    },
+    "sidebar": {
+        "yourSettings": "您的设置",
+        "organizationSettings": "组织设置",
+        "profile": "个人中心",
+        "password": "密码",
+        "passwordAndSocialLogins": "密码与社交登录",
+        "warehouseConnections": "我的仓库连接",
+        "personalAccessTokens": "个人访问令牌",
+        "general": "常规",
+        "allowedEmailDomains": "允许的邮箱域",
+        "allowedEmailDomainsDescription": "这些域名下的邮箱地址可以自动加入组织。",
+        "defaultProject": "默认项目",
+        "defaultProjectDescription": "这是用户首次登录或从新设备登录时看到的项目。如果用户没有访问权限，则会显示下一个可访问的项目。",
+        "dangerZone": "危险区",
+        "dangerZoneDescription": "此操作将删除整个工作区及其所有内容，包括用户。该操作不可撤销。",
+        "customRoles": "自定义角色",
+        "usersAndGroups": "用户与分组",
+        "userManagement": "用户管理",
+        "userGroupAttributes": "用户与分组属性",
+        "userAttributes": "用户属性",
+        "appearance": "外观",
+        "integrations": "集成",
+        "warehouseCredentials": "仓库证书",
+        "allProjects": "所有项目",
+        "scimAccessTokens": "SCIM 访问令牌",
+        "serviceAccounts": "服务账号",
+        "aiAgents": "AI Agent",
+        "currentProject": "当前项目（{{projectName}}）",
+        "connectionSettings": "连接设置",
+        "metricFlow": "MetricFlow",
+        "tablesConfiguration": "数据表配置",
+        "changesets": "Changeset",
+        "compilationHistory": "编译历史",
+        "parameters": "参数",
+        "projectAccess": "项目访问",
+        "usageAnalytics": "使用分析",
+        "syncsScheduledDeliveries": "同步与定时发送",
+        "embedConfiguration": "嵌入配置",
+        "validator": "验证器",
+        "dataOps": "Data ops",
+        "noIntegrations": "暂无可用集成"
+    }
+}

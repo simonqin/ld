@@ -1,1 +1,55 @@
-{}
+{
+    "page": {
+        "title": "Settings"
+    },
+    "breadcrumbs": {
+        "settings": "Settings"
+    },
+    "routes": {
+        "profileTitle": "Profile settings",
+        "passwordTitle": "Password settings",
+        "socialLoginsTitle": "Social logins"
+    },
+    "sidebar": {
+        "yourSettings": "Your settings",
+        "organizationSettings": "Organization settings",
+        "profile": "Profile",
+        "password": "Password",
+        "passwordAndSocialLogins": "Password & Social Logins",
+        "warehouseConnections": "My warehouse connections",
+        "personalAccessTokens": "Personal access tokens",
+        "general": "General",
+        "allowedEmailDomains": "Allowed email domains",
+        "allowedEmailDomainsDescription": "Anyone with email addresses at these domains can automatically join the organization.",
+        "defaultProject": "Default Project",
+        "defaultProjectDescription": "This is the project users will see when they log in for the first time or from a new device. If a user does not have access, they will see their next accessible project.",
+        "dangerZone": "Danger zone",
+        "dangerZoneDescription": "This action deletes the whole workspace and all its content, including users. This action is not reversible.",
+        "customRoles": "Custom roles",
+        "usersAndGroups": "Users & groups",
+        "userManagement": "User management",
+        "userGroupAttributes": "User & group attributes",
+        "userAttributes": "User attributes",
+        "appearance": "Appearance",
+        "integrations": "Integrations",
+        "warehouseCredentials": "Warehouse credentials",
+        "allProjects": "All projects",
+        "scimAccessTokens": "SCIM Access Tokens",
+        "serviceAccounts": "Service Accounts",
+        "aiAgents": "AI Agents",
+        "currentProject": "Current project ({{projectName}})",
+        "connectionSettings": "Connection settings",
+        "metricFlow": "MetricFlow",
+        "tablesConfiguration": "Tables configuration",
+        "changesets": "Changesets",
+        "compilationHistory": "Compilation history",
+        "parameters": "Parameters",
+        "projectAccess": "Project access",
+        "usageAnalytics": "Usage analytics",
+        "syncsScheduledDeliveries": "Syncs & Scheduled deliveries",
+        "embedConfiguration": "Embed configuration",
+        "validator": "Validator",
+        "dataOps": "Data ops",
+        "noIntegrations": "No integrations available"
+    }
+}

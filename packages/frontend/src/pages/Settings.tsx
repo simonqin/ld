@@ -28,6 +28,7 @@ import {
     IconVariable,
 } from '@tabler/icons-react';
 import { useMemo, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     Navigate,
     matchPath,
@@ -107,6 +108,8 @@ const Settings: FC = () => {
         user: { data: user, isInitialLoading: isUserLoading, error: userError },
     } = useApp();
 
+    const { t } = useTranslation('settings');
+
     const isCustomRolesEnabled = health?.isCustomRolesEnabled;
 
     const userGroupsFeatureFlagQuery = useFeatureFlag(
@@ -159,6 +162,95 @@ const Settings: FC = () => {
         (health?.isOrganizationWarehouseCredentialsEnabled ?? false) ||
         isWarehouseCredentialsFeatureFlagEnabled;
 
+    const passwordNavLabel = hasSocialLogin
+        ? t('sidebar.passwordAndSocialLogins', 'Password & Social Logins')
+        : t('sidebar.password', 'Password');
+    const generalTitle = t('sidebar.general', 'General');
+    const profileNavLabel = t('sidebar.profile', 'Profile');
+    const warehouseNavLabel = t(
+        'sidebar.warehouseConnections',
+        'My warehouse connections',
+    );
+    const personalAccessTokensLabel = t(
+        'sidebar.personalAccessTokens',
+        'Personal access tokens',
+    );
+    const customRolesLabel = t('sidebar.customRoles', 'Custom roles');
+    const usersAndGroupsLabel = t('sidebar.usersAndGroups', 'Users & groups');
+    const userManagementLabel = t('sidebar.userManagement', 'User management');
+    const userGroupAttributesLabel = t(
+        'sidebar.userGroupAttributes',
+        'User & group attributes',
+    );
+    const userAttributesLabel = t('sidebar.userAttributes', 'User attributes');
+    const appearanceLabel = t('sidebar.appearance', 'Appearance');
+    const integrationsLabel = t('sidebar.integrations', 'Integrations');
+    const warehouseCredentialsLabel = t(
+        'sidebar.warehouseCredentials',
+        'Warehouse credentials',
+    );
+    const allProjectsLabel = t('sidebar.allProjects', 'All projects');
+    const scimLabel = t('sidebar.scimAccessTokens', 'SCIM Access Tokens');
+    const serviceAccountsLabel = t(
+        'sidebar.serviceAccounts',
+        'Service Accounts',
+    );
+    const aiAgentsLabel = t('sidebar.aiAgents', 'AI Agents');
+    const connectionSettingsLabel = t(
+        'sidebar.connectionSettings',
+        'Connection settings',
+    );
+    const metricFlowLabel = t('sidebar.metricFlow', 'MetricFlow');
+    const tablesConfigurationLabel = t(
+        'sidebar.tablesConfiguration',
+        'Tables configuration',
+    );
+    const changesetsLabel = t('sidebar.changesets', 'Changesets');
+    const compilationHistoryLabel = t(
+        'sidebar.compilationHistory',
+        'Compilation history',
+    );
+    const parametersLabel = t('sidebar.parameters', 'Parameters');
+    const projectAccessLabel = t('sidebar.projectAccess', 'Project access');
+    const usageAnalyticsLabel = t('sidebar.usageAnalytics', 'Usage analytics');
+    const syncsScheduledDeliveriesLabel = t(
+        'sidebar.syncsScheduledDeliveries',
+        'Syncs & Scheduled deliveries',
+    );
+    const embedConfigurationLabel = t(
+        'sidebar.embedConfiguration',
+        'Embed configuration',
+    );
+    const validatorLabel = t('sidebar.validator', 'Validator');
+    const dataOpsLabel = t('sidebar.dataOps', 'Data ops');
+    const noIntegrationsText = t(
+        'sidebar.noIntegrations',
+        'No integrations available',
+    );
+    const allowedDomainsTitle = t(
+        'sidebar.allowedEmailDomains',
+        'Allowed email domains',
+    );
+    const allowedDomainsDescription = t(
+        'sidebar.allowedEmailDomainsDescription',
+        'Anyone with email addresses at these domains can automatically join the organization.',
+    );
+    const defaultProjectTitle = t('sidebar.defaultProject', 'Default Project');
+    const defaultProjectDescription = t(
+        'sidebar.defaultProjectDescription',
+        'This is the project users will see when they log in for the first time or from a new device. If a user does not have access, they will see their next accessible project.',
+    );
+    const dangerZoneTitle = t('sidebar.dangerZone', 'Danger zone');
+    const dangerZoneDescription = t(
+        'sidebar.dangerZoneDescription',
+        'This action deletes the whole workspace and all its content, including users. This action is not reversible.',
+    );
+    const yourSettingsTitle = t('sidebar.yourSettings', 'Your settings');
+    const organizationSettingsTitle = t(
+        'sidebar.organizationSettings',
+        'Organization settings',
+    );
+
     const routes = useMemo<RouteObject[]>(() => {
         const allowedRoutes: RouteObject[] = [
             {
@@ -173,7 +265,9 @@ const Settings: FC = () => {
                 path: 'profile',
                 element: (
                     <SettingsGridCard>
-                        <Title order={4}>Profile settings</Title>
+                        <Title order={4}>
+                            {t('routes.profileTitle', 'Profile settings')}
+                        </Title>
                         <ProfilePanel />
                     </SettingsGridCard>
                 ),
@@ -190,13 +284,20 @@ const Settings: FC = () => {
                 element: (
                     <Stack spacing="xl">
                         <SettingsGridCard>
-                            <Title order={4}>Password settings</Title>
+                            <Title order={4}>
+                                {t('routes.passwordTitle', 'Password settings')}
+                            </Title>
                             <PasswordPanel />
                         </SettingsGridCard>
 
                         {hasSocialLogin && (
                             <SettingsGridCard>
-                                <Title order={4}>Social logins</Title>
+                                <Title order={4}>
+                                    {t(
+                                        'routes.socialLoginsTitle',
+                                        'Social logins',
+                                    )}
+                                </Title>
                                 <SocialLoginsPanel />
                             </SettingsGridCard>
                         )}
@@ -218,16 +319,15 @@ const Settings: FC = () => {
                 element: (
                     <Stack spacing="xl">
                         <SettingsGridCard>
-                            <Title order={4}>General</Title>
+                            <Title order={4}>{generalTitle}</Title>
                             <OrganizationPanel />
                         </SettingsGridCard>
 
                         <SettingsGridCard>
                             <div>
-                                <Title order={4}>Allowed email domains</Title>
+                                <Title order={4}>{allowedDomainsTitle}</Title>
                                 <Text c="ldGray.6" fz="xs">
-                                    Anyone with email addresses at these domains
-                                    can automatically join the organization.
+                                    {allowedDomainsDescription}
                                 </Text>
                             </div>
                             <AllowedDomainsPanel />
@@ -235,12 +335,9 @@ const Settings: FC = () => {
 
                         <SettingsGridCard>
                             <div>
-                                <Title order={4}>Default Project</Title>
+                                <Title order={4}>{defaultProjectTitle}</Title>
                                 <Text c="ldGray.6" fz="xs">
-                                    This is the project users will see when they
-                                    log in for the first time or from a new
-                                    device. If a user does not have access, they
-                                    will see their next accessible project.
+                                    {defaultProjectDescription}
                                 </Text>
                             </div>
                             <DefaultProjectPanel />
@@ -249,11 +346,9 @@ const Settings: FC = () => {
                         {user.ability?.can('delete', 'Organization') && (
                             <SettingsGridCard>
                                 <div>
-                                    <Title order={4}>Danger zone </Title>
+                                    <Title order={4}>{dangerZoneTitle}</Title>
                                     <Text c="ldGray.6" fz="xs">
-                                        This action deletes the whole workspace
-                                        and all its content, including users.
-                                        This action is not reversible.
+                                        {dangerZoneDescription}
                                     </Text>
                                 </div>
                                 <DeleteOrganizationPanel />
@@ -347,11 +442,11 @@ const Settings: FC = () => {
                 path: 'integrations',
                 element: (
                     <Stack>
-                        <Title order={4}>Integrations</Title>
+                        <Title order={4}>{integrationsLabel}</Title>
                         {!health?.hasSlack &&
                             !health?.hasGithub &&
                             !health?.hasGitlab &&
-                            'No integrations available'}
+                            noIntegrationsText}
                         {health?.hasSlack && <SlackSettingsPanel />}
                         {health?.hasGithub && <GithubSettingsPanel />}
                         {health?.hasGitlab && <GitlabSettingsPanel />}
@@ -410,6 +505,16 @@ const Settings: FC = () => {
         project,
         health,
         isCustomRolesEnabled,
+        generalTitle,
+        allowedDomainsTitle,
+        allowedDomainsDescription,
+        defaultProjectTitle,
+        defaultProjectDescription,
+        dangerZoneTitle,
+        dangerZoneDescription,
+        integrationsLabel,
+        noIntegrationsText,
+        t,
     ]);
     const routeElements = useRoutes(routes);
 
@@ -462,17 +567,20 @@ const Settings: FC = () => {
 
     if (!health || !user || !organization) return <PageSpinner />;
 
+    const pageTitle = t('page.title', 'Settings');
+    const breadcrumbTitle = t('breadcrumbs.settings', 'Settings');
+
     return (
         <Page
             withFullHeight
             withSidebarFooter
             withFixedContent={isFixedContent}
             withPaddedContent
-            title="Settings"
+            title={pageTitle}
             sidebar={
                 <Stack sx={{ flexGrow: 1, overflow: 'hidden' }}>
                     <PageBreadcrumbs
-                        items={[{ title: 'Settings', active: true }]}
+                        items={[{ title: breadcrumbTitle, active: true }]}
                     />
                     <ScrollArea
                         variant="primary"
@@ -482,23 +590,19 @@ const Settings: FC = () => {
                         <Stack spacing="lg">
                             <Box>
                                 <Title order={6} fw={600} mb="xs">
-                                    Your settings
+                                    {yourSettingsTitle}
                                 </Title>
 
                                 <RouterNavLink
                                     exact
                                     to="/generalSettings"
-                                    label="Profile"
+                                    label={profileNavLabel}
                                     icon={<MantineIcon icon={IconUserCircle} />}
                                 />
 
                                 {allowPasswordAuthentication && (
                                     <RouterNavLink
-                                        label={
-                                            hasSocialLogin
-                                                ? 'Password & Social Logins'
-                                                : 'Password'
-                                        }
+                                        label={passwordNavLabel}
                                         exact
                                         to="/generalSettings/password"
                                         icon={<MantineIcon icon={IconLock} />}
@@ -506,7 +610,7 @@ const Settings: FC = () => {
                                 )}
 
                                 <RouterNavLink
-                                    label="My warehouse connections"
+                                    label={warehouseNavLabel}
                                     exact
                                     to="/generalSettings/myWarehouseConnections"
                                     icon={
@@ -518,7 +622,7 @@ const Settings: FC = () => {
                                     'PersonalAccessToken',
                                 ) && (
                                     <RouterNavLink
-                                        label="Personal access tokens"
+                                        label={personalAccessTokensLabel}
                                         exact
                                         to="/generalSettings/personalAccessTokens"
                                         icon={<MantineIcon icon={IconKey} />}
@@ -528,12 +632,12 @@ const Settings: FC = () => {
 
                             <Box>
                                 <Title order={6} fw={600} mb="xs">
-                                    Organization settings
+                                    {organizationSettingsTitle}
                                 </Title>
 
                                 {user.ability.can('manage', 'Organization') && (
                                     <RouterNavLink
-                                        label="General"
+                                        label={generalTitle}
                                         to="/generalSettings/organization"
                                         exact
                                         icon={
@@ -546,7 +650,7 @@ const Settings: FC = () => {
                                 {isCustomRolesEnabled && (
                                     <Can I="manage" a="Organization">
                                         <RouterNavLink
-                                            label="Custom roles"
+                                            label={customRolesLabel}
                                             to="/generalSettings/customRoles"
                                             exact
                                             icon={
@@ -565,8 +669,8 @@ const Settings: FC = () => {
                                     <RouterNavLink
                                         label={
                                             isGroupManagementEnabled
-                                                ? 'Users & groups'
-                                                : 'User management'
+                                                ? usersAndGroupsLabel
+                                                : userManagementLabel
                                         }
                                         to="/generalSettings/userManagement"
                                         exact
@@ -585,8 +689,8 @@ const Settings: FC = () => {
                                     <RouterNavLink
                                         label={
                                             isGroupManagementEnabled
-                                                ? 'User & group attributes'
-                                                : 'User attributes'
+                                                ? userGroupAttributesLabel
+                                                : userAttributesLabel
                                         }
                                         to="/generalSettings/userAttributes"
                                         exact
@@ -600,7 +704,7 @@ const Settings: FC = () => {
 
                                 {user.ability.can('update', 'Organization') && (
                                     <RouterNavLink
-                                        label="Appearance"
+                                        label={appearanceLabel}
                                         exact
                                         to="/generalSettings/appearance"
                                         icon={
@@ -611,7 +715,7 @@ const Settings: FC = () => {
 
                                 {user.ability.can('manage', 'Organization') && (
                                     <RouterNavLink
-                                        label="Integrations"
+                                        label={integrationsLabel}
                                         exact
                                         to="/generalSettings/integrations"
                                         icon={<MantineIcon icon={IconPlug} />}
@@ -630,7 +734,7 @@ const Settings: FC = () => {
                                 ) &&
                                     isWarehouseCredentialsEnabled && (
                                         <RouterNavLink
-                                            label="Warehouse credentials"
+                                            label={warehouseCredentialsLabel}
                                             exact
                                             to="/generalSettings/warehouseCredentials"
                                             icon={
@@ -645,7 +749,7 @@ const Settings: FC = () => {
                                     !organization.needsProject &&
                                     user.ability.can('view', 'Project') && (
                                         <RouterNavLink
-                                            label="All projects"
+                                            label={allProjectsLabel}
                                             to="/generalSettings/projectManagement"
                                             exact
                                             icon={
@@ -659,7 +763,7 @@ const Settings: FC = () => {
                                 {user.ability.can('manage', 'Organization') &&
                                     isScimTokenManagementEnabled?.enabled && (
                                         <RouterNavLink
-                                            label="SCIM Access Tokens"
+                                            label={scimLabel}
                                             exact
                                             to="/generalSettings/scimAccessTokens"
                                             icon={
@@ -670,7 +774,7 @@ const Settings: FC = () => {
                                 {user.ability.can('manage', 'Organization') &&
                                     isServiceAccountsEnabled && (
                                         <RouterNavLink
-                                            label="Service Accounts"
+                                            label={serviceAccountsLabel}
                                             exact
                                             to="/generalSettings/serviceAccounts"
                                             icon={
@@ -689,7 +793,7 @@ const Settings: FC = () => {
                                         }),
                                     ) && (
                                         <RouterNavLink
-                                            label="AI Agents"
+                                            label={aiAgentsLabel}
                                             exact
                                             to="/ai-agents/admin"
                                             icon={
@@ -712,11 +816,18 @@ const Settings: FC = () => {
                             ) ? (
                                 <Box>
                                     <Title order={6} fw={600} mb="xs">
-                                        Current project ({project?.name})
+                                        {t(
+                                            'sidebar.currentProject',
+                                            'Current project ({{projectName}})',
+                                            {
+                                                projectName:
+                                                    project?.name ?? '',
+                                            },
+                                        )}
                                     </Title>
 
                                     <RouterNavLink
-                                        label="Connection settings"
+                                        label={connectionSettingsLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/settings`}
                                         icon={
@@ -727,7 +838,7 @@ const Settings: FC = () => {
                                     />
 
                                     <RouterNavLink
-                                        label="MetricFlow"
+                                        label={metricFlowLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/metricflow`}
                                         icon={
@@ -738,7 +849,7 @@ const Settings: FC = () => {
                                     />
 
                                     <RouterNavLink
-                                        label="Tables configuration"
+                                        label={tablesConfigurationLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/tablesConfiguration`}
                                         icon={
@@ -749,7 +860,7 @@ const Settings: FC = () => {
                                     />
 
                                     <RouterNavLink
-                                        label="Changesets"
+                                        label={changesetsLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/changesets`}
                                         icon={
@@ -758,7 +869,7 @@ const Settings: FC = () => {
                                     />
 
                                     <RouterNavLink
-                                        label="Compilation history"
+                                        label={compilationHistoryLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/compilationHistory`}
                                         icon={
@@ -767,7 +878,7 @@ const Settings: FC = () => {
                                     />
 
                                     <RouterNavLink
-                                        label="Parameters"
+                                        label={parametersLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/parameters`}
                                         icon={
@@ -784,7 +895,7 @@ const Settings: FC = () => {
                                         })}
                                     >
                                         <RouterNavLink
-                                            label="Project access"
+                                            label={projectAccessLabel}
                                             exact
                                             to={`/generalSettings/projectManagement/${project.projectUuid}/projectAccess`}
                                             icon={
@@ -802,7 +913,7 @@ const Settings: FC = () => {
                                         }),
                                     ) ? (
                                         <RouterNavLink
-                                            label="Usage analytics"
+                                            label={usageAnalyticsLabel}
                                             exact
                                             to={`/generalSettings/projectManagement/${project.projectUuid}/usageAnalytics`}
                                             onClick={() => {
@@ -819,7 +930,7 @@ const Settings: FC = () => {
                                     ) : null}
 
                                     <RouterNavLink
-                                        label="Syncs & Scheduled deliveries"
+                                        label={syncsScheduledDeliveriesLabel}
                                         exact
                                         to={`/generalSettings/projectManagement/${project.projectUuid}/scheduledDeliveries`}
                                         icon={
@@ -838,7 +949,7 @@ const Settings: FC = () => {
                                         }),
                                     ) && embeddingEnabled?.enabled ? (
                                         <RouterNavLink
-                                            label="Embed configuration"
+                                            label={embedConfigurationLabel}
                                             exact
                                             to={`/generalSettings/projectManagement/${project.projectUuid}/embed`}
                                             icon={
@@ -858,7 +969,7 @@ const Settings: FC = () => {
                                         }),
                                     ) ? (
                                         <RouterNavLink
-                                            label="Validator"
+                                            label={validatorLabel}
                                             exact
                                             to={`/generalSettings/projectManagement/${project.projectUuid}/validator`}
                                             icon={
@@ -878,7 +989,7 @@ const Settings: FC = () => {
                                         }),
                                     ) ? (
                                         <RouterNavLink
-                                            label="Data ops"
+                                            label={dataOpsLabel}
                                             exact
                                             to={`/generalSettings/projectManagement/${project.projectUuid}/dataOps`}
                                             icon={
