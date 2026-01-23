@@ -35,6 +35,7 @@ export interface LightdashUser {
     updatedAt: Date;
     /* Whether the user doesn't have an authentication method (password or openId) */
     isPending?: boolean;
+    preferredLanguage?: string;
 }
 
 export interface LightdashSessionUser extends AccountUser {
@@ -53,6 +54,7 @@ export interface LightdashSessionUser extends AccountUser {
     updatedAt: Date;
     /* Whether the user doesn't have an authentication method (password or openId) */
     isPending?: boolean;
+    preferredLanguage?: string;
 }
 
 export interface ExternalUser extends AccountUser {

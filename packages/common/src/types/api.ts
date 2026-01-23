@@ -639,6 +639,7 @@ export type UpdateUserArgs = {
     isTrackingAnonymized: boolean;
     isSetupComplete: boolean;
     isActive: boolean;
+    preferredLanguage?: string;
 };
 
 export type PasswordResetLink = {

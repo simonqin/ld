@@ -11,6 +11,7 @@ export type DbUser = {
     is_setup_complete: boolean;
     is_active: boolean;
     updated_at: Date;
+    preferred_language: string | null;
 };
 
 export type DbUserIn = Pick<
@@ -33,6 +34,7 @@ export type DbUserUpdate = Partial<
         | 'is_setup_complete'
         | 'is_active'
         | 'updated_at'
+        | 'preferred_language'
     >
 >;
 

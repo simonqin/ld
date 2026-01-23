@@ -79,6 +79,7 @@ export type DbUserDetails = {
     role_uuid?: string;
     is_active: boolean;
     updated_at: Date;
+    preferred_language: string | null;
 };
 
 export const mapDbUserDetailsToLightdashUser = (
@@ -101,6 +102,7 @@ export const mapDbUserDetailsToLightdashUser = (
     isPending: !hasAuthentication,
     createdAt: user.created_at,
     updatedAt: user.updated_at,
+    preferredLanguage: user.preferred_language ?? undefined,
 });
 
 const userDetailsQueryBuilder = (
