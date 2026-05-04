@@ -1,3 +1,10 @@
+## [0.2864.4](https://github.com/lightdash/lightdash/compare/0.2864.3...0.2864.4) (2026-05-04)
+
+
+### Bug Fixes
+
+* correct ClickHouse SECOND, MILLISECOND, WEEK_NUM, and date-part-name SQL expressions ([#22645](https://github.com/lightdash/lightdash/issues/22645)) ([317b9ee](https://github.com/lightdash/lightdash/commit/317b9ee967ba8608012ac4aaf35bf3081ea31dbe))
+
 ## [0.2864.3](https://github.com/lightdash/lightdash/compare/0.2864.2...0.2864.3) (2026-05-04)
 
 
