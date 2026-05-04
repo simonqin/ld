@@ -1,3 +1,14 @@
+## [0.2864.3](https://github.com/lightdash/lightdash/compare/0.2864.2...0.2864.3) (2026-05-04)
+
+
+### Bug Fixes
+
+* replace `RegisteredAccount` with `Account` in `getJobStatus` and remove redundant assertion ([#22644](https://github.com/lightdash/lightdash/issues/22644)) ([5a33d40](https://github.com/lightdash/lightdash/commit/5a33d40656c3f0036f891c57d0307c0ce87ba119)), closes [#22639](https://github.com/lightdash/lightdash/issues/22639)
+* upgrade hono to 4.12.4 ([#22636](https://github.com/lightdash/lightdash/issues/22636)) ([b529a73](https://github.com/lightdash/lightdash/commit/b529a734951e0a10066b0ccf5834b49320d06667)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* upgrade liquidjs to 10.25.7 ([#22637](https://github.com/lightdash/lightdash/issues/22637)) ([0d0b730](https://github.com/lightdash/lightdash/commit/0d0b7301420f0a6579911f1f8495408c7302f488)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* upgrade systeminformation to 5.31.0 ([#22638](https://github.com/lightdash/lightdash/issues/22638)) ([a61bbf7](https://github.com/lightdash/lightdash/commit/a61bbf7d4ced83de87bbd6488f83f6c38ba82da5)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* upgrade vite to 8.0.5 ([#22635](https://github.com/lightdash/lightdash/issues/22635)) ([f291f39](https://github.com/lightdash/lightdash/commit/f291f39e5477fc83e262a9b266a15daec9f7547c)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+
 ## [0.2864.2](https://github.com/lightdash/lightdash/compare/0.2864.1...0.2864.2) (2026-05-04)
 
 
