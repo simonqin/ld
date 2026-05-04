@@ -1,3 +1,10 @@
+## [0.2864.6](https://github.com/lightdash/lightdash/compare/0.2864.5...0.2864.6) (2026-05-04)
+
+
+### Bug Fixes
+
+* **data-apps:** force-style floating surfaces in template ([#22652](https://github.com/lightdash/lightdash/issues/22652)) ([ff6b93a](https://github.com/lightdash/lightdash/commit/ff6b93a8c2eae257caca421ef6a881988db0e93a))
+
 ## [0.2864.5](https://github.com/lightdash/lightdash/compare/0.2864.4...0.2864.5) (2026-05-04)
 
 
