@@ -1,3 +1,10 @@
+## [0.2864.5](https://github.com/lightdash/lightdash/compare/0.2864.4...0.2864.5) (2026-05-04)
+
+
+### Bug Fixes
+
+* **timezone:** coerce inner expr to TIMESTAMP for BigQuery 3-arg TIMESTAMP_TRUNC ([#22632](https://github.com/lightdash/lightdash/issues/22632)) ([62fc08b](https://github.com/lightdash/lightdash/commit/62fc08b798a4d52306156cadc9f07992e0865aac))
+
 ## [0.2864.4](https://github.com/lightdash/lightdash/compare/0.2864.3...0.2864.4) (2026-05-04)
 
 
