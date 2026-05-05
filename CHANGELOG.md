@@ -1,3 +1,10 @@
+# [0.2869.0](https://github.com/lightdash/lightdash/compare/0.2868.0...0.2869.0) (2026-05-05)
+
+
+### Features
+
+* improve chart save as ui ([#22663](https://github.com/lightdash/lightdash/issues/22663)) ([74bd873](https://github.com/lightdash/lightdash/commit/74bd873d8ac69444c2e4853e534d58ab72bda2b9))
+
 # [0.2868.0](https://github.com/lightdash/lightdash/compare/0.2867.0...0.2868.0) (2026-05-05)
 
 
