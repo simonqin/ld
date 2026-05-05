@@ -1,3 +1,10 @@
+## [0.2865.1](https://github.com/lightdash/lightdash/compare/0.2865.0...0.2865.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* **ai-search:** drop autoFocus on home AI search box ([#22656](https://github.com/lightdash/lightdash/issues/22656)) ([d9cb209](https://github.com/lightdash/lightdash/commit/d9cb209fb2effda8158151fdeeb5d35166d835c1))
+
 # [0.2865.0](https://github.com/lightdash/lightdash/compare/0.2864.6...0.2865.0) (2026-05-05)
 
 
