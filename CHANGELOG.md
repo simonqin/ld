@@ -1,3 +1,17 @@
+# [0.2870.0](https://github.com/lightdash/lightdash/compare/0.2869.0...0.2870.0) (2026-05-05)
+
+
+### Bug Fixes
+
+* preserve long dbt YAML descriptions when generating schemas ([#22633](https://github.com/lightdash/lightdash/issues/22633)) ([5844d71](https://github.com/lightdash/lightdash/commit/5844d71b1f05f9d1f1e84582852bf6f9b961cab2))
+
+
+### Features
+
+* add `ai_prompt_context` table migration ([#22646](https://github.com/lightdash/lightdash/issues/22646)) ([5fe8945](https://github.com/lightdash/lightdash/commit/5fe89457392d294dcc8978c4f07a0c3cd0f9b89f))
+* **data-apps:** add chart-friendly format helpers [GLITCH-381] ([#22664](https://github.com/lightdash/lightdash/issues/22664)) ([a673129](https://github.com/lightdash/lightdash/commit/a6731295195938a0e93f2f568934ac1d08d99400))
+* provision dedicated user row per service account with tombstone-on-delete semantics ([#22661](https://github.com/lightdash/lightdash/issues/22661)) ([fb98374](https://github.com/lightdash/lightdash/commit/fb983747ed4c458e879adbd93d8317ffd9e39c8f))
+
 # [0.2869.0](https://github.com/lightdash/lightdash/compare/0.2868.0...0.2869.0) (2026-05-05)
 
 
