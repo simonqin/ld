@@ -1,3 +1,10 @@
+# [0.2874.0](https://github.com/lightdash/lightdash/compare/0.2873.0...0.2874.0) (2026-05-05)
+
+
+### Features
+
+* **ai-agents:** add runSavedChart tool ([#22707](https://github.com/lightdash/lightdash/issues/22707)) ([f5df3b4](https://github.com/lightdash/lightdash/commit/f5df3b407361c1a0acaf0947f6754973f8d7aaa9))
+
 # [0.2873.0](https://github.com/lightdash/lightdash/compare/0.2872.0...0.2873.0) (2026-05-05)
 
 
