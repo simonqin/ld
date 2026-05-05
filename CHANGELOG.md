@@ -1,3 +1,10 @@
+## [0.2870.1](https://github.com/lightdash/lightdash/compare/0.2870.0...0.2870.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* tile header actions flicker near chart title hover ([bd3afc5](https://github.com/lightdash/lightdash/commit/bd3afc567b6703a05fe19867bd9b870e7b3f89e8)), closes [#22669](https://github.com/lightdash/lightdash/issues/22669)
+
 # [0.2870.0](https://github.com/lightdash/lightdash/compare/0.2869.0...0.2870.0) (2026-05-05)
 
 
