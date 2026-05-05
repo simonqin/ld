@@ -1,3 +1,11 @@
+## [0.2865.3](https://github.com/lightdash/lightdash/compare/0.2865.2...0.2865.3) (2026-05-05)
+
+
+### Bug Fixes
+
+* upgrade lodash family to 4.18.1 ([#22640](https://github.com/lightdash/lightdash/issues/22640)) ([92e8b98](https://github.com/lightdash/lightdash/commit/92e8b985ab4dcc89fded22a7f33c34d1cbdab2f5))
+* upgrade next to 16.2.3 and vite 7.x to 7.3.2 ([#22641](https://github.com/lightdash/lightdash/issues/22641)) ([c9da04c](https://github.com/lightdash/lightdash/commit/c9da04cabe1f8c1ce107842c76c64703a7ee6261))
+
 ## [0.2865.2](https://github.com/lightdash/lightdash/compare/0.2865.1...0.2865.2) (2026-05-05)
 
 
