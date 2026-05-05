@@ -1,3 +1,16 @@
+## [0.2865.2](https://github.com/lightdash/lightdash/compare/0.2865.1...0.2865.2) (2026-05-05)
+
+
+### Bug Fixes
+
+* **backend:** controllers + services RegisteredAccount migration ([#22547](https://github.com/lightdash/lightdash/issues/22547)) ([#22659](https://github.com/lightdash/lightdash/issues/22659)) ([d99cf6d](https://github.com/lightdash/lightdash/commit/d99cf6d1f4d74efc7e43af5f3a5ec7219778ebc0)), closes [#22658](https://github.com/lightdash/lightdash/issues/22658) [#22548](https://github.com/lightdash/lightdash/issues/22548) [#22548](https://github.com/lightdash/lightdash/issues/22548)
+* **backend:** tail services + 6 controllers RegisteredAccount migration ([#22548](https://github.com/lightdash/lightdash/issues/22548)) ([#22658](https://github.com/lightdash/lightdash/issues/22658)) ([a84c153](https://github.com/lightdash/lightdash/commit/a84c15397dc98e3ff87a01603af60473075c7611)), closes [#22657](https://github.com/lightdash/lightdash/issues/22657)
+
+
+### Reverts
+
+* **backend:** getOrganization + OrganizationService.get to Account ([#22657](https://github.com/lightdash/lightdash/issues/22657)) ([c73764a](https://github.com/lightdash/lightdash/commit/c73764a4af878f6a79f5ac29c98cbd388edea529))
+
 ## [0.2865.1](https://github.com/lightdash/lightdash/compare/0.2865.0...0.2865.1) (2026-05-05)
 
 
