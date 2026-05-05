@@ -1,3 +1,10 @@
+# [0.2866.0](https://github.com/lightdash/lightdash/compare/0.2865.3...0.2866.0) (2026-05-05)
+
+
+### Features
+
+* **observability:** add case_sensitive resolution log events ([#22660](https://github.com/lightdash/lightdash/issues/22660)) ([3a76ad4](https://github.com/lightdash/lightdash/commit/3a76ad490f18c076f66e25119037c03f5d33ee4f))
+
 ## [0.2865.3](https://github.com/lightdash/lightdash/compare/0.2865.2...0.2865.3) (2026-05-05)
 
 
