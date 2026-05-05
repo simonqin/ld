@@ -1,3 +1,10 @@
+# [0.2876.0](https://github.com/lightdash/lightdash/compare/0.2875.0...0.2876.0) (2026-05-05)
+
+
+### Features
+
+* **prod-7424:** load service account user from middleware ([#22689](https://github.com/lightdash/lightdash/issues/22689)) ([7caf7c2](https://github.com/lightdash/lightdash/commit/7caf7c2966f948b6ec22869f0ad38a3b1ba584ef)), closes [#22661](https://github.com/lightdash/lightdash/issues/22661) [#22690](https://github.com/lightdash/lightdash/issues/22690) [#22691](https://github.com/lightdash/lightdash/issues/22691)
+
 # [0.2875.0](https://github.com/lightdash/lightdash/compare/0.2874.0...0.2875.0) (2026-05-05)
 
 
