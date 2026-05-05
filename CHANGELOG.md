@@ -1,3 +1,10 @@
+# [0.2865.0](https://github.com/lightdash/lightdash/compare/0.2864.6...0.2865.0) (2026-05-05)
+
+
+### Features
+
+* **data-apps:** improve queries panel UX ([#22653](https://github.com/lightdash/lightdash/issues/22653)) ([b3fb4bc](https://github.com/lightdash/lightdash/commit/b3fb4bcd9681e3d4e2148e467657677e3ccf7e2c))
+
 ## [0.2864.6](https://github.com/lightdash/lightdash/compare/0.2864.5...0.2864.6) (2026-05-04)
 
 
