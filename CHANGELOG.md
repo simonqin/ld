@@ -1,3 +1,13 @@
+# [0.2871.0](https://github.com/lightdash/lightdash/compare/0.2870.1...0.2871.0) (2026-05-05)
+
+
+### Features
+
+* add "Ask AI Agent" entry point from charts with pinned context cards ([#22649](https://github.com/lightdash/lightdash/issues/22649)) ([baed928](https://github.com/lightdash/lightdash/commit/baed9284fb91fa45bd2300082bb191cc372a2b6c)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* add context (chart/dashboard) to AI agent prompt requests ([#22648](https://github.com/lightdash/lightdash/issues/22648)) ([26b86fb](https://github.com/lightdash/lightdash/commit/26b86fb35b92b8e25dd37070e5d3e9123aed7799)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* add prompt context (chart/dashboard) to AI agent prompts ([#22647](https://github.com/lightdash/lightdash/issues/22647)) ([b8e33be](https://github.com/lightdash/lightdash/commit/b8e33be1e4b1b9f7a1f432eea78b35d7236c1131)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* space-level color palette picker with nested-space walk-up ([#22615](https://github.com/lightdash/lightdash/issues/22615)) ([2da46d8](https://github.com/lightdash/lightdash/commit/2da46d8ce3c9e6441280de3350e019aad3607d3f))
+
 ## [0.2870.1](https://github.com/lightdash/lightdash/compare/0.2870.0...0.2870.1) (2026-05-05)
 
 
