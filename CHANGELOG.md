@@ -1,3 +1,15 @@
+# [0.2868.0](https://github.com/lightdash/lightdash/compare/0.2867.0...0.2868.0) (2026-05-05)
+
+
+### Bug Fixes
+
+* **palette:** wire Explore through the color palette resolver ([#22662](https://github.com/lightdash/lightdash/issues/22662)) ([604c8b5](https://github.com/lightdash/lightdash/commit/604c8b5fdf700464f12a570b9bee7279d57bf957))
+
+
+### Features
+
+* **timezone:** tz-aware EXTRACT-based time dimensions ([#22651](https://github.com/lightdash/lightdash/issues/22651)) ([bfa42a9](https://github.com/lightdash/lightdash/commit/bfa42a97e5bd650d6842b3daa4fe2d8631b80b4f))
+
 # [0.2867.0](https://github.com/lightdash/lightdash/compare/0.2866.0...0.2867.0) (2026-05-05)
 
 
