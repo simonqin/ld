@@ -1,3 +1,10 @@
+# [0.2873.0](https://github.com/lightdash/lightdash/compare/0.2872.0...0.2873.0) (2026-05-05)
+
+
+### Features
+
+* **formula:** add CASE WHEN and COUNT(DISTINCT) grammar ([#22665](https://github.com/lightdash/lightdash/issues/22665)) ([fe6b2cd](https://github.com/lightdash/lightdash/commit/fe6b2cd679745266636b04edefdce9d2af36fae2))
+
 # [0.2872.0](https://github.com/lightdash/lightdash/compare/0.2871.0...0.2872.0) (2026-05-05)
 
 
