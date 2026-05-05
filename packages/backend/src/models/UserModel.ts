@@ -363,6 +363,11 @@ export class UserModel {
                 'password_logins.user_id',
             )
             .where('email', email)
+            // Defence-in-depth: internal user records (service accounts,
+            // future: persisted embed/AI principals) have no email row, so
+            // this is already empty for them — the explicit guard documents
+            // intent and survives any join refactor.
+            .andWhere(`${UserTableName}.is_internal`, false)
             .select<(DbUserDetails & { password_hash: string })[]>(
                 '*',
                 'organizations.created_at as organization_created_at',
@@ -833,6 +838,7 @@ export class UserModel {
         const [user] = await userDetailsQueryBuilder(this.database)
             .where('email', email)
             .andWhere('emails.is_primary', true)
+            .andWhere(`${UserTableName}.is_internal`, false)
             .select('*', 'organizations.created_at as organization_created_at');
         if (user === undefined) {
             return undefined;
@@ -858,6 +864,7 @@ export class UserModel {
     async findUserByEmail(email: string): Promise<LightdashUser | undefined> {
         const [user] = await userDetailsQueryBuilder(this.database)
             .where('email', email)
+            .andWhere(`${UserTableName}.is_internal`, false)
             .select('*', 'organizations.created_at as organization_created_at');
         return user
             ? mapDbUserDetailsToLightdashUser(
