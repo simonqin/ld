@@ -1,3 +1,17 @@
+# [0.2872.0](https://github.com/lightdash/lightdash/compare/0.2871.0...0.2872.0) (2026-05-05)
+
+
+### Bug Fixes
+
+* add hint to invite @Lightdash to private Slack channels ([#22670](https://github.com/lightdash/lightdash/issues/22670)) ([34bb9aa](https://github.com/lightdash/lightdash/commit/34bb9aae3042b917f396faffa310737ffe3022a5))
+* remediate ajv ReDoS transitive (CVE-2025-69873) [PROD-3546] ([#22683](https://github.com/lightdash/lightdash/issues/22683)) ([4ed5c0c](https://github.com/lightdash/lightdash/commit/4ed5c0c93871ebb40e504d275118fb3f4095bfde))
+* set minimum managed agent schedule to hourly and validate cron frequency ([#22671](https://github.com/lightdash/lightdash/issues/22671)) ([9f74a91](https://github.com/lightdash/lightdash/commit/9f74a91ba0afe2aa99d6820f558fc8b3ff91b717))
+
+
+### Features
+
+* **validations:** switch validations PK to UUID to prevent integer sequence exhaustion ([#22666](https://github.com/lightdash/lightdash/issues/22666)) ([c4206d8](https://github.com/lightdash/lightdash/commit/c4206d80f0669b6c6a6d01aa310b2cdf368c521a))
+
 # [0.2871.0](https://github.com/lightdash/lightdash/compare/0.2870.1...0.2871.0) (2026-05-05)
 
 
