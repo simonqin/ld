@@ -1,3 +1,12 @@
+# [0.2875.0](https://github.com/lightdash/lightdash/compare/0.2874.0...0.2875.0) (2026-05-05)
+
+
+### Features
+
+* **formula:** add OVER (PARTITION BY ...) on aggregates (ZAP-368) ([#22682](https://github.com/lightdash/lightdash/issues/22682)) ([3141c55](https://github.com/lightdash/lightdash/commit/3141c55b6bc195ed6b180561231e77a53f4c4e94))
+* **formula:** add SPLIT_PART, STRPOS, STARTS_WITH (ZAP-367) ([#22667](https://github.com/lightdash/lightdash/issues/22667)) ([ac39cf1](https://github.com/lightdash/lightdash/commit/ac39cf1bd227ee562bc19373a65948e7e40b1095))
+* **table-calculations:** announce upcoming custom SQL permission move ([#22692](https://github.com/lightdash/lightdash/issues/22692)) ([a49108c](https://github.com/lightdash/lightdash/commit/a49108c90dddace8212b84a968f79f68c371f030))
+
 # [0.2874.0](https://github.com/lightdash/lightdash/compare/0.2873.0...0.2874.0) (2026-05-05)
 
 
