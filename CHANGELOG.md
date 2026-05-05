@@ -1,3 +1,10 @@
+# [0.2867.0](https://github.com/lightdash/lightdash/compare/0.2866.0...0.2867.0) (2026-05-05)
+
+
+### Features
+
+* add save chart to space or dashboard option ([#22654](https://github.com/lightdash/lightdash/issues/22654)) ([16079f7](https://github.com/lightdash/lightdash/commit/16079f70da120a1601b4e5cd588290bd3c0a0b3f))
+
 # [0.2866.0](https://github.com/lightdash/lightdash/compare/0.2865.3...0.2866.0) (2026-05-05)
 
 
