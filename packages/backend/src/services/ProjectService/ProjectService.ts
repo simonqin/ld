@@ -1673,14 +1673,26 @@ export class ProjectService extends BaseService {
         }
     }
 
-    async saveExploresToCacheAndIndexCatalog(
-        userUuid: string,
-        projectUuid: string,
-        explores: (Explore | ExploreError)[],
-        compilationSource: 'cli_deploy' | 'refresh_dbt' | 'create_project',
-        jobUuid?: string | null,
-        requestMethod?: string | null,
-    ) {
+    async saveExploresToCacheAndIndexCatalog(args: {
+        userUuid: string;
+        projectUuid: string;
+        explores: (Explore | ExploreError)[];
+        compilationSource: 'cli_deploy' | 'refresh_dbt' | 'create_project';
+        jobUuid?: string | null;
+        requestMethod?: string | null;
+        projectConfigDefaults?: ProjectDefaults;
+        cliVersion?: string | null;
+    }) {
+        const {
+            userUuid,
+            projectUuid,
+            explores,
+            compilationSource,
+            jobUuid,
+            requestMethod,
+            projectConfigDefaults,
+            cliVersion,
+        } = args;
         // We delete the explores when saving to cache which cascades to the catalog
         // So we need to get the current tagged catalog items before deleting the explores (to do a best effort re-tag) and icons
         const prevCatalogItemsWithTags =
@@ -1709,6 +1721,29 @@ export class ProjectService extends BaseService {
 
         const compilationReport = calculateCompilationReport({ explores });
         const project = await this.projectModel.get(projectUuid);
+
+        Logger.info('compile.case_sensitive_resolution', {
+            projectUuid,
+            organizationUuid,
+            compilationSource,
+            cliVersion: cliVersion ?? null,
+            projectDefault: projectConfigDefaults?.case_sensitive ?? null,
+            exploreCount: explores.length,
+            exploresWithFlag: explores
+                .filter((e) => e.caseSensitive !== undefined)
+                .map((e) => ({ name: e.name, value: e.caseSensitive })),
+            dimensionsWithFlag: explores.flatMap((e) =>
+                Object.entries(e.tables ?? {}).flatMap(([t, tbl]) =>
+                    Object.values(tbl.dimensions ?? {})
+                        .filter((d) => d.caseSensitive !== undefined)
+                        .map((d) => ({
+                            table: t,
+                            name: d.name,
+                            value: d.caseSensitive,
+                        })),
+                ),
+            ),
+        });
 
         await this.projectCompileLogModel.insert({
             projectUuid,
@@ -2179,14 +2214,15 @@ export class ProjectService extends BaseService {
                         projectUuid: newProjectUuid,
                         parameters: lightdashProjectConfig.parameters,
                     });
-                    await this.saveExploresToCacheAndIndexCatalog(
-                        user.userUuid,
-                        newProjectUuid,
+                    await this.saveExploresToCacheAndIndexCatalog({
+                        userUuid: user.userUuid,
+                        projectUuid: newProjectUuid,
                         explores,
-                        'create_project',
+                        compilationSource: 'create_project',
                         jobUuid,
-                        method,
-                    );
+                        requestMethod: method,
+                        projectConfigDefaults: lightdashProjectConfig.defaults,
+                    });
                     return newProjectUuid;
                 },
             );
@@ -2230,6 +2266,7 @@ export class ProjectService extends BaseService {
         user: SessionUser,
         projectUuid: string,
         explores: (Explore | ExploreError)[],
+        cliVersion?: string | null,
     ): Promise<ApiDeployExploresResults> {
         const project =
             await this.projectModel.getWithSensitiveFields(projectUuid);
@@ -2259,16 +2296,16 @@ export class ProjectService extends BaseService {
             enabled: this.lightdashConfig.preAggregates.enabled,
         });
 
-        await this.saveExploresToCacheAndIndexCatalog(
-            user.userUuid,
+        await this.saveExploresToCacheAndIndexCatalog({
+            userUuid: user.userUuid,
             projectUuid,
-            exploresWithPreAggregates,
-
+            explores: exploresWithPreAggregates,
             // TODO: Do not hardcode CLI information here
-            'cli_deploy',
-            null,
-            'cli',
-        );
+            compilationSource: 'cli_deploy',
+            jobUuid: null,
+            requestMethod: 'cli',
+            cliVersion,
+        });
 
         await this.schedulerClient.generateValidation({
             userUuid: user.userUuid,
@@ -2662,14 +2699,16 @@ export class ProjectService extends BaseService {
                             });
                             timings.parameters.end = performance.now();
                             timings.cacheExplores.start = performance.now();
-                            await this.saveExploresToCacheAndIndexCatalog(
-                                user.userUuid,
+                            await this.saveExploresToCacheAndIndexCatalog({
+                                userUuid: user.userUuid,
                                 projectUuid,
                                 explores,
-                                'refresh_dbt',
-                                job.jobUuid,
-                                method,
-                            );
+                                compilationSource: 'refresh_dbt',
+                                jobUuid: job.jobUuid,
+                                requestMethod: method,
+                                projectConfigDefaults:
+                                    lightdashProjectConfig.defaults,
+                            });
                             timings.cacheExplores.end = performance.now();
                         } finally {
                             await adapter.destroy();
@@ -5425,14 +5464,16 @@ export class ProjectService extends BaseService {
                         });
                         timings.parameters.end = performance.now();
                         timings.cacheExplores.start = performance.now();
-                        const result = this.saveExploresToCacheAndIndexCatalog(
-                            user.userUuid,
+                        const result = this.saveExploresToCacheAndIndexCatalog({
+                            userUuid: user.userUuid,
                             projectUuid,
                             explores,
-                            'refresh_dbt',
-                            job.jobUuid,
+                            compilationSource: 'refresh_dbt',
+                            jobUuid: job.jobUuid,
                             requestMethod,
-                        );
+                            projectConfigDefaults:
+                                lightdashProjectConfig.defaults,
+                        });
                         timings.cacheExplores.end = performance.now();
 
                         return result;
@@ -7995,14 +8036,15 @@ export class ProjectService extends BaseService {
         }
 
         Logger.info(`Set explores for: ${projectToSetExplores}`);
-        await this.saveExploresToCacheAndIndexCatalog(
-            user.userUuid,
-            projectToSetExplores,
-            [...convertedExplores, ...exploreErrors],
-            'refresh_dbt',
-            null,
-            'api',
-        );
+        await this.saveExploresToCacheAndIndexCatalog({
+            userUuid: user.userUuid,
+            projectUuid: projectToSetExplores,
+            explores: [...convertedExplores, ...exploreErrors],
+            compilationSource: 'refresh_dbt',
+            jobUuid: null,
+            requestMethod: 'api',
+            projectConfigDefaults: project.projectDefaults,
+        });
 
         Logger.info(`Schedule validation:`, {
             userUuid: user.userUuid,
