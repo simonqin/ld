@@ -1,3 +1,10 @@
+## [0.2883.1](https://github.com/lightdash/lightdash/compare/0.2883.0...0.2883.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* bump tsx for patched esbuild ([#22700](https://github.com/lightdash/lightdash/issues/22700)) ([9bbdc00](https://github.com/lightdash/lightdash/commit/9bbdc00bc1cfc177d84983ad9d813ddc465a44d0))
+
 # [0.2883.0](https://github.com/lightdash/lightdash/compare/0.2882.1...0.2883.0) (2026-05-06)
 
 
