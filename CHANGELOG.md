@@ -1,3 +1,10 @@
+## [0.2884.2](https://github.com/lightdash/lightdash/compare/0.2884.1...0.2884.2) (2026-05-06)
+
+
+### Performance Improvements
+
+* **auth:** scope project-membership join columns to drop bytea bloat ([#22767](https://github.com/lightdash/lightdash/issues/22767)) ([b965bd7](https://github.com/lightdash/lightdash/commit/b965bd782636d5040edd4872775bfc71ef927864))
+
 ## [0.2884.1](https://github.com/lightdash/lightdash/compare/0.2884.0...0.2884.1) (2026-05-06)
 
 
