@@ -1,3 +1,10 @@
+# [0.2884.0](https://github.com/lightdash/lightdash/compare/0.2883.1...0.2884.0) (2026-05-06)
+
+
+### Features
+
+* **data-apps:** serve data-app preview iframes from a separate origin ([#22766](https://github.com/lightdash/lightdash/issues/22766)) ([fd08c48](https://github.com/lightdash/lightdash/commit/fd08c48bfc37d0c539ca7a2fc5c3d2aa27d69a77))
+
 ## [0.2883.1](https://github.com/lightdash/lightdash/compare/0.2883.0...0.2883.1) (2026-05-06)
 
 
