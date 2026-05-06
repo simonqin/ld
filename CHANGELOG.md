@@ -1,3 +1,10 @@
+## [0.2884.1](https://github.com/lightdash/lightdash/compare/0.2884.0...0.2884.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* don't throw on feature flag error on FE - default to false instead ([#22764](https://github.com/lightdash/lightdash/issues/22764)) ([1bd9d2c](https://github.com/lightdash/lightdash/commit/1bd9d2cd08d91fe6d2a7b76594cf83926f0770a4))
+
 # [0.2884.0](https://github.com/lightdash/lightdash/compare/0.2883.1...0.2884.0) (2026-05-06)
 
 
