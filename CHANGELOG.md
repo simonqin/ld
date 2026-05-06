@@ -1,3 +1,10 @@
+## [0.2881.1](https://github.com/lightdash/lightdash/compare/0.2881.0...0.2881.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* refine export modal layout and helper messaging ([#22747](https://github.com/lightdash/lightdash/issues/22747)) ([7601b6d](https://github.com/lightdash/lightdash/commit/7601b6deb4055029006b7462f2d627ca05451ed5))
+
 # [0.2881.0](https://github.com/lightdash/lightdash/compare/0.2880.1...0.2881.0) (2026-05-06)
 
 
