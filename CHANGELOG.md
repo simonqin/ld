@@ -1,3 +1,10 @@
+## [0.2880.1](https://github.com/lightdash/lightdash/compare/0.2880.0...0.2880.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* throw better errors on Athena client failures ([#22739](https://github.com/lightdash/lightdash/issues/22739)) ([7d382a1](https://github.com/lightdash/lightdash/commit/7d382a1c8abb4d93b73970e6e48a8cfd34dc2d11))
+
 # [0.2880.0](https://github.com/lightdash/lightdash/compare/0.2879.0...0.2880.0) (2026-05-06)
 
 
