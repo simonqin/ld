@@ -1,3 +1,10 @@
+## [0.2881.2](https://github.com/lightdash/lightdash/compare/0.2881.1...0.2881.2) (2026-05-06)
+
+
+### Bug Fixes
+
+* **service-accounts:** reject SCIM-only tokens on non-SCIM endpoints ([#22748](https://github.com/lightdash/lightdash/issues/22748)) ([17a3a50](https://github.com/lightdash/lightdash/commit/17a3a50baf2be33d67fc8a17ccf8adef41b4b127))
+
 ## [0.2881.1](https://github.com/lightdash/lightdash/compare/0.2881.0...0.2881.1) (2026-05-06)
 
 
