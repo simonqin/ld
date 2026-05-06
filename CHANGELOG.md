@@ -1,3 +1,10 @@
+# [0.2878.0](https://github.com/lightdash/lightdash/compare/0.2877.0...0.2878.0) (2026-05-06)
+
+
+### Features
+
+* **managed-agent:** expand schedule frequency options ([#22728](https://github.com/lightdash/lightdash/issues/22728)) ([870d61f](https://github.com/lightdash/lightdash/commit/870d61fa5f61a78a258d12bef1463dd09998185b)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+
 # [0.2877.0](https://github.com/lightdash/lightdash/compare/0.2876.1...0.2877.0) (2026-05-06)
 
 
