@@ -1,3 +1,10 @@
+## [0.2884.3](https://github.com/lightdash/lightdash/compare/0.2884.2...0.2884.3) (2026-05-06)
+
+
+### Bug Fixes
+
+* harden data app preview iframe headers ([#22770](https://github.com/lightdash/lightdash/issues/22770)) ([16ecba2](https://github.com/lightdash/lightdash/commit/16ecba2be14d50137e71365a7e4b60d8a1614c4d))
+
 ## [0.2884.2](https://github.com/lightdash/lightdash/compare/0.2884.1...0.2884.2) (2026-05-06)
 
 
