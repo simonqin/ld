@@ -1,3 +1,10 @@
+## [0.2876.1](https://github.com/lightdash/lightdash/compare/0.2876.0...0.2876.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* **scheduler:** unblock send-now UI when threshold alert is not met ([#22718](https://github.com/lightdash/lightdash/issues/22718)) ([75d2e1b](https://github.com/lightdash/lightdash/commit/75d2e1bf4e0dfc64a4725226a9ff4270d9759b7d))
+
 # [0.2876.0](https://github.com/lightdash/lightdash/compare/0.2875.0...0.2876.0) (2026-05-05)
 
 
