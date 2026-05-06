@@ -1,3 +1,16 @@
+# [0.2883.0](https://github.com/lightdash/lightdash/compare/0.2882.1...0.2883.0) (2026-05-06)
+
+
+### Bug Fixes
+
+* optional chain on `dashboardComments` health check ([#22760](https://github.com/lightdash/lightdash/issues/22760)) ([56757e2](https://github.com/lightdash/lightdash/commit/56757e2ee3f4b6806e57c0dc75d6e81ed0e23a20))
+
+
+### Features
+
+* **service-accounts:** add permissions modal with action menu ([#22759](https://github.com/lightdash/lightdash/issues/22759)) ([c26130f](https://github.com/lightdash/lightdash/commit/c26130fb1eb589b7bd8ac200a5ee669eceb93757))
+* **service-accounts:** tag stale accounts and add toolbar filters ([#22755](https://github.com/lightdash/lightdash/issues/22755)) ([ab2a75d](https://github.com/lightdash/lightdash/commit/ab2a75de58faae8144737bfab64a3b067dc11cf0))
+
 ## [0.2882.1](https://github.com/lightdash/lightdash/compare/0.2882.0...0.2882.1) (2026-05-06)
 
 
