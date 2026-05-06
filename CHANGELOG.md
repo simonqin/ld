@@ -1,3 +1,19 @@
+# [0.2879.0](https://github.com/lightdash/lightdash/compare/0.2878.0...0.2879.0) (2026-05-06)
+
+
+### Bug Fixes
+
+* **managed-agent:** rename action labels to deleted/fixed ([#22731](https://github.com/lightdash/lightdash/issues/22731)) ([8a9c485](https://github.com/lightdash/lightdash/commit/8a9c48590eccc3b42d2666f631c1ceb8e1da7f37))
+* remove DISABLE_DASHBOARD_COMMENTS (graduated) feature flag, only use it as config field ([#22732](https://github.com/lightdash/lightdash/issues/22732)) ([c952f28](https://github.com/lightdash/lightdash/commit/c952f28d3aa68b2d1825e5fac84dd108d7e9507f))
+
+
+### Features
+
+* add "Ask AI Agent" entry point to resource action menu ([#22733](https://github.com/lightdash/lightdash/issues/22733)) ([ac77b02](https://github.com/lightdash/lightdash/commit/ac77b0266b19770e67bbf71e79ae8db8cd981bd3))
+* **ai-agents:** preserve pending prompt across agent switches ([#22729](https://github.com/lightdash/lightdash/issues/22729)) ([6d54cac](https://github.com/lightdash/lightdash/commit/6d54cac4280e2736e97d7b61672db209214ad1d2)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+* **managed-agent:** emit analytics events for setup, edits & reversals ([#22730](https://github.com/lightdash/lightdash/issues/22730)) ([b3a67f6](https://github.com/lightdash/lightdash/commit/b3a67f6c23087942e722e3c8a744afcfdee4d59f))
+* **timezone:** wall-clock shift Excel DATE/TIMESTAMP cells ([#22674](https://github.com/lightdash/lightdash/issues/22674)) ([9f4331b](https://github.com/lightdash/lightdash/commit/9f4331b63cfd26da54ba6e6950e3d9eaa5275843))
+
 # [0.2878.0](https://github.com/lightdash/lightdash/compare/0.2877.0...0.2878.0) (2026-05-06)
 
 
