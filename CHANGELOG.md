@@ -1,3 +1,10 @@
+## [0.2881.3](https://github.com/lightdash/lightdash/compare/0.2881.2...0.2881.3) (2026-05-06)
+
+
+### Bug Fixes
+
+* **unfurl:** per-tile readiness diagnostics for screenshot timeouts ([#22752](https://github.com/lightdash/lightdash/issues/22752)) ([1970b20](https://github.com/lightdash/lightdash/commit/1970b2006d402eabdce1ae5c6a735a1b16478d64))
+
 ## [0.2881.2](https://github.com/lightdash/lightdash/compare/0.2881.1...0.2881.2) (2026-05-06)
 
 
