@@ -1,3 +1,10 @@
+## [0.2882.1](https://github.com/lightdash/lightdash/compare/0.2882.0...0.2882.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* preserve pivot x-axis sort fields (re-apply [#22479](https://github.com/lightdash/lightdash/issues/22479)) ([#22751](https://github.com/lightdash/lightdash/issues/22751)) ([7144702](https://github.com/lightdash/lightdash/commit/71447029fa938a89e1a16c1d79ed9004a10ffbc8)), closes [#22622](https://github.com/lightdash/lightdash/issues/22622) [#22458](https://github.com/lightdash/lightdash/issues/22458) [post-#22458](https://github.com/post-/issues/22458) [post-#22569](https://github.com/post-/issues/22569) [#20681](https://github.com/lightdash/lightdash/issues/20681) [#19509](https://github.com/lightdash/lightdash/issues/19509)
+
 # [0.2882.0](https://github.com/lightdash/lightdash/compare/0.2881.3...0.2882.0) (2026-05-06)
 
 
