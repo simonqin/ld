@@ -8,7 +8,6 @@ import {
     Button,
     Group,
     HoverCard,
-    Paper,
     Stack,
     Table,
     Text,
@@ -20,6 +19,7 @@ import { useState, type FC } from 'react';
 import MantineIcon from '../../../components/common/MantineIcon';
 import { useTableStyles } from '../../../hooks/styles/useTableStyles';
 import { ServiceAccountsDeleteModal } from './ServiceAccountsDeleteModal';
+import { isServiceAccountStale, STALE_THRESHOLD_DAYS } from './staleness';
 
 const TableRow: FC<{
     onClickDelete: (serviceAccount: ServiceAccount) => void;
@@ -27,6 +27,7 @@ const TableRow: FC<{
 }> = ({ onClickDelete, serviceAccount }) => {
     const { description, scopes, lastUsedAt, rotatedAt, expiresAt } =
         serviceAccount;
+    const stale = isServiceAccountStale(serviceAccount);
 
     const scopeBadges = scopes.map((scope) => (
         <Badge
@@ -45,8 +46,29 @@ const TableRow: FC<{
 
     return (
         <tr>
-            <td>{description}</td>
-            <td width="200px">
+            <td>
+                <Group spacing="xs" noWrap>
+                    <Text>{description}</Text>
+                    {stale && (
+                        <Tooltip
+                            withinPortal
+                            position="top"
+                            label={`Not used in the last ${STALE_THRESHOLD_DAYS} days`}
+                        >
+                            <Badge
+                                variant="light"
+                                color="red"
+                                radius="md"
+                                sx={{ textTransform: 'none' }}
+                                px="xxs"
+                            >
+                                Stale
+                            </Badge>
+                        </Tooltip>
+                    )}
+                </Group>
+            </td>
+            <td style={{ whiteSpace: 'nowrap' }}>
                 {scopes.length > 2 ? (
                     <HoverCard offset={-20}>
                         <HoverCard.Target>
@@ -63,7 +85,7 @@ const TableRow: FC<{
                     <Group spacing="xs">{scopeBadges}</Group>
                 )}
             </td>
-            <td>
+            <td style={{ whiteSpace: 'nowrap' }}>
                 <Group align="center" position="left" spacing="xs">
                     {expiresAt ? formatDate(expiresAt) : 'No expiration date'}
                     {rotatedAt && (
@@ -84,7 +106,7 @@ const TableRow: FC<{
                     )}
                 </Group>
             </td>
-            <td>
+            <td style={{ whiteSpace: 'nowrap' }}>
                 {lastUsedAt && (
                     <Tooltip
                         withinPortal
@@ -147,28 +169,32 @@ export const ServiceAccountsTable: FC<TableProps> = ({
 
     return (
         <>
-            <Paper withBorder sx={{ overflow: 'hidden' }}>
-                <Table className={cx(classes.root, classes.alignLastTdRight)}>
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Scopes</th>
-                            <th>Expires at</th>
-                            <th>Last used at</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {accounts.map((serviceAccount) => (
-                            <TableRow
-                                key={serviceAccount.uuid}
-                                serviceAccount={serviceAccount}
-                                onClickDelete={handleOpenModal}
-                            />
-                        ))}
-                    </tbody>
-                </Table>
-            </Paper>
+            <Table className={cx(classes.root, classes.alignLastTdRight)}>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th style={{ whiteSpace: 'nowrap', width: '1%' }}>
+                            Scopes
+                        </th>
+                        <th style={{ whiteSpace: 'nowrap', width: '1%' }}>
+                            Expires at
+                        </th>
+                        <th style={{ whiteSpace: 'nowrap', width: '1%' }}>
+                            Last used at
+                        </th>
+                        <th style={{ width: '1%' }}></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {accounts.map((serviceAccount) => (
+                        <TableRow
+                            key={serviceAccount.uuid}
+                            serviceAccount={serviceAccount}
+                            onClickDelete={handleOpenModal}
+                        />
+                    ))}
+                </tbody>
+            </Table>
 
             <ServiceAccountsDeleteModal
                 isOpen={opened}
