@@ -1,3 +1,20 @@
+# [0.2881.0](https://github.com/lightdash/lightdash/compare/0.2880.1...0.2881.0) (2026-05-06)
+
+
+### Bug Fixes
+
+* gate custom-group-bins via DB-backed feature flag ([#22745](https://github.com/lightdash/lightdash/issues/22745)) ([15673e9](https://github.com/lightdash/lightdash/commit/15673e977000f88d7029751af6c4fa1757190e9d))
+* **skills:** clarify disabled suggested dashboard filters ([#22743](https://github.com/lightdash/lightdash/issues/22743)) ([72d3e0f](https://github.com/lightdash/lightdash/commit/72d3e0fe946c5be51205967d943b5d3008641830))
+
+
+### Features
+
+* **managed-agent:** add action category and previous-version metadata helpers ([#22740](https://github.com/lightdash/lightdash/issues/22740)) ([9ca455d](https://github.com/lightdash/lightdash/commit/9ca455ddac999f718c6361edd89cfa512bf675ab))
+* **managed-agent:** label reverse button as undo or dismiss ([#22742](https://github.com/lightdash/lightdash/issues/22742)) ([02cf700](https://github.com/lightdash/lightdash/commit/02cf700fc163055a57bb2e3b6a7b1c7620cf4afb)), closes [#22741](https://github.com/lightdash/lightdash/issues/22741) [#22740](https://github.com/lightdash/lightdash/issues/22740) [#22741](https://github.com/lightdash/lightdash/issues/22741)
+* **managed-agent:** make fix-broken chart actions reversible ([#22741](https://github.com/lightdash/lightdash/issues/22741)) ([2e92432](https://github.com/lightdash/lightdash/commit/2e924327c37940a366cf3746303d0168cbb83d81)), closes [#22740](https://github.com/lightdash/lightdash/issues/22740)
+* **managed-agent:** show reverted state on activity log + sidebar ([#22746](https://github.com/lightdash/lightdash/issues/22746)) ([dba9b00](https://github.com/lightdash/lightdash/commit/dba9b00bc21d7f8386b7d7cf3ca8bb70aa95789d)), closes [#22742](https://github.com/lightdash/lightdash/issues/22742) [#22742](https://github.com/lightdash/lightdash/issues/22742)
+* **timezone:** align pivot CSV temporal format with non-pivot CSV ([#22744](https://github.com/lightdash/lightdash/issues/22744)) ([09783a8](https://github.com/lightdash/lightdash/commit/09783a8e59ac9c8c51dd1187577cb8465ae8f108))
+
 ## [0.2880.1](https://github.com/lightdash/lightdash/compare/0.2880.0...0.2880.1) (2026-05-06)
 
 
