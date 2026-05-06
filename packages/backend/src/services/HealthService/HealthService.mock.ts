@@ -139,6 +139,7 @@ export const BaseResponse: HealthState = {
     },
     dataApps: {
         enabled: false,
+        previewOrigin: null,
     },
 };
 
