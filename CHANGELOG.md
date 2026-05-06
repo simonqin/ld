@@ -1,3 +1,10 @@
+# [0.2882.0](https://github.com/lightdash/lightdash/compare/0.2881.3...0.2882.0) (2026-05-06)
+
+
+### Features
+
+* **ai-agents:** track pinned context analytics and "Ask AI Agent" click source ([#22750](https://github.com/lightdash/lightdash/issues/22750)) ([589d502](https://github.com/lightdash/lightdash/commit/589d5028ad6fdef531d3fe63a7c27de5a611f1dc))
+
 ## [0.2881.3](https://github.com/lightdash/lightdash/compare/0.2881.2...0.2881.3) (2026-05-06)
 
 
