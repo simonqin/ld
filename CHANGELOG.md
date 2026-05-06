@@ -1,3 +1,17 @@
+# [0.2877.0](https://github.com/lightdash/lightdash/compare/0.2876.1...0.2877.0) (2026-05-06)
+
+
+### Bug Fixes
+
+* rename space menu "Rename" to "Update space" ([#22695](https://github.com/lightdash/lightdash/issues/22695)) ([cf3fcc9](https://github.com/lightdash/lightdash/commit/cf3fcc9db77562d788fe08afc9f71fae8efb0dff))
+* return managed agent schedule enum in settings API ([#22724](https://github.com/lightdash/lightdash/issues/22724)) ([497d639](https://github.com/lightdash/lightdash/commit/497d639255747ed28b8d79a8044066016bdd68dc))
+* **table-calc:** only show SQL deprecation callout in SQL mode ([#22727](https://github.com/lightdash/lightdash/issues/22727)) ([b7d6e40](https://github.com/lightdash/lightdash/commit/b7d6e40370e36615cf6977522eff9e7648d7c7cd))
+
+
+### Features
+
+* include metric-level tags in catalog queries ([#22710](https://github.com/lightdash/lightdash/issues/22710)) ([26c7a17](https://github.com/lightdash/lightdash/commit/26c7a17d4f5e97d3128faca2195117344e1bc54d))
+
 ## [0.2876.1](https://github.com/lightdash/lightdash/compare/0.2876.0...0.2876.1) (2026-05-06)
 
 
