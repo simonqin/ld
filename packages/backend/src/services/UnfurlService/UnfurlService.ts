@@ -41,7 +41,7 @@ import * as fsPromise from 'fs/promises';
 import { uniq } from 'lodash';
 import { nanoid as useNanoid } from 'nanoid';
 import fetch from 'node-fetch';
-import playwright, { type ElementHandle } from 'playwright';
+import playwright, { type ElementHandle, type Page } from 'playwright';
 import { LightdashAnalytics } from '../../analytics/LightdashAnalytics';
 import { type FileStorageClient } from '../../clients/FileStorage/FileStorageClient';
 import { SlackClient } from '../../clients/Slack/SlackClient';
@@ -777,6 +777,77 @@ export class UnfurlService extends BaseService {
         return unfurlImage.imageUrl;
     }
 
+    /**
+     * Reads the always-mounted #lightdash-screenshot-progress element and
+     * logs which tile UUIDs are still unaccounted for, so that on
+     * #lightdash-ready-indicator timeouts we can identify the specific
+     * tile(s) blocking the screenshot.
+     *
+     * Best-effort: never throws. If the element is absent the page either
+     * never mounted the React tree (e.g. JS module-init crash) or pre-dates
+     * the progress indicator deploy, both of which are logged distinctly.
+     */
+    private async logUnreadyTilesOnTimeout(
+        page: Page,
+        url: string,
+        unfurlId: string,
+    ): Promise<void> {
+        try {
+            // Inline JSON parsing instead of a named inner helper — esbuild's
+            // keep-names option (used by tsx in dev) wraps named consts with
+            // __name(...), which fails in the browser context where __name
+            // is undefined. Inline arrow function args don't get this wrapping.
+            const progress = await page.evaluate((selector) => {
+                const el = document.querySelector(selector);
+                if (!el) return null;
+                const expected: string[] = [];
+                const ready: string[] = [];
+                const errored: string[] = [];
+                try {
+                    const v = el.getAttribute('data-tiles-expected');
+                    if (v) expected.push(...(JSON.parse(v) as string[]));
+                } catch {
+                    /* ignore malformed attribute */
+                }
+                try {
+                    const v = el.getAttribute('data-tiles-ready');
+                    if (v) ready.push(...(JSON.parse(v) as string[]));
+                } catch {
+                    /* ignore malformed attribute */
+                }
+                try {
+                    const v = el.getAttribute('data-tiles-errored');
+                    if (v) errored.push(...(JSON.parse(v) as string[]));
+                } catch {
+                    /* ignore malformed attribute */
+                }
+                return { expected, ready, errored };
+            }, SCREENSHOT_SELECTORS.PROGRESS_INDICATOR);
+
+            if (!progress) {
+                this.logger.error(
+                    `Screenshot ready timeout: progress indicator not in DOM. The frontend likely never mounted (JS module-init failure or pre-deploy build) - unfurlId: ${unfurlId}, url: ${url}`,
+                );
+                return;
+            }
+
+            const accounted = new Set([...progress.ready, ...progress.errored]);
+            const unready = progress.expected.filter(
+                (tileUuid) => !accounted.has(tileUuid),
+            );
+
+            this.logger.error(
+                `Screenshot ready timeout: ${unready.length}/${progress.expected.length} tiles never reported ready or errored - unfurlId: ${unfurlId}, url: ${url}, unreadyTileUuids: ${JSON.stringify(unready)}, expectedTileUuids: ${JSON.stringify(progress.expected)}, readyTileUuids: ${JSON.stringify(progress.ready)}, erroredTileUuids: ${JSON.stringify(progress.errored)}`,
+            );
+        } catch (probeError) {
+            this.logger.warn(
+                `Failed to probe screenshot progress indicator on timeout - unfurlId: ${unfurlId}, url: ${url}, error: ${getErrorMessage(
+                    probeError,
+                )}`,
+            );
+        }
+    }
+
     private async saveScreenshot({
         imageId,
         cookie,
@@ -995,11 +1066,37 @@ export class UnfurlService extends BaseService {
                     page.on('console', (msg) => {
                         const type = msg.type();
                         if (type === 'error') {
-                            this.logger.warn(
-                                `Headless browser console error - file: ${
-                                    msg.location().url
-                                }, text ${msg.text()}`,
-                            );
+                            const location = msg.location();
+                            const text = msg.text();
+                            // Match across both the message text and the
+                            // resource URL: Chrome puts the URL in
+                            // location.url for resource-fetch failures
+                            // ("Failed to load resource: net::ERR_FAILED")
+                            // and in text for CORS rejections
+                            // ("Access to font at '...' has been blocked").
+                            const surface = `${location.url} ${text}`;
+                            // Suppress known-benign noise (Google Fonts
+                            // CORS/fetch failures, CSP report-only
+                            // directives) so real JS errors dominate the
+                            // error stream.
+                            const isBenign =
+                                /upgrade-insecure-requests.*report-only/i.test(
+                                    surface,
+                                ) ||
+                                /Cross-Origin-Opener-Policy.*ignored/i.test(
+                                    surface,
+                                ) ||
+                                /fonts\.gstatic\.com/i.test(surface);
+
+                            if (isBenign) {
+                                this.logger.debug(
+                                    `Headless browser console error (benign) - file: ${location.url}, text: ${text}`,
+                                );
+                            } else {
+                                this.logger.error(
+                                    `Headless browser console error - unfurlId: ${imageId}, pageUrl: ${url}, file: ${location.url}:${location.lineNumber}:${location.columnNumber}, text: ${text}`,
+                                );
+                            }
                         }
                     });
 
@@ -1264,17 +1361,28 @@ export class UnfurlService extends BaseService {
                         );
                     }
 
-                    this.logger.info('Waiting for screenshot ready indicator');
-                    await page.waitForSelector(
-                        SCREENSHOT_SELECTORS.READY_INDICATOR,
-                        {
-                            state: 'attached',
-                            timeout: RESPONSE_TIMEOUT_MS,
-                        },
-                    );
                     this.logger.info(
-                        'Screenshot ready indicator found - page is ready',
+                        `Waiting for screenshot ready indicator - unfurlId: ${imageId}`,
                     );
+                    try {
+                        await page.waitForSelector(
+                            SCREENSHOT_SELECTORS.READY_INDICATOR,
+                            {
+                                state: 'attached',
+                                timeout: RESPONSE_TIMEOUT_MS,
+                            },
+                        );
+                        this.logger.info(
+                            `Screenshot ready indicator found - page is ready - unfurlId: ${imageId}`,
+                        );
+                    } catch (waitError) {
+                        // Probe the always-mounted progress indicator to find
+                        // out which tiles never reported ready/errored. Logged
+                        // before re-throwing so callers (and retries) can see
+                        // exactly which tile is blocking the indicator.
+                        await this.logUnreadyTilesOnTimeout(page, url, imageId);
+                        throw waitError;
+                    }
 
                     // Auto-detect CJK language from page content and set
                     // <html lang="..."> so CSS :lang() rules select the
@@ -1479,7 +1587,7 @@ export class UnfurlService extends BaseService {
                         this.logger.info(
                             `Retrying screenshot (attempt ${retryCount + 2}/${
                                 maxRetries + 1
-                            }) after ${delay}ms for url ${url}, type: ${lightdashPage}. Error: ${getErrorMessage(
+                            }) after ${delay}ms for url ${url}, type: ${lightdashPage}, unfurlId: ${imageId}. Error: ${getErrorMessage(
                                 e,
                             )}`,
                         );
@@ -1522,7 +1630,7 @@ export class UnfurlService extends BaseService {
                     hasError = true;
 
                     this.logger.error(
-                        `Unable to fetch screenshots for scheduler with url ${url}, of type: ${lightdashPage}. Message: ${getErrorMessage(
+                        `Unable to fetch screenshots for scheduler with url ${url}, of type: ${lightdashPage}, unfurlId: ${imageId}. Message: ${getErrorMessage(
                             e,
                         )}`,
                     );
@@ -1565,7 +1673,7 @@ export class UnfurlService extends BaseService {
 
                     const executionTime = Date.now() - startTime;
                     this.logger.info(
-                        `UnfurlService saveScreenshot took ${executionTime} ms`,
+                        `UnfurlService saveScreenshot took ${executionTime} ms - unfurlId: ${imageId}`,
                     );
                 }
             },
