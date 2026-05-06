@@ -1,3 +1,12 @@
+# [0.2880.0](https://github.com/lightdash/lightdash/compare/0.2879.0...0.2880.0) (2026-05-06)
+
+
+### Features
+
+* **managed-agent:** animate the home-card pixel grid ([#22738](https://github.com/lightdash/lightdash/issues/22738)) ([6ca8f69](https://github.com/lightdash/lightdash/commit/6ca8f693993a103ba13656c0ce2f2d147b010677))
+* **managed-agent:** group activity log by run ([#22737](https://github.com/lightdash/lightdash/issues/22737)) ([ef9204f](https://github.com/lightdash/lightdash/commit/ef9204f4f325aa2b4a955a539341c8409d348b81))
+* **timezone:** shift TIMESTAMP cells in Google Sheets exports ([#22736](https://github.com/lightdash/lightdash/issues/22736)) ([44a1205](https://github.com/lightdash/lightdash/commit/44a1205e849603304497881861bfc7f01fb8a02d))
+
 # [0.2879.0](https://github.com/lightdash/lightdash/compare/0.2878.0...0.2879.0) (2026-05-06)
 
 
