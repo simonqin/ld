@@ -1,3 +1,11 @@
+# [0.2897.0](https://github.com/lightdash/lightdash/compare/0.2896.0...0.2897.0) (2026-05-07)
+
+
+### Features
+
+* **managed-agent:** run-centric activity log ([#22787](https://github.com/lightdash/lightdash/issues/22787)) ([5125fbf](https://github.com/lightdash/lightdash/commit/5125fbf6b9b797ffe79e35c1956bc590415e3974))
+* **managed-agent:** track heartbeat runs with status surface ([#22761](https://github.com/lightdash/lightdash/issues/22761)) ([7676e07](https://github.com/lightdash/lightdash/commit/7676e07b395a03b9e1675267d8326857ce541a7a))
+
 # [0.2896.0](https://github.com/lightdash/lightdash/compare/0.2895.0...0.2896.0) (2026-05-07)
 
 
