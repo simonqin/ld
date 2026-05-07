@@ -1,3 +1,10 @@
+# [0.2888.0](https://github.com/lightdash/lightdash/compare/0.2887.0...0.2888.0) (2026-05-07)
+
+
+### Features
+
+* **managed-agent:** run heartbeat immediately on enable ([#22754](https://github.com/lightdash/lightdash/issues/22754)) ([c423d5f](https://github.com/lightdash/lightdash/commit/c423d5fbc79f316ab05ba24f9a99c6101a29239f))
+
 # [0.2887.0](https://github.com/lightdash/lightdash/compare/0.2886.0...0.2887.0) (2026-05-07)
 
 
