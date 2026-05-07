@@ -1,3 +1,10 @@
+# [0.2889.0](https://github.com/lightdash/lightdash/compare/0.2888.1...0.2889.0) (2026-05-07)
+
+
+### Features
+
+* **prod-7163:** chart-level color palette override ([#22769](https://github.com/lightdash/lightdash/issues/22769)) ([de0190c](https://github.com/lightdash/lightdash/commit/de0190c366a774ffaa8d09017c3bd68f51564702))
+
 ## [0.2888.1](https://github.com/lightdash/lightdash/compare/0.2888.0...0.2888.1) (2026-05-07)
 
 
