@@ -1,3 +1,10 @@
+## [0.2893.2](https://github.com/lightdash/lightdash/compare/0.2893.1...0.2893.2) (2026-05-07)
+
+
+### Bug Fixes
+
+* **data-apps:** validate image against app_id ([#22793](https://github.com/lightdash/lightdash/issues/22793)) ([fcae4f9](https://github.com/lightdash/lightdash/commit/fcae4f9e6e3c3ff7d6c99d6a17f79a37655cb187))
+
 ## [0.2893.1](https://github.com/lightdash/lightdash/compare/0.2893.0...0.2893.1) (2026-05-07)
 
 
