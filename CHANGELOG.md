@@ -1,3 +1,20 @@
+# [0.2899.0](https://github.com/lightdash/lightdash/compare/0.2898.0...0.2899.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* resolve dashboard slug to uuid in DashboardService methods ([#22807](https://github.com/lightdash/lightdash/issues/22807)) ([b3e7038](https://github.com/lightdash/lightdash/commit/b3e7038c1597eb7aea5d3d1b62a1ac94be950527)), closes [#22801](https://github.com/lightdash/lightdash/issues/22801)
+* **timezone:** thread column timezone through Snowflake DATE_TRUNC/EXTRACT wrap ([#22804](https://github.com/lightdash/lightdash/issues/22804)) ([aaadbdc](https://github.com/lightdash/lightdash/commit/aaadbdc2145a2b3d13ae829b19e5347772c432e6))
+* wire missing org-management and dashboard-export scopes into role tiers and add org-parity + vocabulary-coverage tests ([#22802](https://github.com/lightdash/lightdash/issues/22802)) ([c9ed591](https://github.com/lightdash/lightdash/commit/c9ed591dcf7196da3e28a48fe059e28ef0cc11a9))
+
+
+### Features
+
+* make ai agents available everywhere ([#22776](https://github.com/lightdash/lightdash/issues/22776)) ([deed567](https://github.com/lightdash/lightdash/commit/deed56743ae46f17d04c8dfae314e0d733ecabea)), closes [#22758](https://github.com/lightdash/lightdash/issues/22758)
+* **roles:** add endpoint listing custom-role assignees (PROD-7465) ([#22797](https://github.com/lightdash/lightdash/issues/22797)) ([35674df](https://github.com/lightdash/lightdash/commit/35674df7db61f4f017c186ddb69b18a89b99f3f9)), closes [#22798](https://github.com/lightdash/lightdash/issues/22798)
+* **roles:** list assignees in custom-role delete modal (PROD-7465) ([#22798](https://github.com/lightdash/lightdash/issues/22798)) ([bf25b51](https://github.com/lightdash/lightdash/commit/bf25b5141628a96976afe71933b916653541c9cc)), closes [#22797](https://github.com/lightdash/lightdash/issues/22797)
+* set `service_account_user_uuid` NOT NULL (PROD-7427) ([#22809](https://github.com/lightdash/lightdash/issues/22809)) ([353fa8f](https://github.com/lightdash/lightdash/commit/353fa8f1aae61928fbe9adbb7c81caef0d1ef381))
+
 # [0.2898.0](https://github.com/lightdash/lightdash/compare/0.2897.0...0.2898.0) (2026-05-07)
 
 
