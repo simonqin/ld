@@ -77,14 +77,17 @@ type WarehouseConfig = {
         originalSql: string,
         type: DimensionType,
         timezone?: string,
+        sourceTimezone?: string,
     ) => string;
 };
 
 /** Per-warehouse SQL for the DATE_TRUNC timezone round-trip. `toProjectTz`
  *  shifts into project-local wall-clock before truncation; `toUTC` converts
- *  the truncated value back into a proper UTC instant. */
+ *  the truncated value back into a proper UTC instant. `sourceTimezone` is
+ *  the timezone the column is in — only Snowflake uses it explicitly (in
+ *  `CONVERT_TIMEZONE`); other adapters ignore it. */
 type DateTruncTimezoneConversion = {
-    toProjectTz: (sql: string, tz: string) => string;
+    toProjectTz: (sql: string, tz: string, sourceTimezone?: string) => string;
     toUTC: (sql: string, tz: string) => string;
 };
 
@@ -99,7 +102,8 @@ export const dateTruncTimezoneConversions: Record<
         toUTC: (sql) => sql,
     },
     [SupportedDbtAdapter.SNOWFLAKE]: {
-        toProjectTz: (sql, tz) => `CONVERT_TIMEZONE('UTC', '${tz}', ${sql})`,
+        toProjectTz: (sql, tz, sourceTimezone = 'UTC') =>
+            `CONVERT_TIMEZONE('${sourceTimezone}', '${tz}', ${sql})`,
         toUTC: (sql, tz) => `CONVERT_TIMEZONE('${tz}', 'UTC', ${sql})`,
     },
     [SupportedDbtAdapter.POSTGRES]: {
@@ -145,8 +149,13 @@ export const dateTruncTimezoneConversions: Record<
 };
 
 // EXTRACT returns a number/string, so no `toUTC` inverse — one-way shift only.
+// `sourceTimezone` semantics match `DateTruncTimezoneConversion.toProjectTz`.
 type DateExtractTimezoneConversion = {
-    toExtractInputTz: (sql: string, tz: string) => string;
+    toExtractInputTz: (
+        sql: string,
+        tz: string,
+        sourceTimezone?: string,
+    ) => string;
 };
 
 export const dateExtractsTimezoneConversions: Record<
@@ -159,8 +168,8 @@ export const dateExtractsTimezoneConversions: Record<
         toExtractInputTz: (sql, tz) => `TIMESTAMP(${sql}) AT TIME ZONE '${tz}'`,
     },
     [SupportedDbtAdapter.SNOWFLAKE]: {
-        toExtractInputTz: (sql, tz) =>
-            `CONVERT_TIMEZONE('UTC', '${tz}', ${sql})`,
+        toExtractInputTz: (sql, tz, sourceTimezone = 'UTC') =>
+            `CONVERT_TIMEZONE('${sourceTimezone}', '${tz}', ${sql})`,
     },
     [SupportedDbtAdapter.POSTGRES]: {
         toExtractInputTz: (sql, tz) =>
@@ -318,11 +327,12 @@ const snowflakeConfig: WarehouseConfig = {
         originalSql: string,
         _type,
         timezone,
+        sourceTimezone,
     ) => {
         const sql = timezone
             ? dateExtractsTimezoneConversions[
                   SupportedDbtAdapter.SNOWFLAKE
-              ].toExtractInputTz(originalSql, timezone)
+              ].toExtractInputTz(originalSql, timezone, sourceTimezone)
             : originalSql;
         // https://docs.snowflake.com/en/sql-reference/functions/to_char.html
         const timeFrameExpressionsFn: Record<
@@ -676,6 +686,7 @@ export const getSqlForTruncatedDate = (
     type: DimensionType,
     startOfWeek?: WeekDay | null,
     timezone?: string,
+    sourceTimezone?: string,
 ): string => {
     if (!timezone || type !== DimensionType.TIMESTAMP) {
         return warehouseConfigs[adapterType].getSqlForTruncatedDate(
@@ -687,7 +698,7 @@ export const getSqlForTruncatedDate = (
     }
 
     const { toProjectTz, toUTC } = dateTruncTimezoneConversions[adapterType];
-    const input = toProjectTz(originalSql, timezone);
+    const input = toProjectTz(originalSql, timezone, sourceTimezone);
     const truncated = warehouseConfigs[adapterType].getSqlForTruncatedDate(
         timeFrame,
         input,
@@ -706,12 +717,14 @@ export const getSqlForDatePart = (
     type: DimensionType,
     startOfWeek?: WeekDay | null,
     timezone?: string,
+    sourceTimezone?: string,
 ): string => {
     const wrappedSql =
         timezone && type === DimensionType.TIMESTAMP
             ? dateExtractsTimezoneConversions[adapterType].toExtractInputTz(
                   originalSql,
                   timezone,
+                  sourceTimezone,
               )
             : originalSql;
     return warehouseConfigs[adapterType].getSqlForDatePart(
@@ -732,6 +745,7 @@ export const getSqlForDatePartName = (
     type: DimensionType,
     _startOfWeek?: WeekDay | null,
     timezone?: string,
+    sourceTimezone?: string,
 ): string => {
     if (!timezone || type !== DimensionType.TIMESTAMP) {
         return warehouseConfigs[adapterType].getSqlForDatePartName(
@@ -745,6 +759,7 @@ export const getSqlForDatePartName = (
         originalSql,
         type,
         timezone,
+        sourceTimezone,
     );
 };
 
@@ -758,6 +773,7 @@ type TimeFrameConfig = {
         type: DimensionType,
         startOfWeek?: WeekDay | null,
         timezone?: string,
+        sourceTimezone?: string,
     ) => string;
     getAxisMinInterval: () => number | null;
     getAxisLabelFormatter: () => Record<string, string> | null;

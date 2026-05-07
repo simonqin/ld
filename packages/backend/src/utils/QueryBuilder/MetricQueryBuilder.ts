@@ -135,8 +135,9 @@ export type BuildQueryProps = {
     originalExplore?: Explore;
     /** Wrap DATE_TRUNC with timezone conversion. Gated behind EnableTimezoneSupport. */
     useTimezoneAwareDateTrunc?: boolean;
-    /** Warehouse session timezone — used to skip wrapping when it matches queryTimezone. */
-    dataTimezone?: string;
+    /** Timezone the column data is in — source for the timezone-aware wrap.
+     *  Derived from warehouse credentials via `getColumnTimezone`. */
+    columnTimezone?: string;
 };
 
 /**
@@ -315,24 +316,12 @@ export class MetricQueryBuilder {
     /** Query timezone when timezone-aware DATE_TRUNC is active, undefined otherwise. */
     private get timezoneForDateTrunc(): string | undefined {
         if (!this.args.useTimezoneAwareDateTrunc) return undefined;
-        if (this.isDataInQueryTimezone()) return undefined;
+        if (this.columnTimezone === this.args.timezone) return undefined;
         return this.args.timezone;
     }
 
-    /**
-     * True when the warehouse's effective input TZ already equals the query TZ,
-     * so the project-TZ wrap would be a no-op. Snowflake's input is always UTC
-     * (convertTimezone normalizes at compile time); others use dataTimezone.
-     */
-    private isDataInQueryTimezone(): boolean {
-        const adapterType = this.args.warehouseSqlBuilder.getAdapterType();
-
-        const effectiveInputTz =
-            adapterType === SupportedDbtAdapter.SNOWFLAKE
-                ? 'UTC'
-                : (this.args.dataTimezone ?? 'UTC');
-
-        return effectiveInputTz === this.args.timezone;
+    private get columnTimezone(): string {
+        return this.args.columnTimezone ?? 'UTC';
     }
 
     // Contains the metrics from the Explore and the custom metrics from the metric query
@@ -481,6 +470,7 @@ export class MetricQueryBuilder {
             adapterType,
             startOfWeek,
             timezone: this.timezoneForDateTrunc,
+            columnTimezone: this.columnTimezone,
         });
         const popDimensionBaseId = `${popDimension.table}_${
             popDimension.timeIntervalBaseDimensionName ?? popDimension.name
@@ -637,6 +627,7 @@ export class MetricQueryBuilder {
                 baseDimension.type,
                 startOfWeek,
                 timezone,
+                this.columnTimezone,
             );
         }
 
@@ -647,6 +638,7 @@ export class MetricQueryBuilder {
             baseDimension.type,
             startOfWeek,
             timezone,
+            this.columnTimezone,
         );
     }
 
@@ -734,6 +726,7 @@ export class MetricQueryBuilder {
                         adapterType,
                         startOfWeek,
                         timezone: this.timezoneForDateTrunc,
+                        columnTimezone: this.columnTimezone,
                     });
 
                     assertValidDimensionRequiredAttribute(
@@ -1074,6 +1067,7 @@ export class MetricQueryBuilder {
                     adapterType,
                     startOfWeek,
                     timezone: this.timezoneForDateTrunc,
+                    columnTimezone: this.columnTimezone,
                 });
 
                 assertValidDimensionRequiredAttribute(
@@ -2243,6 +2237,7 @@ export class MetricQueryBuilder {
                             adapterType,
                             startOfWeek,
                             timezone: this.timezoneForDateTrunc,
+                            columnTimezone: this.columnTimezone,
                         });
                         const popDimensionFilters =
                             this.getPopDimensionsFilterSQL(popFieldId);
@@ -2458,6 +2453,7 @@ export class MetricQueryBuilder {
                         adapterType,
                         startOfWeek,
                         timezone: this.timezoneForDateTrunc,
+                        columnTimezone: this.columnTimezone,
                     });
                     const popDimensionFilters =
                         this.getPopDimensionsFilterSQL(popFieldId);
@@ -4005,6 +4001,7 @@ export class MetricQueryBuilder {
                     adapterType,
                     startOfWeek,
                     timezone: this.timezoneForDateTrunc,
+                    columnTimezone: this.columnTimezone,
                 });
                 const popDimensionFilters =
                     this.getPopDimensionsFilterSQL(popFieldId);
