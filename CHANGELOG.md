@@ -1,3 +1,10 @@
+## [0.2889.1](https://github.com/lightdash/lightdash/compare/0.2889.0...0.2889.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* index color_palette_uuid on spaces and projects ([#22779](https://github.com/lightdash/lightdash/issues/22779)) ([8b48174](https://github.com/lightdash/lightdash/commit/8b481743aac636d88905ba169a4471199976185d)), closes [#22708](https://github.com/lightdash/lightdash/issues/22708) [#22751](https://github.com/lightdash/lightdash/issues/22751)
+
 # [0.2889.0](https://github.com/lightdash/lightdash/compare/0.2888.1...0.2889.0) (2026-05-07)
 
 
