@@ -1,3 +1,10 @@
+# [0.2886.0](https://github.com/lightdash/lightdash/compare/0.2885.0...0.2886.0) (2026-05-07)
+
+
+### Features
+
+* **managed-agent:** gate autopilot home card and /improve route to developers and admins ([#22773](https://github.com/lightdash/lightdash/issues/22773)) ([7d163c7](https://github.com/lightdash/lightdash/commit/7d163c7a3c1c9c07ba7a213924eb6661bfb7b9f0))
+
 # [0.2885.0](https://github.com/lightdash/lightdash/compare/0.2884.3...0.2885.0) (2026-05-07)
 
 
