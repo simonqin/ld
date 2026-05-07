@@ -1,3 +1,10 @@
+# [0.2900.0](https://github.com/lightdash/lightdash/compare/0.2899.0...0.2900.0) (2026-05-07)
+
+
+### Features
+
+* add hexbin map type ([#22810](https://github.com/lightdash/lightdash/issues/22810)) ([68cd168](https://github.com/lightdash/lightdash/commit/68cd168edf21c2b8da329e76b081425f8b798f0f))
+
 # [0.2899.0](https://github.com/lightdash/lightdash/compare/0.2898.0...0.2899.0) (2026-05-07)
 
 
