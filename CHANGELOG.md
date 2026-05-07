@@ -1,3 +1,15 @@
+# [0.2885.0](https://github.com/lightdash/lightdash/compare/0.2884.3...0.2885.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* **security:** lock down preview iframe connect-src to 'none' ([#22771](https://github.com/lightdash/lightdash/issues/22771)) ([609e4ea](https://github.com/lightdash/lightdash/commit/609e4eac74cd6be7c4be107c5e4cff192dbd2383))
+
+
+### Features
+
+* backfill service accounts to legacy custom roles and wire org-level role_uuid into CASL ability builder ([#22694](https://github.com/lightdash/lightdash/issues/22694)) ([1636272](https://github.com/lightdash/lightdash/commit/1636272d61d2cbf3d5d84b90e2979e50af9475f0))
+
 ## [0.2884.3](https://github.com/lightdash/lightdash/compare/0.2884.2...0.2884.3) (2026-05-06)
 
 
