@@ -315,16 +315,16 @@ export class MetricQueryBuilder {
     /** Query timezone when timezone-aware DATE_TRUNC is active, undefined otherwise. */
     private get timezoneForDateTrunc(): string | undefined {
         if (!this.args.useTimezoneAwareDateTrunc) return undefined;
-        if (this.shouldSkipTimezoneConversion()) return undefined;
+        if (this.isDataInQueryTimezone()) return undefined;
         return this.args.timezone;
     }
 
     /**
-     * Skip timezone conversion when the effective input TZ matches the query TZ.
-     * Snowflake's effective input is always UTC (convertTimezone normalizes at
-     * compile time); all others use dataTimezone (defaulting to UTC).
+     * True when the warehouse's effective input TZ already equals the query TZ,
+     * so the project-TZ wrap would be a no-op. Snowflake's input is always UTC
+     * (convertTimezone normalizes at compile time); others use dataTimezone.
      */
-    private shouldSkipTimezoneConversion(): boolean {
+    private isDataInQueryTimezone(): boolean {
         const adapterType = this.args.warehouseSqlBuilder.getAdapterType();
 
         const effectiveInputTz =
@@ -583,11 +583,19 @@ export class MetricQueryBuilder {
         );
     }
 
-    /** Rewrites `compiledSql` with the project-TZ wrap for truncatable and extractable intervals. */
+    /**
+     * Rewrites `compiledSql` with the project-TZ wrap for truncatable and
+     * extractable intervals.
+     *
+     * Base dims with `convert_timezone: false` are skipped — the dim renders
+     * in its raw warehouse value. Pass `respectConvertTimezone: false` from
+     * filter rendering so WHERE clauses keep wrapping regardless.
+     */
     private getTimezoneAwareDimensionSql(
         dimension: CompiledDimension,
         adapterType: SupportedDbtAdapter,
         startOfWeek: WeekDay | null | undefined,
+        respectConvertTimezone: boolean = true,
     ): string {
         const { timezone, useTimezoneAwareDateTrunc } = this.args;
 
@@ -614,6 +622,10 @@ export class MetricQueryBuilder {
             !baseDimension?.compiledSql ||
             baseDimension.type !== DimensionType.TIMESTAMP
         ) {
+            return dimension.compiledSql;
+        }
+
+        if (respectConvertTimezone && baseDimension.skipTimezoneConversion) {
             return dimension.compiledSql;
         }
 
@@ -1427,7 +1439,9 @@ export class MetricQueryBuilder {
             throw new FieldReferenceError(errorMessage);
         }
 
-        // Override filter dimension SQL to match the timezone-aware SELECT clause
+        // Override filter dimension SQL to match the timezone-aware SELECT
+        // clause. Filters always wrap by project tz — even for dims with
+        // `convert_timezone: false` — so pass `respectConvertTimezone: false`.
         const filterField = isDimension(field)
             ? {
                   ...field,
@@ -1435,6 +1449,7 @@ export class MetricQueryBuilder {
                       field,
                       adapterType,
                       startOfWeek,
+                      false,
                   ),
               }
             : field;

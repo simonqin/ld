@@ -1717,3 +1717,124 @@ describe('duplicate metric/dimension names', () => {
         expect(duplicateWarnings[1].message).toContain('user_id2');
     });
 });
+
+describe('convert_timezone dimension override', () => {
+    const buildModel = (
+        convertTimezoneValue: boolean | undefined,
+    ): DbtModelNode & { relation_name: string } => ({
+        ...model,
+        columns: {
+            created_at: {
+                name: 'created_at',
+                description: 'when the row was created',
+                data_type: DimensionType.TIMESTAMP,
+                meta: {
+                    dimension: {
+                        type: DimensionType.TIMESTAMP,
+                        ...(convertTimezoneValue !== undefined
+                            ? { convert_timezone: convertTimezoneValue }
+                            : {}),
+                        time_intervals: [TimeFrames.DAY, TimeFrames.MONTH_NUM],
+                    },
+                },
+            },
+        },
+    });
+
+    it('writes skipTimezoneConversion: true onto the compiled dimension and its time-interval children', () => {
+        const result = convertTable(
+            SupportedDbtAdapter.BIGQUERY,
+            buildModel(false),
+            [],
+            DEFAULT_SPOTLIGHT_CONFIG,
+        );
+        expect(result.dimensions.created_at.skipTimezoneConversion).toBe(true);
+        expect(result.dimensions.created_at_day.skipTimezoneConversion).toBe(
+            true,
+        );
+        expect(
+            result.dimensions.created_at_month_num.skipTimezoneConversion,
+        ).toBe(true);
+    });
+
+    it('propagates skipTimezoneConversion onto custom-granularity children', () => {
+        const modelWithCustom: DbtModelNode & { relation_name: string } = {
+            ...model,
+            columns: {
+                created_at: {
+                    name: 'created_at',
+                    description: 'when the row was created',
+                    data_type: DimensionType.TIMESTAMP,
+                    meta: {
+                        dimension: {
+                            type: DimensionType.TIMESTAMP,
+                            convert_timezone: false,
+                            time_intervals: ['my_quarter'],
+                        },
+                    },
+                },
+            },
+        };
+        const result = convertTable(
+            SupportedDbtAdapter.BIGQUERY,
+            modelWithCustom,
+            [],
+            DEFAULT_SPOTLIGHT_CONFIG,
+            undefined,
+            undefined,
+            {
+                my_quarter: {
+                    label: 'My Quarter',
+                    sql: "DATE_TRUNC(${COLUMN}, 'QUARTER')",
+                },
+            },
+        );
+        expect(
+            result.dimensions.created_at_my_quarter.skipTimezoneConversion,
+        ).toBe(true);
+    });
+
+    it('still propagates skipTimezoneConversion when disableTimestampConversion is also set', () => {
+        // The two flags are independent — both should compose.
+        const result = convertTable(
+            SupportedDbtAdapter.SNOWFLAKE,
+            buildModel(false),
+            [],
+            DEFAULT_SPOTLIGHT_CONFIG,
+            undefined,
+            true,
+        );
+        expect(result.dimensions.created_at.skipTimezoneConversion).toBe(true);
+        expect(result.dimensions.created_at_day.skipTimezoneConversion).toBe(
+            true,
+        );
+        expect(
+            result.dimensions.created_at_month_num.skipTimezoneConversion,
+        ).toBe(true);
+        expect(result.dimensions.created_at.sql).not.toContain(
+            'CONVERT_TIMEZONE',
+        );
+    });
+
+    it('omits skipTimezoneConversion when convert_timezone is unset or true (default behavior)', () => {
+        const undef = convertTable(
+            SupportedDbtAdapter.BIGQUERY,
+            buildModel(undefined),
+            [],
+            DEFAULT_SPOTLIGHT_CONFIG,
+        );
+        expect(
+            undef.dimensions.created_at.skipTimezoneConversion,
+        ).toBeUndefined();
+
+        const truthy = convertTable(
+            SupportedDbtAdapter.BIGQUERY,
+            buildModel(true),
+            [],
+            DEFAULT_SPOTLIGHT_CONFIG,
+        );
+        expect(
+            truthy.dimensions.created_at.skipTimezoneConversion,
+        ).toBeUndefined();
+    });
+});
