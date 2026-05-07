@@ -1,3 +1,16 @@
+# [0.2890.0](https://github.com/lightdash/lightdash/compare/0.2889.1...0.2890.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* accept MotherDuck token in DuckDB path query string ([#22778](https://github.com/lightdash/lightdash/issues/22778)) ([f09f22e](https://github.com/lightdash/lightdash/commit/f09f22ea1a01221f026f4f5e7b5b0b61beabbc43)), closes [#22482](https://github.com/lightdash/lightdash/issues/22482)
+
+
+### Features
+
+* nested groups for the tables sidebar ([#22768](https://github.com/lightdash/lightdash/issues/22768)) ([ea45937](https://github.com/lightdash/lightdash/commit/ea459371a4bd39929162f63901147e5cc383e7cb))
+* publish E2B template to US and EU registries ([#22780](https://github.com/lightdash/lightdash/issues/22780)) ([71ca32d](https://github.com/lightdash/lightdash/commit/71ca32d091c84e4c1f576c94796b4c5f21f4609b))
+
 ## [0.2889.1](https://github.com/lightdash/lightdash/compare/0.2889.0...0.2889.1) (2026-05-07)
 
 
