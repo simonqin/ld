@@ -1,3 +1,10 @@
+# [0.2895.0](https://github.com/lightdash/lightdash/compare/0.2894.0...0.2895.0) (2026-05-07)
+
+
+### Features
+
+* show chart-level filters on dashboard tiles ([#22795](https://github.com/lightdash/lightdash/issues/22795)) ([3fc081a](https://github.com/lightdash/lightdash/commit/3fc081a3687b706b30daf072e6f7d00bb6c37f2c))
+
 # [0.2894.0](https://github.com/lightdash/lightdash/compare/0.2893.2...0.2894.0) (2026-05-07)
 
 
