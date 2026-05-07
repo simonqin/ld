@@ -8767,6 +8767,21 @@
             },
             "ApiClarifyAppRequest": {
                 "properties": {
+                    "imageIds": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "dashboard": {
+                        "$ref": "#/components/schemas/AppDashboardReference"
+                    },
+                    "charts": {
+                        "items": {
+                            "$ref": "#/components/schemas/AppChartReference"
+                        },
+                        "type": "array"
+                    },
                     "template": {
                         "$ref": "#/components/schemas/DataAppTemplate"
                     },
@@ -10904,6 +10919,19 @@
                                                         "type": "string",
                                                         "enum": ["error"],
                                                         "nullable": false
+                                                    }
+                                                },
+                                                "required": ["status"],
+                                                "type": "object"
+                                            },
+                                            {
+                                                "properties": {
+                                                    "status": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "success",
+                                                            "error"
+                                                        ]
                                                     }
                                                 },
                                                 "required": ["status"],
