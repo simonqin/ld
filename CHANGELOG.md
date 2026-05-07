@@ -1,3 +1,10 @@
+# [0.2891.0](https://github.com/lightdash/lightdash/compare/0.2890.1...0.2891.0) (2026-05-07)
+
+
+### Features
+
+* **bigquery:** support custom api endpoints ([#22781](https://github.com/lightdash/lightdash/issues/22781)) ([fa802ff](https://github.com/lightdash/lightdash/commit/fa802ff60a3c65d4d7a0ccdfe25f1c0ddb2c37e3))
+
 ## [0.2890.1](https://github.com/lightdash/lightdash/compare/0.2890.0...0.2890.1) (2026-05-07)
 
 
