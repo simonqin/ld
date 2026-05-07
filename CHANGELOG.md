@@ -1,3 +1,15 @@
+# [0.2902.0](https://github.com/lightdash/lightdash/compare/0.2901.0...0.2902.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* **managed-agent:** keep action sidebar in sync after revert ([#22820](https://github.com/lightdash/lightdash/issues/22820)) ([be9e1cd](https://github.com/lightdash/lightdash/commit/be9e1cdd914983d586a2ee866f877f5f22e72265))
+
+
+### Features
+
+* **managed-agent:** track run started, run completed, and action created ([#22819](https://github.com/lightdash/lightdash/issues/22819)) ([dfacdb5](https://github.com/lightdash/lightdash/commit/dfacdb58f910e7998d6b29bb6883c46058083908))
+
 # [0.2901.0](https://github.com/lightdash/lightdash/compare/0.2900.0...0.2901.0) (2026-05-07)
 
 
