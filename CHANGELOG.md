@@ -1,3 +1,10 @@
+# [0.2887.0](https://github.com/lightdash/lightdash/compare/0.2886.0...0.2887.0) (2026-05-07)
+
+
+### Features
+
+* **managed-agent:** rename /improve to /autopilot with redirect ([#22774](https://github.com/lightdash/lightdash/issues/22774)) ([b260ea3](https://github.com/lightdash/lightdash/commit/b260ea3b7b17e1249559d63910287d5b3e06eb9d))
+
 # [0.2886.0](https://github.com/lightdash/lightdash/compare/0.2885.0...0.2886.0) (2026-05-07)
 
 
