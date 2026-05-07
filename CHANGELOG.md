@@ -1,3 +1,11 @@
+# [0.2901.0](https://github.com/lightdash/lightdash/compare/0.2900.0...0.2901.0) (2026-05-07)
+
+
+### Features
+
+* **managed-agent:** diff and revert CTA for auto-fixed charts ([#22815](https://github.com/lightdash/lightdash/issues/22815)) ([d89ef96](https://github.com/lightdash/lightdash/commit/d89ef96e0ca66f7f5a99dba0b3f32c4bae05ebda))
+* **managed-agent:** rotate thinking verbs in tool activity badge ([#22816](https://github.com/lightdash/lightdash/issues/22816)) ([9e0594c](https://github.com/lightdash/lightdash/commit/9e0594c924652e50812b9eb7299b3998f3900fbf))
+
 # [0.2900.0](https://github.com/lightdash/lightdash/compare/0.2899.0...0.2900.0) (2026-05-07)
 
 
