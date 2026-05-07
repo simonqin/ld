@@ -1,3 +1,19 @@
+# [0.2898.0](https://github.com/lightdash/lightdash/compare/0.2897.0...0.2898.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* add non-judgmental tone rule to Autopilot agent system prompt ([#22805](https://github.com/lightdash/lightdash/issues/22805)) ([d7a9af0](https://github.com/lightdash/lightdash/commit/d7a9af0594cfea566a799e280eb9c1886900235f))
+* **managed-agent:** handle deleted target in action sidebar ([#22806](https://github.com/lightdash/lightdash/issues/22806)) ([62c4e20](https://github.com/lightdash/lightdash/commit/62c4e2021b43afe76ee9f2a4b49aa91806545d10))
+* mobile spaces view shows space heirarchy ([#22799](https://github.com/lightdash/lightdash/issues/22799)) ([739e87a](https://github.com/lightdash/lightdash/commit/739e87a1627b79af991bc577486fbf778906912a))
+* pass attached resources to clarifying-questions LLM call (GLITCH-418) ([#22796](https://github.com/lightdash/lightdash/issues/22796)) ([c59080a](https://github.com/lightdash/lightdash/commit/c59080a559d658ecf2cb4d8cbd751a71bcb5607c))
+
+
+### Features
+
+* audit-logs for autopilot actions ([#22791](https://github.com/lightdash/lightdash/issues/22791)) ([811881c](https://github.com/lightdash/lightdash/commit/811881c1db2ba98860140506fceaf30880a78582))
+* **managed-agent:** tool-activity badge with icon stack ([#22790](https://github.com/lightdash/lightdash/issues/22790)) ([faa904a](https://github.com/lightdash/lightdash/commit/faa904ab953c6fe2ff4784965a3fb0a768ec602f))
+
 # [0.2897.0](https://github.com/lightdash/lightdash/compare/0.2896.0...0.2897.0) (2026-05-07)
 
 
