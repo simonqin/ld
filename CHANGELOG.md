@@ -1,3 +1,10 @@
+# [0.2896.0](https://github.com/lightdash/lightdash/compare/0.2895.0...0.2896.0) (2026-05-07)
+
+
+### Features
+
+* add rotate token UI for service accounts ([#22786](https://github.com/lightdash/lightdash/issues/22786)) ([bff89e1](https://github.com/lightdash/lightdash/commit/bff89e1631d3de025efb1437f7494f0814e811dc))
+
 # [0.2895.0](https://github.com/lightdash/lightdash/compare/0.2894.0...0.2895.0) (2026-05-07)
 
 
