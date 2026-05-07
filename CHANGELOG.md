@@ -1,3 +1,10 @@
+## [0.2890.1](https://github.com/lightdash/lightdash/compare/0.2890.0...0.2890.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* improve UI for service account table ([#22777](https://github.com/lightdash/lightdash/issues/22777)) ([554e295](https://github.com/lightdash/lightdash/commit/554e295724b527e50bc21a0647346f827f6d62c5))
+
 # [0.2890.0](https://github.com/lightdash/lightdash/compare/0.2889.1...0.2890.0) (2026-05-07)
 
 
