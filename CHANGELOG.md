@@ -1,3 +1,10 @@
+## [0.2893.1](https://github.com/lightdash/lightdash/compare/0.2893.0...0.2893.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* replace SA permissions modal with custom-role link ([#22792](https://github.com/lightdash/lightdash/issues/22792)) ([a8d3c33](https://github.com/lightdash/lightdash/commit/a8d3c33412eefad3d81c0f9b0cdeed04c13f1bb8))
+
 # [0.2893.0](https://github.com/lightdash/lightdash/compare/0.2892.0...0.2893.0) (2026-05-07)
 
 
