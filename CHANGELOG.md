@@ -1,3 +1,10 @@
+## [0.2888.1](https://github.com/lightdash/lightdash/compare/0.2888.0...0.2888.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* popular content tool for autopilot ([#22772](https://github.com/lightdash/lightdash/issues/22772)) ([332b2a8](https://github.com/lightdash/lightdash/commit/332b2a860ef71903b1f8a3be0e21344207c4f277))
+
 # [0.2888.0](https://github.com/lightdash/lightdash/compare/0.2887.0...0.2888.0) (2026-05-07)
 
 
