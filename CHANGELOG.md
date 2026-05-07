@@ -1,3 +1,10 @@
+# [0.2894.0](https://github.com/lightdash/lightdash/compare/0.2893.2...0.2894.0) (2026-05-07)
+
+
+### Features
+
+* **prod-7162:** dashboard-level color palette ([#22794](https://github.com/lightdash/lightdash/issues/22794)) ([b46b9a6](https://github.com/lightdash/lightdash/commit/b46b9a63366eaef92f6eaa68031df532549b5bf8))
+
 ## [0.2893.2](https://github.com/lightdash/lightdash/compare/0.2893.1...0.2893.2) (2026-05-07)
 
 
