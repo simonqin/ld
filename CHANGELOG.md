@@ -1,3 +1,11 @@
+# [0.2893.0](https://github.com/lightdash/lightdash/compare/0.2892.0...0.2893.0) (2026-05-07)
+
+
+### Features
+
+* add rotate endpoint to service-accounts controller ([#22785](https://github.com/lightdash/lightdash/issues/22785)) ([3066369](https://github.com/lightdash/lightdash/commit/3066369aeb229137e5b116736a0b34d2baee46af))
+* **managed-agent:** unify heartbeat execution onto scheduler worker ([#22756](https://github.com/lightdash/lightdash/issues/22756)) ([26434ae](https://github.com/lightdash/lightdash/commit/26434ae6b6350aa5289f176074dcc617e2c2588b))
+
 # [0.2892.0](https://github.com/lightdash/lightdash/compare/0.2891.0...0.2892.0) (2026-05-07)
 
 
