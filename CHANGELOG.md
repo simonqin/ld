@@ -1,3 +1,16 @@
+# [0.2892.0](https://github.com/lightdash/lightdash/compare/0.2891.0...0.2892.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* preserve isEditMode when clearing explore query (PROD-7475) ([#22789](https://github.com/lightdash/lightdash/issues/22789)) ([4ff14fa](https://github.com/lightdash/lightdash/commit/4ff14faf66491e2b7e80e98a99bc1226d7f39f8a))
+
+
+### Features
+
+* create dashboard in chart save ([#22788](https://github.com/lightdash/lightdash/issues/22788)) ([8eee240](https://github.com/lightdash/lightdash/commit/8eee24094fd2929e54cf615422b9bb91c5053a0b))
+* **timezone:** add convert_timezone override to dimensions ([#22762](https://github.com/lightdash/lightdash/issues/22762)) ([1d5a74f](https://github.com/lightdash/lightdash/commit/1d5a74f6c5f55e8ee3d0d2fb8463fcc9eb14e4c9))
+
 # [0.2891.0](https://github.com/lightdash/lightdash/compare/0.2890.1...0.2891.0) (2026-05-07)
 
 
