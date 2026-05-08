@@ -1,3 +1,10 @@
+## [0.2903.1](https://github.com/lightdash/lightdash/compare/0.2903.0...0.2903.1) (2026-05-08)
+
+
+### Bug Fixes
+
+* **data-apps:** avoid connecting to sandbox for pause/kill commands ([#22827](https://github.com/lightdash/lightdash/issues/22827)) ([0863621](https://github.com/lightdash/lightdash/commit/0863621d8f7996905f9cbf296a7d4d6b7e6b72b1))
+
 # [0.2903.0](https://github.com/lightdash/lightdash/compare/0.2902.0...0.2903.0) (2026-05-08)
 
 
