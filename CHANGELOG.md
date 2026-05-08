@@ -1,3 +1,10 @@
+## [0.2903.7](https://github.com/lightdash/lightdash/compare/0.2903.6...0.2903.7) (2026-05-08)
+
+
+### Bug Fixes
+
+* **data-apps:** remove allow-same-origin from preview iframe sandbox ([#22859](https://github.com/lightdash/lightdash/issues/22859)) ([6ef9bbe](https://github.com/lightdash/lightdash/commit/6ef9bbe36bb365df737ae0031179883db1caa464))
+
 ## [0.2903.6](https://github.com/lightdash/lightdash/compare/0.2903.5...0.2903.6) (2026-05-08)
 
 
