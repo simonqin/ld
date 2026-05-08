@@ -1,3 +1,11 @@
+# [0.2904.0](https://github.com/lightdash/lightdash/compare/0.2903.10...0.2904.0) (2026-05-08)
+
+
+### Features
+
+* add control of hexbin sizing ([#22814](https://github.com/lightdash/lightdash/issues/22814)) ([2e15b94](https://github.com/lightdash/lightdash/commit/2e15b9461c335437e1288004a75c8902cf09fed3))
+* hide dashbaord tabs ([#22853](https://github.com/lightdash/lightdash/issues/22853)) ([365bf84](https://github.com/lightdash/lightdash/commit/365bf84851bd10f1de92ae3c16250cfe5e59cc38))
+
 ## [0.2903.10](https://github.com/lightdash/lightdash/compare/0.2903.9...0.2903.10) (2026-05-08)
 
 
