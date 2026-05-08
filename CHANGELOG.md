@@ -1,3 +1,10 @@
+## [0.2903.8](https://github.com/lightdash/lightdash/compare/0.2903.7...0.2903.8) (2026-05-08)
+
+
+### Bug Fixes
+
+* **color-palette:** skip palette resolver fetch in embedded dashboards ([#22857](https://github.com/lightdash/lightdash/issues/22857)) ([82f9aa1](https://github.com/lightdash/lightdash/commit/82f9aa1463699ca686edc9712b44b1f4fc0a3afb))
+
 ## [0.2903.7](https://github.com/lightdash/lightdash/compare/0.2903.6...0.2903.7) (2026-05-08)
 
 
