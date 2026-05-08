@@ -1,3 +1,10 @@
+## [0.2903.6](https://github.com/lightdash/lightdash/compare/0.2903.5...0.2903.6) (2026-05-08)
+
+
+### Bug Fixes
+
+* use recursive CTE for chart origin resolver ([#22851](https://github.com/lightdash/lightdash/issues/22851)) ([1ae9b7b](https://github.com/lightdash/lightdash/commit/1ae9b7b1af1eefd08e487b482491bf3986b59fd3))
+
 ## [0.2903.5](https://github.com/lightdash/lightdash/compare/0.2903.4...0.2903.5) (2026-05-08)
 
 
