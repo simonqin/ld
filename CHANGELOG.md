@@ -1,3 +1,10 @@
+## [0.2903.10](https://github.com/lightdash/lightdash/compare/0.2903.9...0.2903.10) (2026-05-08)
+
+
+### Bug Fixes
+
+* **ai-agents:** refine dock tab styles and loader size ([#22854](https://github.com/lightdash/lightdash/issues/22854)) ([e13bf3b](https://github.com/lightdash/lightdash/commit/e13bf3b77550c2f9833ef6ea548d39069385800a)), closes [#150](https://github.com/lightdash/lightdash/issues/150)
+
 ## [0.2903.9](https://github.com/lightdash/lightdash/compare/0.2903.8...0.2903.9) (2026-05-08)
 
 
