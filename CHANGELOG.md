@@ -1,3 +1,10 @@
+## [0.2903.2](https://github.com/lightdash/lightdash/compare/0.2903.1...0.2903.2) (2026-05-08)
+
+
+### Bug Fixes
+
+* keep chart download format picker open ([#22826](https://github.com/lightdash/lightdash/issues/22826)) ([e3b7f92](https://github.com/lightdash/lightdash/commit/e3b7f9203f843272349630f4627553c945aa57db))
+
 ## [0.2903.1](https://github.com/lightdash/lightdash/compare/0.2903.0...0.2903.1) (2026-05-08)
 
 
