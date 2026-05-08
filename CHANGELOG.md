@@ -1,3 +1,10 @@
+## [0.2903.9](https://github.com/lightdash/lightdash/compare/0.2903.8...0.2903.9) (2026-05-08)
+
+
+### Bug Fixes
+
+* reset params to dashboard saved values ([#22861](https://github.com/lightdash/lightdash/issues/22861)) ([da37ad5](https://github.com/lightdash/lightdash/commit/da37ad568101da9c046733dd8d2f15cd25c01082))
+
 ## [0.2903.8](https://github.com/lightdash/lightdash/compare/0.2903.7...0.2903.8) (2026-05-08)
 
 
