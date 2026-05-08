@@ -1,3 +1,10 @@
+## [0.2903.4](https://github.com/lightdash/lightdash/compare/0.2903.3...0.2903.4) (2026-05-08)
+
+
+### Bug Fixes
+
+* disable posthog session recordings ([#22841](https://github.com/lightdash/lightdash/issues/22841)) ([b32714c](https://github.com/lightdash/lightdash/commit/b32714c1bf6c269a00497020445c8165245feb5a))
+
 ## [0.2903.3](https://github.com/lightdash/lightdash/compare/0.2903.2...0.2903.3) (2026-05-08)
 
 
