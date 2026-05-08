@@ -1,3 +1,10 @@
+## [0.2903.5](https://github.com/lightdash/lightdash/compare/0.2903.4...0.2903.5) (2026-05-08)
+
+
+### Bug Fixes
+
+* **ai-agents:** error toast when no EE features enabled ([#22847](https://github.com/lightdash/lightdash/issues/22847)) ([2468d0f](https://github.com/lightdash/lightdash/commit/2468d0f3ba52e6d61c9f024887e04a347c881357)), closes [#22843](https://github.com/lightdash/lightdash/issues/22843)
+
 ## [0.2903.4](https://github.com/lightdash/lightdash/compare/0.2903.3...0.2903.4) (2026-05-08)
 
 
