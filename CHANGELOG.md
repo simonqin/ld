@@ -1,3 +1,10 @@
+# [0.2903.0](https://github.com/lightdash/lightdash/compare/0.2902.0...0.2903.0) (2026-05-08)
+
+
+### Features
+
+* create data app directly inside a space (GLITCH-410) ([#22811](https://github.com/lightdash/lightdash/issues/22811)) ([625c840](https://github.com/lightdash/lightdash/commit/625c8405837647c4bfae584351bcbc5d6cfc96f4))
+
 # [0.2902.0](https://github.com/lightdash/lightdash/compare/0.2901.0...0.2902.0) (2026-05-07)
 
 
