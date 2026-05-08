@@ -1,3 +1,10 @@
+## [0.2903.3](https://github.com/lightdash/lightdash/compare/0.2903.2...0.2903.3) (2026-05-08)
+
+
+### Bug Fixes
+
+* match group names in table search ([#22838](https://github.com/lightdash/lightdash/issues/22838)) ([3c44c71](https://github.com/lightdash/lightdash/commit/3c44c710221ada21479046b9607ac9cd437fe608))
+
 ## [0.2903.2](https://github.com/lightdash/lightdash/compare/0.2903.1...0.2903.2) (2026-05-08)
 
 
