@@ -1,3 +1,10 @@
+# [0.2905.0](https://github.com/lightdash/lightdash/compare/0.2904.5...0.2905.0) (2026-05-11)
+
+
+### Features
+
+* **table:** add gradient swatch support for color range conditional formatting ([#22888](https://github.com/lightdash/lightdash/issues/22888)) ([8a2fbee](https://github.com/lightdash/lightdash/commit/8a2fbee0298dd992f170380ca7d65db9fdd37649))
+
 ## [0.2904.5](https://github.com/lightdash/lightdash/compare/0.2904.4...0.2904.5) (2026-05-11)
 
 
