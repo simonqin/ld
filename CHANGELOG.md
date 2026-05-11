@@ -1,3 +1,15 @@
+# [0.2911.0](https://github.com/lightdash/lightdash/compare/0.2910.0...0.2911.0) (2026-05-11)
+
+
+### Bug Fixes
+
+* **prod-7520:** opaque background on save chart modal sticky footer ([#22909](https://github.com/lightdash/lightdash/issues/22909)) ([48b0c15](https://github.com/lightdash/lightdash/commit/48b0c153584ecee18caccd9ca420a71f5257fa31))
+
+
+### Features
+
+* **timezone:** filter pickers honor project timezone (GLITCH-327) ([#22830](https://github.com/lightdash/lightdash/issues/22830)) ([67b3115](https://github.com/lightdash/lightdash/commit/67b31152f8206c1e10b3f6f9a99e7fafc3339b8a))
+
 # [0.2910.0](https://github.com/lightdash/lightdash/compare/0.2909.0...0.2910.0) (2026-05-11)
 
 
