@@ -1,3 +1,15 @@
+# [0.2907.0](https://github.com/lightdash/lightdash/compare/0.2906.0...0.2907.0) (2026-05-11)
+
+
+### Bug Fixes
+
+* **prod-7497:** thread parameter values through virtual view save ([#22865](https://github.com/lightdash/lightdash/issues/22865)) ([4e061c3](https://github.com/lightdash/lightdash/commit/4e061c39134fc3b2b618f387716a6df33beb16b4))
+
+
+### Features
+
+* configure azure on orgs ([#22890](https://github.com/lightdash/lightdash/issues/22890)) ([e1d804a](https://github.com/lightdash/lightdash/commit/e1d804a4ed0871d171bee0b9fe0a8a46350e313d))
+
 # [0.2906.0](https://github.com/lightdash/lightdash/compare/0.2905.0...0.2906.0) (2026-05-11)
 
 
