@@ -1,3 +1,10 @@
+# [0.2906.0](https://github.com/lightdash/lightdash/compare/0.2905.0...0.2906.0) (2026-05-11)
+
+
+### Features
+
+* **authorization:** gate custom SQL table calculations behind a new scope ([#22701](https://github.com/lightdash/lightdash/issues/22701)) ([f386a06](https://github.com/lightdash/lightdash/commit/f386a06ca5cb4113d5b7eacffd33bdd31e0bd8f1))
+
 # [0.2905.0](https://github.com/lightdash/lightdash/compare/0.2904.5...0.2905.0) (2026-05-11)
 
 
