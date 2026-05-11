@@ -1,3 +1,10 @@
+## [0.2904.2](https://github.com/lightdash/lightdash/compare/0.2904.1...0.2904.2) (2026-05-11)
+
+
+### Bug Fixes
+
+* coerce non-string filter values in case-insensitive string filters ([#22883](https://github.com/lightdash/lightdash/issues/22883)) ([10d237b](https://github.com/lightdash/lightdash/commit/10d237b5b6cbf2ea46b49036e91da9410c2bf114))
+
 ## [0.2904.1](https://github.com/lightdash/lightdash/compare/0.2904.0...0.2904.1) (2026-05-11)
 
 
