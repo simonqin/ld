@@ -41,6 +41,7 @@ import {
     UnexpectedServerError,
     UpdateMetadata,
     UpdateProject,
+    UpdateQueryTimezoneSettings,
     UpdateVirtualViewPayload,
     WarehouseClient,
     WarehouseCredentials,
@@ -534,6 +535,9 @@ export class ProjectModel {
                               scheduler_timezone:
                                   copiedProjects[0].scheduler_timezone,
                               query_timezone: copiedProjects[0].query_timezone,
+                              use_project_timezone_in_filters:
+                                  copiedProjects[0]
+                                      .use_project_timezone_in_filters,
                           }
                         : {}),
                     created_by_user_uuid: userUuid,
@@ -714,6 +718,7 @@ export class ProjectModel {
                   copied_from_project_uuid?: string;
                   scheduler_timezone: string;
                   query_timezone: string | null;
+                  use_project_timezone_in_filters: boolean;
                   created_by_user_uuid: string | null;
                   organization_warehouse_credentials_uuid: string | null;
                   has_default_user_spaces: boolean;
@@ -732,6 +737,7 @@ export class ProjectModel {
                   copied_from_project_uuid?: string;
                   scheduler_timezone: string;
                   query_timezone: string | null;
+                  use_project_timezone_in_filters: boolean;
                   created_by_user_uuid: string | null;
                   organization_warehouse_credentials_uuid: string | null;
                   has_default_user_spaces: boolean;
@@ -792,6 +798,9 @@ export class ProjectModel {
                             .ref('query_timezone')
                             .withSchema(ProjectTableName),
                         this.database
+                            .ref('use_project_timezone_in_filters')
+                            .withSchema(ProjectTableName),
+                        this.database
                             .ref('created_by_user_uuid')
                             .withSchema(ProjectTableName),
                         this.database
@@ -842,6 +851,8 @@ export class ProjectModel {
                     upstreamProjectUuid: project.copied_from_project_uuid,
                     schedulerTimezone: project.scheduler_timezone,
                     queryTimezone: project.query_timezone,
+                    useProjectTimezoneInFilters:
+                        project.use_project_timezone_in_filters,
                     createdByUserUuid: project.created_by_user_uuid,
                     organizationWarehouseCredentialsUuid:
                         project.organization_warehouse_credentials_uuid ??
@@ -1046,6 +1057,7 @@ export class ProjectModel {
             upstreamProjectUuid: project.upstreamProjectUuid || undefined,
             schedulerTimezone: project.schedulerTimezone,
             queryTimezone: project.queryTimezone,
+            useProjectTimezoneInFilters: project.useProjectTimezoneInFilters,
             createdByUserUuid: project.createdByUserUuid ?? null,
             organizationWarehouseCredentialsUuid:
                 project.organizationWarehouseCredentialsUuid,
@@ -3204,21 +3216,54 @@ export class ProjectModel {
 
     async updateQueryTimezone(
         projectUuid: string,
-        timezone: string | null,
+        settings: UpdateQueryTimezoneSettings,
     ): Promise<DbProject> {
-        const [updatedProject] = await this.database(ProjectTableName)
-            .update({
-                query_timezone: timezone,
-            })
-            .where('project_uuid', projectUuid)
-            .returning('*');
+        const { queryTimezone, useProjectTimezoneInFilters } = settings;
 
-        if (!updatedProject) {
-            throw new NotFoundError(
-                `Cannot find project with id: ${projectUuid}`,
-            );
-        }
+        return this.database.transaction(async (trx) => {
+            const [current] = await trx(ProjectTableName)
+                .select('query_timezone', 'use_project_timezone_in_filters')
+                .where('project_uuid', projectUuid)
+                .forUpdate();
 
-        return updatedProject;
+            if (!current) {
+                throw new NotFoundError(
+                    `Cannot find project with id: ${projectUuid}`,
+                );
+            }
+
+            const resultingTimezone =
+                queryTimezone !== undefined
+                    ? queryTimezone
+                    : current.query_timezone;
+            const resultingUseProjectTimezoneInFilters =
+                useProjectTimezoneInFilters !== undefined
+                    ? useProjectTimezoneInFilters
+                    : current.use_project_timezone_in_filters;
+
+            if (
+                resultingUseProjectTimezoneInFilters &&
+                resultingTimezone === null
+            ) {
+                throw new ParameterError(
+                    'Cannot enable useProjectTimezoneInFilters without a project query timezone',
+                );
+            }
+
+            const [updatedProject] = await trx(ProjectTableName)
+                .update({
+                    ...(queryTimezone !== undefined && {
+                        query_timezone: queryTimezone,
+                    }),
+                    ...(useProjectTimezoneInFilters !== undefined && {
+                        use_project_timezone_in_filters:
+                            useProjectTimezoneInFilters,
+                    }),
+                })
+                .where('project_uuid', projectUuid)
+                .returning('*');
+
+            return updatedProject;
+        });
     }
 }

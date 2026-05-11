@@ -156,6 +156,7 @@ import {
     UpdateMetadata,
     UpdateProject,
     UpdateProjectMember,
+    UpdateQueryTimezoneSettings,
     UpdateVirtualViewPayload,
     UserAccessControls,
     UserAttributeValueMap,
@@ -7717,7 +7718,7 @@ export class ProjectService extends BaseService {
     async updateQueryTimezone(
         user: SessionUser,
         projectUuid: string,
-        queryTimezone: string | null,
+        settings: UpdateQueryTimezoneSettings,
     ) {
         const project = await this.projectModel.getSummary(projectUuid);
 
@@ -7726,11 +7727,29 @@ export class ProjectService extends BaseService {
             throw new ForbiddenError();
         }
 
-        if (queryTimezone !== null && !isValidTimezone(queryTimezone)) {
+        const { queryTimezone, useProjectTimezoneInFilters } = settings;
+
+        if (
+            queryTimezone === undefined &&
+            useProjectTimezoneInFilters === undefined
+        ) {
+            throw new ParameterError(
+                'Must provide queryTimezone or useProjectTimezoneInFilters',
+            );
+        }
+
+        if (
+            queryTimezone !== null &&
+            queryTimezone !== undefined &&
+            !isValidTimezone(queryTimezone)
+        ) {
             throw new ParameterError(`Invalid timezone: "${queryTimezone}"`);
         }
 
-        await this.projectModel.updateQueryTimezone(projectUuid, queryTimezone);
+        const updatedProject = await this.projectModel.updateQueryTimezone(
+            projectUuid,
+            settings,
+        );
 
         this.analytics.track({
             event: 'query_timezone.updated',
@@ -7738,10 +7757,11 @@ export class ProjectService extends BaseService {
             properties: {
                 projectId: projectUuid,
                 organizationUuid: project.organizationUuid,
-                queryTimezone:
-                    queryTimezone !== null
-                        ? getTimezoneLabel(queryTimezone)
-                        : null,
+                queryTimezone: updatedProject.query_timezone
+                    ? getTimezoneLabel(updatedProject.query_timezone)
+                    : null,
+                useProjectTimezoneInFilters:
+                    updatedProject.use_project_timezone_in_filters,
             },
         });
     }

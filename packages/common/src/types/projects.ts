@@ -602,6 +602,7 @@ export type Project = {
     dbtVersion: DbtVersionOption;
     schedulerTimezone: string;
     queryTimezone: string | null;
+    useProjectTimezoneInFilters: boolean;
     createdByUserUuid: string | null;
     organizationWarehouseCredentialsUuid?: string;
     hasDefaultUserSpaces: boolean;
@@ -645,5 +646,6 @@ export type UpdateSchedulerSettings = {
 };
 
 export type UpdateQueryTimezoneSettings = {
-    queryTimezone: string | null;
+    queryTimezone?: string | null;
+    useProjectTimezoneInFilters?: boolean;
 };
