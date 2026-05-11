@@ -1,3 +1,10 @@
+## [0.2913.1](https://github.com/lightdash/lightdash/compare/0.2913.0...0.2913.1) (2026-05-11)
+
+
+### Bug Fixes
+
+* **echarts:** bypass dayjs.tz for UTC in category date axis snap ([#22914](https://github.com/lightdash/lightdash/issues/22914)) ([5ae0905](https://github.com/lightdash/lightdash/commit/5ae09057d75cd8983717bfe65e248df648ab0d0a)), closes [pre-#22884](https://github.com/pre-/issues/22884)
+
 # [0.2913.0](https://github.com/lightdash/lightdash/compare/0.2912.0...0.2913.0) (2026-05-11)
 
 
