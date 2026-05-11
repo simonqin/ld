@@ -1,3 +1,10 @@
+# [0.2908.0](https://github.com/lightdash/lightdash/compare/0.2907.2...0.2908.0) (2026-05-11)
+
+
+### Features
+
+* **timezone:** persist project-timezone-in-filters setting (GLITCH-327) ([#22828](https://github.com/lightdash/lightdash/issues/22828)) ([2d770d9](https://github.com/lightdash/lightdash/commit/2d770d979b5b81e0683a72fc0f25c974d1a85205))
+
 ## [0.2907.2](https://github.com/lightdash/lightdash/compare/0.2907.1...0.2907.2) (2026-05-11)
 
 
