@@ -1,3 +1,10 @@
+## [0.2907.2](https://github.com/lightdash/lightdash/compare/0.2907.1...0.2907.2) (2026-05-11)
+
+
+### Bug Fixes
+
+* **timezone:** shift cell raw to project TZ for filter/drill/underlying actions ([#22895](https://github.com/lightdash/lightdash/issues/22895)) ([da52176](https://github.com/lightdash/lightdash/commit/da521760d41b804a1b2a3d7ff23737687664a015))
+
 ## [0.2907.1](https://github.com/lightdash/lightdash/compare/0.2907.0...0.2907.1) (2026-05-11)
 
 
