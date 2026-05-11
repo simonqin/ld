@@ -74,6 +74,7 @@ import {
     oauthProtectedResourceHandler,
 } from './routers/oauthRouter';
 import { SchedulerWorker } from './scheduler/SchedulerWorker';
+import { SchedulerWorkerHealth } from './scheduler/SchedulerWorkerHealth';
 import { InstanceConfigurationService } from './services/InstanceConfigurationService/InstanceConfigurationService';
 import {
     OperationContext,
@@ -114,6 +115,8 @@ const schedulerWorkerFactory = (context: {
     models: ModelRepository;
     clients: ClientRepository;
     utils: UtilRepository;
+    // Optional only so the EE factory override (which reads context.workerHealth) typechecks against this shape.
+    workerHealth?: SchedulerWorkerHealth;
 }) =>
     new SchedulerWorker({
         lightdashConfig: context.lightdashConfig,

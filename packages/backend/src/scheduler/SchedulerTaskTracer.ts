@@ -186,6 +186,8 @@ const getTagsForTask: {
         'project.uuid': payload.projectUuid,
         'managed_agent.triggered_by': payload.triggeredBy ?? 'cron',
     }),
+    [SCHEDULER_TASKS.WORKER_HEARTBEAT]: () => ({}),
+    [SCHEDULER_TASKS.CLEAN_WORKER_HEARTBEATS]: () => ({}),
     [SCHEDULER_TASKS.APP_GENERATE_PIPELINE]: (payload) => ({
         'organization.uuid': payload.organizationUuid,
         'user.uuid': payload.userUuid,
@@ -194,11 +196,15 @@ const getTagsForTask: {
     [SCHEDULER_TASKS.SWEEP_STALE_APP_LOCKS]: () => ({}),
 } as const;
 
-// Generic accessor function
+// Generic accessor function. Returns {} for dynamic task names that aren't
+// in the static map (e.g. per-pool heartbeat tasks named workerHeartbeat:<id>).
 const getTagsFromPayload = <T extends SchedulerTaskName>(
     taskName: T,
     payload: TaskPayloadMap[T],
-): Record<string, string> => getTagsForTask[taskName](payload);
+): Record<string, string> => {
+    const tagFn = getTagsForTask[taskName];
+    return typeof tagFn === 'function' ? tagFn(payload) : {};
+};
 
 /**
  * Traces a task and adds tags to the Sentry span
@@ -346,6 +352,9 @@ export const traceTask = <T extends SchedulerTaskName>(
     return tracedTask;
 };
 
+// Skip wrapping the per-pool heartbeat tasks — they fire every 60s and produce no actionable trace signal.
+const TRACE_SKIP_PREFIX = 'workerHeartbeat:';
+
 /**
  * Traces a list of tasks and converts them to a Graphile Worker TaskList
  * @param tasks - The list of tasks to trace
@@ -353,14 +362,22 @@ export const traceTask = <T extends SchedulerTaskName>(
  */
 export const traceTasks = (tasks: Partial<TypedTaskList>) => {
     const tracedTasks = Object.keys(tasks).reduce<TaskList>(
-        (accTasks, taskName) => ({
-            ...accTasks,
-            // NOTE: Graphile Worker requires the task to be of type Task, which is not typed. We need to cast it to unknown.
-            [taskName]: traceTask(
-                taskName as SchedulerTaskName,
-                tasks[taskName as keyof TypedTaskList] as TypedTask<unknown>,
-            ) as Task,
-        }),
+        (accTasks, taskName) => {
+            const handler = tasks[
+                taskName as keyof TypedTaskList
+            ] as TypedTask<unknown>;
+            if (taskName.startsWith(TRACE_SKIP_PREFIX)) {
+                return { ...accTasks, [taskName]: handler as Task };
+            }
+            return {
+                ...accTasks,
+                // NOTE: Graphile Worker requires the task to be of type Task, which is not typed. We need to cast it to unknown.
+                [taskName]: traceTask(
+                    taskName as SchedulerTaskName,
+                    handler,
+                ) as Task,
+            };
+        },
         {} as TaskList,
     );
     return tracedTasks;
