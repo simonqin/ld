@@ -2248,6 +2248,9 @@ export const GenericDashboardChartTile: FC<
                 dashboardChartReadyQuery.executeQueryResponse
                     .usedParametersValues
             }
+            resolvedTimezone={
+                dashboardChartReadyQuery.executeQueryResponse.resolvedTimezone
+            }
         >
             {minimal ? (
                 <DashboardChartTileMinimal
