@@ -1,3 +1,10 @@
+## [0.2904.5](https://github.com/lightdash/lightdash/compare/0.2904.4...0.2904.5) (2026-05-11)
+
+
+### Bug Fixes
+
+* **explorer:** guard `runQuery` against undefined feature flag and return dispatch status ([#22877](https://github.com/lightdash/lightdash/issues/22877)) ([3f3b821](https://github.com/lightdash/lightdash/commit/3f3b8218429e456226f9fe0022403d451ad721ca))
+
 ## [0.2904.4](https://github.com/lightdash/lightdash/compare/0.2904.3...0.2904.4) (2026-05-11)
 
 
