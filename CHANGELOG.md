@@ -1,3 +1,10 @@
+# [0.2914.0](https://github.com/lightdash/lightdash/compare/0.2913.1...0.2914.0) (2026-05-11)
+
+
+### Features
+
+* **user-settings:** "Leave organization" action (behind feature flag) ([#22915](https://github.com/lightdash/lightdash/issues/22915)) ([8abd231](https://github.com/lightdash/lightdash/commit/8abd23147524003006d99eaa77a1d213feaf2042))
+
 ## [0.2913.1](https://github.com/lightdash/lightdash/compare/0.2913.0...0.2913.1) (2026-05-11)
 
 
