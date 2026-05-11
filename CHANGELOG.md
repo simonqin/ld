@@ -1,3 +1,10 @@
+## [0.2907.1](https://github.com/lightdash/lightdash/compare/0.2907.0...0.2907.1) (2026-05-11)
+
+
+### Bug Fixes
+
+* **date-zoom:** align WHERE filter grain with zoom on underlying-data (PROD-880) ([#22894](https://github.com/lightdash/lightdash/issues/22894)) ([ba4af1d](https://github.com/lightdash/lightdash/commit/ba4af1ddaee94a3a5d316b318f5690729e8db9b1)), closes [#12615](https://github.com/lightdash/lightdash/issues/12615) [#12515](https://github.com/lightdash/lightdash/issues/12515) [#12615](https://github.com/lightdash/lightdash/issues/12615)
+
 # [0.2907.0](https://github.com/lightdash/lightdash/compare/0.2906.0...0.2907.0) (2026-05-11)
 
 
