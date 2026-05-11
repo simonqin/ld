@@ -1,3 +1,10 @@
+# [0.2912.0](https://github.com/lightdash/lightdash/compare/0.2911.0...0.2912.0) (2026-05-11)
+
+
+### Features
+
+* **scheduler:** worker-aware liveness probe with heartbeat ([#22893](https://github.com/lightdash/lightdash/issues/22893)) ([5cab2e8](https://github.com/lightdash/lightdash/commit/5cab2e8287d1eb4351d3652e2eece61d4788150c))
+
 # [0.2911.0](https://github.com/lightdash/lightdash/compare/0.2910.0...0.2911.0) (2026-05-11)
 
 
