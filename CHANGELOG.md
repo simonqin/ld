@@ -1,3 +1,11 @@
+## [0.2904.1](https://github.com/lightdash/lightdash/compare/0.2904.0...0.2904.1) (2026-05-11)
+
+
+### Bug Fixes
+
+* **oauth:** persist rotated Snowflake & Databricks refresh tokens ([#22831](https://github.com/lightdash/lightdash/issues/22831)) ([#22846](https://github.com/lightdash/lightdash/issues/22846)) ([f1079e3](https://github.com/lightdash/lightdash/commit/f1079e37b5abe69d2cc6b4fe7fcff8070fb15a64))
+* resolve short-form metric refs against outer metric's table to prevent same-named joined metric collision (PROD-7503) ([#22881](https://github.com/lightdash/lightdash/issues/22881)) ([ef1e32e](https://github.com/lightdash/lightdash/commit/ef1e32e19c99ecd7913bed0807df07e22a89b44b))
+
 # [0.2904.0](https://github.com/lightdash/lightdash/compare/0.2903.10...0.2904.0) (2026-05-08)
 
 
