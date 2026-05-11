@@ -1,3 +1,10 @@
+# [0.2910.0](https://github.com/lightdash/lightdash/compare/0.2909.0...0.2910.0) (2026-05-11)
+
+
+### Features
+
+* **timezone:** settings toggle for project-timezone filter inputs (GLITCH-327) ([#22829](https://github.com/lightdash/lightdash/issues/22829)) ([820d4c3](https://github.com/lightdash/lightdash/commit/820d4c3741e58f901a7f591ee112e957bc4218f0))
+
 # [0.2909.0](https://github.com/lightdash/lightdash/compare/0.2908.0...0.2909.0) (2026-05-11)
 
 
