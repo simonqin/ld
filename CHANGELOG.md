@@ -1,3 +1,10 @@
+## [0.2904.4](https://github.com/lightdash/lightdash/compare/0.2904.3...0.2904.4) (2026-05-11)
+
+
+### Bug Fixes
+
+* **echarts:** snap category date axis in UTC for DATE base dimensions ([#22896](https://github.com/lightdash/lightdash/issues/22896)) ([2403730](https://github.com/lightdash/lightdash/commit/24037309ab197a59ee41de65379a10c46c24ce41)), closes [#22884](https://github.com/lightdash/lightdash/issues/22884)
+
 ## [0.2904.3](https://github.com/lightdash/lightdash/compare/0.2904.2...0.2904.3) (2026-05-11)
 
 
