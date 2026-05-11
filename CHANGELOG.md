@@ -1,3 +1,10 @@
+# [0.2909.0](https://github.com/lightdash/lightdash/compare/0.2908.0...0.2909.0) (2026-05-11)
+
+
+### Features
+
+* **scheduler:** notify owner by email when admin modifies their scheduler ([#22905](https://github.com/lightdash/lightdash/issues/22905)) ([c517994](https://github.com/lightdash/lightdash/commit/c5179943a7ca6b41cb2cf4aff85129d5d3f7a5af))
+
 # [0.2908.0](https://github.com/lightdash/lightdash/compare/0.2907.2...0.2908.0) (2026-05-11)
 
 
