@@ -1,0 +1,37 @@
+.containedList {
+    --accordion-radius: var(--mantine-radius-md);
+}
+
+.containedList :global(.mantine-Accordion-control) {
+    padding: var(--mantine-spacing-xs);
+}
+
+.containedList :global(.mantine-Accordion-label) {
+    padding: 0;
+}
+
+.containedList :global(.mantine-Accordion-panel) {
+    padding: 0;
+}
+
+.controlLabel {
+    flex: 1;
+}
+
+.controlButton {
+    flex: 0;
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+.controlRow [data-cf-rule-delete] {
+    opacity: 0;
+    transition: opacity 120ms ease;
+    pointer-events: none;
+}
+
+.controlRow:hover [data-cf-rule-delete] {
+    opacity: 1;
+    pointer-events: auto;
+}

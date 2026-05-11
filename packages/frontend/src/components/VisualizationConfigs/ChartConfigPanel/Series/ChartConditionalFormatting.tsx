@@ -7,7 +7,7 @@ import {
     type FilterableItem,
     type FilterOperator,
 } from '@lightdash/common';
-import { Accordion, Divider, Group } from '@mantine/core';
+import { Accordion, Divider, Group } from '@mantine-8/core';
 import { produce } from 'immer';
 import {
     Fragment,
@@ -20,6 +20,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import FieldSelect from '../../../common/FieldSelect';
 import ColorSelector from '../../ColorSelector';
+import accordionClasses from '../../common/Accordion.module.css';
 import { AccordionControl } from '../../common/AccordionControl';
 import { AddButton } from '../../common/AddButton';
 import { Config } from '../../common/Config';
@@ -133,12 +134,14 @@ const ChartConditionalFormattingItem: FC<ItemProps> = ({
                 <Config.Section>
                     <FieldSelect
                         disabled
+                        size="xs"
                         item={field}
                         items={field ? [field] : []}
                         onChange={() => undefined}
                         hasGrouping
+                        label={<Config.Label>Select Field</Config.Label>}
                     />
-                    <Group spacing="xs">
+                    <Group gap="xs">
                         <Config.Label>Color</Config.Label>
                         <ColorSelector
                             color={config.color}
@@ -295,17 +298,7 @@ export const ChartConditionalFormatting: FC<Props> = ({
                 variant="contained"
                 value={openItems}
                 onChange={handleAccordionChange}
-                styles={(theme) => ({
-                    control: {
-                        padding: theme.spacing.xs,
-                    },
-                    label: {
-                        padding: 0,
-                    },
-                    panel: {
-                        padding: 0,
-                    },
-                })}
+                className={accordionClasses.containedList}
             >
                 {supportedConfigs.map((config, index) => (
                     <ChartConditionalFormattingItem
