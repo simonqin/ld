@@ -1,3 +1,10 @@
+## [0.2904.3](https://github.com/lightdash/lightdash/compare/0.2904.2...0.2904.3) (2026-05-11)
+
+
+### Bug Fixes
+
+* **echarts:** snap category date axis in project timezone ([#22884](https://github.com/lightdash/lightdash/issues/22884)) ([08e4a06](https://github.com/lightdash/lightdash/commit/08e4a0657baf47912ad5b88441be9907d185f7f4))
+
 ## [0.2904.2](https://github.com/lightdash/lightdash/compare/0.2904.1...0.2904.2) (2026-05-11)
 
 
