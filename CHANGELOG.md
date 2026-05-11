@@ -1,3 +1,10 @@
+# [0.2913.0](https://github.com/lightdash/lightdash/compare/0.2912.0...0.2913.0) (2026-05-11)
+
+
+### Features
+
+* **data-apps:** surface Claude's thinking in the build status ([#22913](https://github.com/lightdash/lightdash/issues/22913)) ([315f347](https://github.com/lightdash/lightdash/commit/315f34774c51db057edcd56538a3668017a7f20c))
+
 # [0.2912.0](https://github.com/lightdash/lightdash/compare/0.2911.0...0.2912.0) (2026-05-11)
 
 
