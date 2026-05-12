@@ -1457,12 +1457,13 @@ export class DashboardService
         dashboardUuid: string,
         searchQuery?: string,
         paginateArgs?: KnexPaginateArgs,
+        includeLatestRun?: boolean,
     ): Promise<KnexPaginatedData<SchedulerAndTargets[]>> {
         const dashboard = await this.checkCreateScheduledDeliveryAccess(
             user,
             dashboardUuid,
         );
-        return this.schedulerModel.getSchedulers({
+        const schedulers = await this.schedulerModel.getSchedulers({
             projectUuid: dashboard.projectUuid,
             organizationUuid: dashboard.organizationUuid,
             paginateArgs,
@@ -1472,6 +1473,12 @@ export class DashboardService
                 resourceUuids: [dashboardUuid],
             },
         });
+
+        if (!includeLatestRun) {
+            return schedulers;
+        }
+
+        return this.schedulerModel.attachLatestRunToSchedulers(schedulers);
     }
 
     async createScheduler(
