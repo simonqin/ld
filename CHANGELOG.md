@@ -1,3 +1,12 @@
+# [0.2923.0](https://github.com/lightdash/lightdash/compare/0.2922.0...0.2923.0) (2026-05-12)
+
+
+### Features
+
+* freeze columns in pivot tables (PROD-639) ([#22979](https://github.com/lightdash/lightdash/issues/22979)) ([b62c993](https://github.com/lightdash/lightdash/commit/b62c993991cd2344d42932b7dcd3f10372f22620))
+* frozen columns support for pivot table ([#22980](https://github.com/lightdash/lightdash/issues/22980)) ([9e75fe0](https://github.com/lightdash/lightdash/commit/9e75fe0ca4ddce30c03695d1010ad11eb0cd5647))
+* sync freeze toggle across metrics in `metricsAsRows` mode ([#22981](https://github.com/lightdash/lightdash/issues/22981)) ([376d425](https://github.com/lightdash/lightdash/commit/376d425eec9f5d756e795855349e83675d437908))
+
 # [0.2922.0](https://github.com/lightdash/lightdash/compare/0.2921.0...0.2922.0) (2026-05-12)
 
 
