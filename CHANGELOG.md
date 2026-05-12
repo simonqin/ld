@@ -1,3 +1,10 @@
+# [0.2915.0](https://github.com/lightdash/lightdash/compare/0.2914.0...0.2915.0) (2026-05-12)
+
+
+### Features
+
+* **search:** surface data apps in the omnibar (GLITCH-425) ([#22920](https://github.com/lightdash/lightdash/issues/22920)) ([75dfaf0](https://github.com/lightdash/lightdash/commit/75dfaf00831bb2a3e6110e111ee631acca472c84))
+
 # [0.2914.0](https://github.com/lightdash/lightdash/compare/0.2913.1...0.2914.0) (2026-05-11)
 
 
