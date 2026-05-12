@@ -1,3 +1,10 @@
+## [0.2917.2](https://github.com/lightdash/lightdash/compare/0.2917.1...0.2917.2) (2026-05-12)
+
+
+### Bug Fixes
+
+* **echarts:** pad continuous category axis for all bar charts ([#22922](https://github.com/lightdash/lightdash/issues/22922)) ([5af1ce3](https://github.com/lightdash/lightdash/commit/5af1ce38b633f468a877f1b428c985a3b817c0ba))
+
 ## [0.2917.1](https://github.com/lightdash/lightdash/compare/0.2917.0...0.2917.1) (2026-05-12)
 
 
