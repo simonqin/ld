@@ -1,3 +1,10 @@
+# [0.2916.0](https://github.com/lightdash/lightdash/compare/0.2915.1...0.2916.0) (2026-05-12)
+
+
+### Features
+
+* **scheduler:** show last-run status badge on dashboard/chart scheduler list ([#22912](https://github.com/lightdash/lightdash/issues/22912)) ([dbd94dc](https://github.com/lightdash/lightdash/commit/dbd94dcf55efafb5d283e328c00c2d2df8c030a6))
+
 ## [0.2915.1](https://github.com/lightdash/lightdash/compare/0.2915.0...0.2915.1) (2026-05-12)
 
 
