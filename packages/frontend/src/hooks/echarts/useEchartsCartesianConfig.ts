@@ -2763,12 +2763,37 @@ const useEchartsCartesianConfig = (
                 !isStackNone,
         );
 
+        // Canonical category values for stacked bars on a continuous-date
+        // axis. The axis labels are snapped to a single offset, but row
+        // x-values can drift across DST. padDatasetForContinuousAxis already
+        // normalizes dataset.source — do the same for series.data tuples so
+        // stacked DST bars find their axis slot.
+        const continuousRange = axes.continuousDateRange;
+        const xFieldId = validCartesianConfig?.layout?.xField;
+        const categoryValues =
+            continuousRange && xFieldId && stackedBarSeries.length > 0
+                ? (() => {
+                      const dateKeyToCanonical = new Map<string, string>();
+                      continuousRange.forEach((d) =>
+                          dateKeyToCanonical.set(d.slice(0, 10), d),
+                      );
+                      return rows.map((row) => {
+                          const raw = row[xFieldId]?.value?.raw;
+                          if (typeof raw !== 'string') return raw;
+                          return (
+                              dateKeyToCanonical.get(raw.slice(0, 10)) ?? raw
+                          );
+                      });
+                  })()
+                : undefined;
+
         const seriesWithRoundedStacks =
             stackedBarSeries.length > 0
                 ? applyRoundedCornersToStackData(seriesWithValidStack, rows, {
                       radius: dynamicRadius,
                       isHorizontal: !!isHorizontal,
                       legendSelected: validCartesianConfigLegend,
+                      categoryValues,
                   })
                 : seriesWithValidStack;
 
@@ -2802,6 +2827,7 @@ const useEchartsCartesianConfig = (
         colorPalette,
         theme.colors.background,
         resolvedTimezone,
+        axes.continuousDateRange,
     ]);
     const sortedResults = useMemo(() => {
         const results =
@@ -3089,28 +3115,24 @@ const useEchartsCartesianConfig = (
         xAxisSortedResults,
     ]);
 
-    // When the axis has a continuous date range and row limiting is active,
-    // pad the dataset with empty rows for gap dates so ECharts positional
-    // mapping (row index → category index) stays correct.
+    // Pad whenever a continuous date range exists: the row's date field can
+    // drift from the snap's category string across DST, and ECharts matches
+    // by strict equality. Padding normalizes both to YYYY-MM-DD. The date
+    // dimension is layout.xField regardless of flipAxes — flipping only
+    // swaps which visual axis renders it.
     const paddedDataToRender = useMemo(() => {
         const continuousRange = axes.continuousDateRange;
-        if (!continuousRange || !validCartesianConfig?.rowLimit)
-            return dataToRender;
-        const xFieldId = validCartesianConfig?.layout?.flipAxes
-            ? validCartesianConfig?.layout?.yField?.[0]
-            : validCartesianConfig?.layout?.xField;
-        if (!xFieldId) return dataToRender;
+        if (!continuousRange) return dataToRender;
+        const dateFieldId = validCartesianConfig?.layout?.xField;
+        if (!dateFieldId) return dataToRender;
         return padDatasetForContinuousAxis(
             dataToRender,
             continuousRange,
-            xFieldId,
+            dateFieldId,
         );
     }, [
         dataToRender,
         axes.continuousDateRange,
-        validCartesianConfig?.rowLimit,
-        validCartesianConfig?.layout?.flipAxes,
-        validCartesianConfig?.layout?.yField,
         validCartesianConfig?.layout?.xField,
     ]);
 
