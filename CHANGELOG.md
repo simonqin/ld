@@ -1,3 +1,10 @@
+## [0.2919.1](https://github.com/lightdash/lightdash/compare/0.2919.0...0.2919.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **mcp:** tag warehouse queries with per-tool MCP context (PROD-7537) ([#22964](https://github.com/lightdash/lightdash/issues/22964)) ([a19adc2](https://github.com/lightdash/lightdash/commit/a19adc21b8fdb05be10e7ff9df08149683ae8878))
+
 # [0.2919.0](https://github.com/lightdash/lightdash/compare/0.2918.0...0.2919.0) (2026-05-12)
 
 
