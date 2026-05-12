@@ -1,3 +1,10 @@
+# [0.2921.0](https://github.com/lightdash/lightdash/compare/0.2920.0...0.2921.0) (2026-05-12)
+
+
+### Features
+
+* **leave-org:** surface Leave button on Profile page for discoverability ([#22983](https://github.com/lightdash/lightdash/issues/22983)) ([15526b1](https://github.com/lightdash/lightdash/commit/15526b1784142709634caf90d9c27595c71bc61d))
+
 # [0.2920.0](https://github.com/lightdash/lightdash/compare/0.2919.3...0.2920.0) (2026-05-12)
 
 
