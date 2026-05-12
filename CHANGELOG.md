@@ -1,3 +1,17 @@
+# [0.2918.0](https://github.com/lightdash/lightdash/compare/0.2917.2...0.2918.0) (2026-05-12)
+
+
+### Bug Fixes
+
+* **echarts:** re-sort pivot series on metric-sort to react to filters (PROD-2999) ([#22899](https://github.com/lightdash/lightdash/issues/22899)) ([3501b88](https://github.com/lightdash/lightdash/commit/3501b88c86208f5e00650e80783eda01101bd35b)), closes [#20435](https://github.com/lightdash/lightdash/issues/20435)
+* keep configured custom date zoom granularities available regardless of chart query (PROD-7514) ([#22898](https://github.com/lightdash/lightdash/issues/22898)) ([82126f2](https://github.com/lightdash/lightdash/commit/82126f269f41aba68657fd7d8f495e9538e0123b))
+
+
+### Features
+
+* **cli:** add --combine-manifest option to preview commands ([#22955](https://github.com/lightdash/lightdash/issues/22955)) ([162f968](https://github.com/lightdash/lightdash/commit/162f9687e179e8f8427aed7761022b0c18a9505c))
+* **data-apps:** show description info popup for data apps in spaces ([#22957](https://github.com/lightdash/lightdash/issues/22957)) ([5e78265](https://github.com/lightdash/lightdash/commit/5e78265d4e20b78a712f3ebd0533fbdcdf300021))
+
 ## [0.2917.2](https://github.com/lightdash/lightdash/compare/0.2917.1...0.2917.2) (2026-05-12)
 
 
