@@ -1,3 +1,15 @@
+# [0.2919.0](https://github.com/lightdash/lightdash/compare/0.2918.0...0.2919.0) (2026-05-12)
+
+
+### Bug Fixes
+
+* **scheduler:** replace queued heartbeat with out-of-band pg ping ([#22959](https://github.com/lightdash/lightdash/issues/22959)) ([b5d6325](https://github.com/lightdash/lightdash/commit/b5d6325736a668fcf00d40bb8a11ed8d8bb185dc))
+
+
+### Features
+
+* **spk-447:** gate custom roles via DB feature flag ([#22910](https://github.com/lightdash/lightdash/issues/22910)) ([6e94397](https://github.com/lightdash/lightdash/commit/6e94397040111b37d1b99c1ceafb9645c71abb49))
+
 # [0.2918.0](https://github.com/lightdash/lightdash/compare/0.2917.2...0.2918.0) (2026-05-12)
 
 
