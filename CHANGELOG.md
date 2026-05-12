@@ -1,3 +1,12 @@
+# [0.2922.0](https://github.com/lightdash/lightdash/compare/0.2921.0...0.2922.0) (2026-05-12)
+
+
+### Features
+
+* **ai-agent:** per-thread SQL mode toggle (web) ([#22984](https://github.com/lightdash/lightdash/issues/22984)) ([5e2fc76](https://github.com/lightdash/lightdash/commit/5e2fc761c9aca93bb3f5c04678982b2aaae88451)), closes [#22960](https://github.com/lightdash/lightdash/issues/22960)
+* **ai-agent:** require user approval for runSql with interleaved streaming UI (ZAP-381) ([#22924](https://github.com/lightdash/lightdash/issues/22924)) ([42252ff](https://github.com/lightdash/lightdash/commit/42252ff299cc574ccd95bb9e83cb98c92dc166e6)), closes [#22925](https://github.com/lightdash/lightdash/issues/22925)
+* **ai-agent:** Slack approval buttons + collapsed CSV rendering for runSql (ZAP-381) ([#22925](https://github.com/lightdash/lightdash/issues/22925)) ([31325a9](https://github.com/lightdash/lightdash/commit/31325a98250459536eaef259a493513f0d8e74f7)), closes [#22923](https://github.com/lightdash/lightdash/issues/22923)
+
 # [0.2921.0](https://github.com/lightdash/lightdash/compare/0.2920.0...0.2921.0) (2026-05-12)
 
 
