@@ -1,3 +1,10 @@
+# [0.2920.0](https://github.com/lightdash/lightdash/compare/0.2919.3...0.2920.0) (2026-05-12)
+
+
+### Features
+
+* **timezone:** user-level timezone preference (PROD-7528) ([#22911](https://github.com/lightdash/lightdash/issues/22911)) ([2068054](https://github.com/lightdash/lightdash/commit/2068054778fa6c25267c0eece782a55c38246f1b))
+
 ## [0.2919.3](https://github.com/lightdash/lightdash/compare/0.2919.2...0.2919.3) (2026-05-12)
 
 
