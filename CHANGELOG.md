@@ -1,3 +1,10 @@
+## [0.2915.1](https://github.com/lightdash/lightdash/compare/0.2915.0...0.2915.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **dashboards:** prevent FK violation and orphan-cleanup crash on save (PROD-5905) ([#22921](https://github.com/lightdash/lightdash/issues/22921)) ([2a9b45c](https://github.com/lightdash/lightdash/commit/2a9b45c1de831be81f2f4afeceaf9c155669a72b))
+
 # [0.2915.0](https://github.com/lightdash/lightdash/compare/0.2914.0...0.2915.0) (2026-05-12)
 
 
