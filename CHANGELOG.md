@@ -1,3 +1,10 @@
+## [0.2919.3](https://github.com/lightdash/lightdash/compare/0.2919.2...0.2919.3) (2026-05-12)
+
+
+### Bug Fixes
+
+* **leave-org:** delete the user on leave to match admin-remove cleanup ([#22970](https://github.com/lightdash/lightdash/issues/22970)) ([0d67d85](https://github.com/lightdash/lightdash/commit/0d67d8526b9e95a021c8aa79c6d81d52b3ab9d52))
+
 ## [0.2919.2](https://github.com/lightdash/lightdash/compare/0.2919.1...0.2919.2) (2026-05-12)
 
 
