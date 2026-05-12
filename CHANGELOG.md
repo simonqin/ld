@@ -1,3 +1,10 @@
+# [0.2917.0](https://github.com/lightdash/lightdash/compare/0.2916.0...0.2917.0) (2026-05-12)
+
+
+### Features
+
+* send screenshots to data app generator (iframe-side) ([#22926](https://github.com/lightdash/lightdash/issues/22926)) ([d331575](https://github.com/lightdash/lightdash/commit/d33157564352ac21add59d3fa40125bc5e4a985d))
+
 # [0.2916.0](https://github.com/lightdash/lightdash/compare/0.2915.1...0.2916.0) (2026-05-12)
 
 
