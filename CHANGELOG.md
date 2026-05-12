@@ -1,3 +1,10 @@
+# [0.2924.0](https://github.com/lightdash/lightdash/compare/0.2923.0...0.2924.0) (2026-05-12)
+
+
+### Features
+
+* add accordion description prop ([#22886](https://github.com/lightdash/lightdash/issues/22886)) ([662ecb3](https://github.com/lightdash/lightdash/commit/662ecb3cd63c965c6dd4b4b69ac608ff996f6232))
+
 # [0.2923.0](https://github.com/lightdash/lightdash/compare/0.2922.0...0.2923.0) (2026-05-12)
 
 
