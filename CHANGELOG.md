@@ -1,3 +1,10 @@
+## [0.2917.1](https://github.com/lightdash/lightdash/compare/0.2917.0...0.2917.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **e2e:** enable USE_SQL_PIVOT_RESULTS in preview env ([#22947](https://github.com/lightdash/lightdash/issues/22947)) ([d5b2afe](https://github.com/lightdash/lightdash/commit/d5b2afef6940cde394661f49497b6522dfdfb21a))
+
 # [0.2917.0](https://github.com/lightdash/lightdash/compare/0.2916.0...0.2917.0) (2026-05-12)
 
 
