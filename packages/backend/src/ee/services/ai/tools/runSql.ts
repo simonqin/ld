@@ -9,11 +9,12 @@ import type {
     GetPromptFn,
     RunSqlJobFn,
     SendFileFn,
-    SendSlackBlocksFn,
     UpdateProgressFn,
+    UpdateSlackMessageFn,
 } from '../types/aiAgentDependencies';
 import { serializeData } from '../utils/serializeData';
 import { toolErrorHandler } from '../utils/toolErrorHandler';
+import { renderBlocks, type SectionState } from './slackSqlAggregate';
 import {
     isSlackThreadAutoApproved,
     resolveSqlApproval,
@@ -25,76 +26,40 @@ type Dependencies = {
     runSqlJob: RunSqlJobFn;
     getPrompt: GetPromptFn;
     sendFile: SendFileFn;
-    sendSlackBlocks: SendSlackBlocksFn;
+    updateSlackMessage: UpdateSlackMessageFn;
+    siteUrl: string;
 };
 
-const truncateForSlack = (sql: string, maxLength = 2500) =>
-    sql.length > maxLength
-        ? `${sql.slice(0, maxLength)}\n... (truncated)`
-        : sql;
+// Strip --line and /* block */ comments + string literals so subsequent
+// keyword checks don't false-positive on text that's inside a comment or a
+// string. We don't execute the stripped version — it's used purely for
+// validation.
+const SQL_COMMENTS_AND_STRINGS = /--[^\n]*|\/\*[\s\S]*?\*\/|'(?:[^']|'')*'/g;
+const stripCommentsAndStrings = (sql: string): string =>
+    sql.replace(SQL_COMMENTS_AND_STRINGS, ' ');
 
-const buildSlackApprovalBlocks = (
-    toolCallId: string,
-    threadUuid: string,
-    sql: string,
-) => [
-    {
-        type: 'section',
-        text: {
-            type: 'mrkdwn',
-            text: ':lock: *About to run SQL — approve to execute*',
-        },
-    },
-    {
-        type: 'section',
-        text: {
-            type: 'mrkdwn',
-            text: `\`\`\`sql\n${truncateForSlack(sql)}\n\`\`\``,
-        },
-    },
-    {
-        type: 'actions',
-        elements: [
-            {
-                type: 'button',
-                text: { type: 'plain_text', text: 'Approve' },
-                action_id: `actions.sql_approval:${toolCallId}:${threadUuid}:approved`,
-                value: toolCallId,
-                style: 'primary',
-            },
-            {
-                type: 'button',
-                text: {
-                    type: 'plain_text',
-                    text: "Approve & don't ask again",
-                },
-                action_id: `actions.sql_approval:${toolCallId}:${threadUuid}:approved_always`,
-                value: toolCallId,
-            },
-            {
-                type: 'button',
-                text: { type: 'plain_text', text: 'Reject' },
-                action_id: `actions.sql_approval:${toolCallId}:${threadUuid}:rejected`,
-                value: toolCallId,
-                style: 'danger',
-            },
-        ],
-    },
-];
-
-const SELECT_OR_WITH = /^\s*(WITH|SELECT)\b/i;
+const STARTS_WITH_SELECT_OR_WITH = /^\s*(WITH|SELECT)\b/i;
 const FORBIDDEN_STATEMENTS =
     /\b(INSERT|UPDATE|DELETE|DROP|TRUNCATE|ALTER|CREATE|GRANT|REVOKE|MERGE|CALL|EXECUTE)\b/i;
+const INFORMATION_SCHEMA = /\binformation_schema\b/i;
 
 const PREVIEW_ROW_LIMIT = 50;
+const SLACK_INLINE_ROW_LIMIT = 10;
+const LARGE_RESULT_THRESHOLD = 25;
 
 const validateSelectOnly = (sql: string) => {
-    if (!SELECT_OR_WITH.test(sql)) {
+    const stripped = stripCommentsAndStrings(sql);
+    if (!STARTS_WITH_SELECT_OR_WITH.test(stripped)) {
         throw new Error('Only SELECT or WITH queries are allowed.');
     }
-    if (FORBIDDEN_STATEMENTS.test(sql)) {
+    if (FORBIDDEN_STATEMENTS.test(stripped)) {
         throw new Error(
             'SQL contains forbidden statements (INSERT/UPDATE/DELETE/DDL). Only SELECT queries are allowed.',
+        );
+    }
+    if (INFORMATION_SCHEMA.test(stripped)) {
+        throw new Error(
+            'Querying information_schema is forbidden. Use describeWarehouseTable for column discovery on a raw table, or listWarehouseTables to find table names. If neither returns what you need, ask the user — do not introspect via SQL.',
         );
     }
 };
@@ -104,63 +69,87 @@ export const getRunSql = ({
     runSqlJob,
     getPrompt,
     sendFile,
-    sendSlackBlocks,
+    updateSlackMessage,
+    siteUrl,
 }: Dependencies) =>
     tool({
         description: toolRunSqlArgsSchema.description,
         inputSchema: toolRunSqlArgsSchema,
         execute: async ({ sql, limit }, { toolCallId }) => {
+            // Pre-section errors (bad SQL shape) — no Slack message exists
+            // yet, just return the error to the agent.
             try {
                 validateSelectOnly(sql);
+            } catch (e) {
+                return {
+                    result: toolErrorHandler(e, 'Error running SQL query.'),
+                    metadata: { status: 'error' },
+                };
+            }
 
-                const prompt = await getPrompt();
-                const isSlack = isSlackPrompt(prompt);
-                const slackAutoApproved =
-                    isSlack && isSlackThreadAutoApproved(prompt.threadUuid);
+            const prompt = await getPrompt();
+            const isSlack = isSlackPrompt(prompt);
+            const slackAutoApproved =
+                isSlack && isSlackThreadAutoApproved(prompt.threadUuid);
 
+            // Render a runSql state INTO the bot's existing progress message
+            // (the bolt-gif "Thinking…" message at response_slack_ts). One
+            // living block — pending → running → result. When the agent
+            // moves on, the next updateProgress overwrites with the bolt gif.
+            const renderState = async (state: SectionState) => {
+                if (!isSlack) return;
+                await updateSlackMessage({
+                    channelId: prompt.slackChannelId,
+                    organizationUuid: prompt.organizationUuid,
+                    ts: prompt.response_slack_ts,
+                    text: 'SQL execution',
+                    blocks: renderBlocks(state, siteUrl),
+                });
+            };
+
+            try {
                 if (slackAutoApproved) {
-                    await updateProgress('Running SQL query...');
+                    await renderState({ kind: 'approved', sql });
+                } else if (isSlack) {
+                    await renderState({
+                        kind: 'pending',
+                        sql,
+                        toolCallId,
+                        threadUuid: prompt.threadUuid,
+                    });
                 } else {
                     await updateProgress('Awaiting approval to run SQL...');
                 }
 
-                // Register the listener first, then trigger any auto-approval
-                // (the EventEmitter delivers synchronously, so the order matters).
+                // Register the approval listener first, then trigger any
+                // auto-approval (the EventEmitter delivers synchronously, so
+                // order matters).
                 const decisionPromise = waitForSqlApproval(toolCallId);
-
                 if (slackAutoApproved) {
                     resolveSqlApproval(toolCallId, 'approved');
-                } else if (isSlack) {
-                    // Post a separate message with Approve/Reject buttons so
-                    // the user can decide without leaving Slack.
-                    await sendSlackBlocks({
-                        channelId: prompt.slackChannelId,
-                        threadTs: prompt.slackThreadTs,
-                        organizationUuid: prompt.organizationUuid,
-                        text: 'About to run SQL — approve to execute',
-                        blocks: buildSlackApprovalBlocks(
-                            toolCallId,
-                            prompt.threadUuid,
-                            sql,
-                        ),
-                    });
                 }
 
                 const decision = await decisionPromise;
                 if (decision === 'rejected') {
+                    await renderState({ kind: 'rejected', sql });
                     return {
                         result: 'User rejected this SQL execution. Do not retry the same query; ask the user what they would like instead.',
                         metadata: { status: 'rejected' },
                     };
                 }
                 if (decision === 'timeout') {
+                    await renderState({ kind: 'timeout', sql });
                     return {
                         result: 'SQL approval timed out after 5 minutes with no response. The user may have stepped away — acknowledge politely and wait for them to re-ask.',
                         metadata: { status: 'timeout' },
                     };
                 }
 
-                await updateProgress('Running SQL query...');
+                if (isSlack) {
+                    await renderState({ kind: 'running', sql });
+                } else {
+                    await updateProgress('Running SQL query...');
+                }
 
                 const { rows, columns, rowCount } = await runSqlJob({
                     sql,
@@ -168,6 +157,13 @@ export const getRunSql = ({
                 });
 
                 if (rowCount === 0) {
+                    await renderState({
+                        kind: 'success',
+                        sql,
+                        rowCount: 0,
+                        inlineCsv: '',
+                        truncated: false,
+                    });
                     return {
                         result: `Query returned 0 rows.${
                             columns.length > 0
@@ -185,19 +181,10 @@ export const getRunSql = ({
                             return acc;
                         }, {}),
                     ),
-                    {
-                        header: true,
-                        columns,
-                    },
+                    { header: true, columns },
                 );
 
-                // For Slack: avoid the noisy auto-expanded CSV file preview by
-                // posting a collapsible code block of the first few rows. If
-                // the result is large, ALSO upload the full CSV file (Slack
-                // file previews are heavy, so we only do it when worth it).
-                if (isSlackPrompt(prompt)) {
-                    const SLACK_INLINE_ROW_LIMIT = 10;
-                    const LARGE_RESULT_THRESHOLD = 25;
+                if (isSlack) {
                     const inlineRows = rows.slice(0, SLACK_INLINE_ROW_LIMIT);
                     const inlineCsv = stringify(
                         inlineRows.map((row) =>
@@ -211,28 +198,17 @@ export const getRunSql = ({
                         ),
                         { header: true, columns },
                     );
-                    const truncatedNote =
-                        rowCount > SLACK_INLINE_ROW_LIMIT
-                            ? ` _(showing first ${SLACK_INLINE_ROW_LIMIT})_`
-                            : '';
-                    await sendSlackBlocks({
-                        channelId: prompt.slackChannelId,
-                        threadTs: prompt.slackThreadTs,
-                        organizationUuid: prompt.organizationUuid,
-                        text: `Query returned ${rowCount} rows`,
-                        blocks: [
-                            {
-                                type: 'section',
-                                text: {
-                                    type: 'mrkdwn',
-                                    text: `*Query returned ${rowCount} row${
-                                        rowCount === 1 ? '' : 's'
-                                    }*${truncatedNote}\n\`\`\`\n${inlineCsv}\n\`\`\``,
-                                },
-                            },
-                        ],
+
+                    await renderState({
+                        kind: 'success',
+                        sql,
+                        rowCount,
+                        inlineCsv,
+                        truncated: rowCount > SLACK_INLINE_ROW_LIMIT,
                     });
 
+                    // chat.update can't attach files, so a full CSV for large
+                    // results still goes as a separate message.
                     if (rowCount > LARGE_RESULT_THRESHOLD) {
                         await sendFile({
                             channelId: prompt.slackChannelId,
@@ -254,10 +230,7 @@ export const getRunSql = ({
                             return acc;
                         }, {}),
                     ),
-                    {
-                        header: true,
-                        columns,
-                    },
+                    { header: true, columns },
                 );
 
                 const truncatedNote =
@@ -272,6 +245,14 @@ export const getRunSql = ({
                     metadata: { status: 'success' },
                 };
             } catch (e) {
+                // Post-section errors (runSqlJob threw, Slack call failed,
+                // etc.). Reflect the error in the living Slack block so the
+                // state isn't stuck on "running" forever.
+                const message =
+                    e instanceof Error ? e.message : 'Unknown error';
+                await renderState({ kind: 'error', sql, message }).catch(() => {
+                    /* don't shadow the original error if rendering fails */
+                });
                 return {
                     result: toolErrorHandler(e, 'Error running SQL query.'),
                     metadata: { status: 'error' },

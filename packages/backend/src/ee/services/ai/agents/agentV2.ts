@@ -11,6 +11,7 @@ import {
 } from 'ai';
 import Logger from '../../../../logging/logger';
 import { getSystemPromptV2 } from '../prompts/systemV2';
+import { getDescribeWarehouseTable } from '../tools/describeWarehouseTable';
 import { getFindContent } from '../tools/findContent';
 import { getFindExplores } from '../tools/findExplores';
 import { getFindFields } from '../tools/findFields';
@@ -132,13 +133,20 @@ const getAgentTools = (
               runSqlJob: dependencies.runSqlJob,
               getPrompt: dependencies.getPrompt,
               sendFile: dependencies.sendFile,
-              sendSlackBlocks: dependencies.sendSlackBlocks,
+              updateSlackMessage: dependencies.updateSlackMessage,
+              siteUrl: args.siteUrl,
           })
         : null;
 
     const listWarehouseTables = args.canRunSql
         ? getListWarehouseTables({
               listWarehouseTables: dependencies.listWarehouseTables,
+          })
+        : null;
+
+    const describeWarehouseTable = args.canRunSql
+        ? getDescribeWarehouseTable({
+              describeWarehouseTable: dependencies.describeWarehouseTable,
           })
         : null;
 
@@ -173,6 +181,7 @@ const getAgentTools = (
         ...(args.enableDataAccess ? { searchFieldValues } : {}),
         ...(runSql ? { runSql } : {}),
         ...(listWarehouseTables ? { listWarehouseTables } : {}),
+        ...(describeWarehouseTable ? { describeWarehouseTable } : {}),
     };
 
     logger(

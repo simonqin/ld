@@ -116,6 +116,14 @@ export type SendSlackBlocksFn = (args: {
     organizationUuid: string;
     text: string;
     blocks: AnyType[];
+}) => Promise<{ ts: string }>;
+
+export type UpdateSlackMessageFn = (args: {
+    channelId: string;
+    organizationUuid: string;
+    ts: string;
+    text: string;
+    blocks: AnyType[];
 }) => Promise<void>;
 
 export type UpdatePromptFn = (
@@ -189,3 +197,11 @@ export type RunSqlJobFn = (args: { sql: string; limit: number }) => Promise<{
 }>;
 
 export type ListWarehouseTablesFn = () => Promise<WarehouseTablesCatalog>;
+
+export type DescribeWarehouseTableFn = (args: {
+    table: string;
+    schema?: string;
+}) => Promise<{
+    columns: Array<{ name: string; type: string }>;
+    resolvedSchema: string | null;
+}>;

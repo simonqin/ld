@@ -145,6 +145,7 @@ import {
 import { AiAgentArgs, AiAgentDependencies } from '../ai/types/aiAgent';
 import {
     CreateChangeFn,
+    DescribeWarehouseTableFn,
     FindContentFn,
     FindExploresFn,
     FindFieldFn,
@@ -163,6 +164,7 @@ import {
     StoreToolCallFn,
     StoreToolResultsFn,
     UpdateProgressFn,
+    UpdateSlackMessageFn,
 } from '../ai/types/aiAgentDependencies';
 import { getUserFacingErrorMessage } from '../ai/utils/errorMessages';
 import {
@@ -172,6 +174,7 @@ import {
     getDeepLinkBlocks,
     getFeedbackBlocks,
     getFollowUpToolBlocks,
+    getMarkdownBlocks,
     getProposeChangeBlocks,
     getReferencedArtifactsBlocks,
     getTextBlocks,
@@ -3185,15 +3188,75 @@ Use your existing tools to inspect them when relevant to the user's question. Wh
                 () => this.projectService.getWarehouseTables(user, projectUuid),
             );
 
+        const describeWarehouseTable: DescribeWarehouseTableFn = ({
+            table,
+            schema,
+        }) =>
+            wrapSentryTransaction(
+                'AiAgent.describeWarehouseTable',
+                { projectUuid, table, schema: schema ?? null },
+                async () => {
+                    // When the agent doesn't pass a schema, fall back to the
+                    // project's default schema (same fallback the runSql
+                    // system prompt uses). getWarehouseFields throws if it
+                    // ends up undefined.
+                    let resolvedSchema = schema ?? null;
+                    if (!resolvedSchema) {
+                        const creds =
+                            await this.projectModel.getWarehouseCredentialsForProject(
+                                projectUuid,
+                            );
+                        resolvedSchema = creds
+                            ? ('schema' in creds && creds.schema) ||
+                              ('dataset' in creds && creds.dataset) ||
+                              null ||
+                              null
+                            : null;
+                    }
+                    const fields = await this.projectService.getWarehouseFields(
+                        user,
+                        projectUuid,
+                        QueryExecutionContext.AI,
+                        table,
+                        resolvedSchema ?? undefined,
+                    );
+                    return {
+                        columns: Object.entries(fields).map(([name, type]) => ({
+                            name,
+                            type: String(type),
+                        })),
+                        resolvedSchema,
+                    };
+                },
+            );
+
         const sendSlackBlocks: SendSlackBlocksFn = async (args) =>
             wrapSentryTransaction(
                 'AiAgent.sendSlackBlocks',
                 { channelId: args.channelId },
                 async () => {
-                    await this.slackClient.postMessage({
+                    const response = await this.slackClient.postMessage({
                         organizationUuid: args.organizationUuid,
                         channel: args.channelId,
                         thread_ts: args.threadTs,
+                        text: args.text,
+                        blocks: args.blocks,
+                    });
+                    return { ts: (response?.ts ?? '') as string };
+                },
+            );
+
+        const updateSlackMessage: UpdateSlackMessageFn = async (args) =>
+            wrapSentryTransaction(
+                'AiAgent.updateSlackMessage',
+                { channelId: args.channelId },
+                async () => {
+                    const webClient = await this.slackClient.getWebClient(
+                        args.organizationUuid,
+                    );
+                    await webClient.chat.update({
+                        channel: args.channelId,
+                        ts: args.ts,
                         text: args.text,
                         blocks: args.blocks,
                     });
@@ -3376,9 +3439,11 @@ Use your existing tools to inspect them when relevant to the user's question. Wh
             runAsyncQuery,
             runSqlJob,
             listWarehouseTables,
+            describeWarehouseTable,
             getSavedChart,
             sendFile,
             sendSlackBlocks,
+            updateSlackMessage,
             storeToolCall,
             storeToolResults,
             storeReasoning,
@@ -3456,9 +3521,11 @@ Use your existing tools to inspect them when relevant to the user's question. Wh
             runAsyncQuery,
             runSqlJob,
             listWarehouseTables,
+            describeWarehouseTable,
             getSavedChart,
             sendFile,
             sendSlackBlocks,
+            updateSlackMessage,
             storeToolCall,
             storeToolResults,
             storeReasoning,
@@ -3574,10 +3641,12 @@ Use your existing tools to inspect them when relevant to the user's question. Wh
             runAsyncQuery,
             runSqlJob,
             listWarehouseTables,
+            describeWarehouseTable,
             getSavedChart,
             getPrompt,
             sendFile,
             sendSlackBlocks,
+            updateSlackMessage,
             storeToolCall,
             storeToolResults,
             storeReasoning,
@@ -3925,7 +3994,14 @@ Use your existing tools to inspect them when relevant to the user's question. Wh
             slackPrompt.promptUuid,
         );
 
-        const feedbackBlocks = getFeedbackBlocks(slackPrompt, threadArtifacts);
+        const feedbackBlocks = agent
+            ? getFeedbackBlocks(
+                  slackPrompt,
+                  toolResults,
+                  agent.uuid,
+                  this.lightdashConfig.siteUrl,
+              )
+            : [];
         const followUpToolBlocks = getFollowUpToolBlocks(
             slackPrompt,
             threadArtifacts,
@@ -3984,17 +4060,18 @@ Use your existing tools to inspect them when relevant to the user's question. Wh
                   )
                 : [];
 
-        // ! This is needed because the markdownToBlocks escapes all characters and slack just needs &, <, > to be escaped
-        // ! https://api.slack.com/reference/surfaces/formatting#escaping
-        // Also strip trailing backslashes before newlines — slackifyMarkdown converts
-        // markdown hard line breaks (two trailing spaces) into `\` which Slack renders literally.
+        // Slack's `markdown` block renders GitHub-flavoured markdown natively,
+        // including tables — which the older mrkdwn-via-section path strips
+        // into pipe-text. We pass the agent's raw response straight through
+        // for the rich rendering, and keep slackifyMarkdown for the message-
+        // level `text` field that drives notifications + older client fallback.
         const slackifiedMarkdown = slackifyMarkdown(response).replace(
             /\\\n/g,
             '\n',
         );
 
         const blocks = [
-            ...getTextBlocks(slackifiedMarkdown),
+            ...getMarkdownBlocks(response),
             ...exploreBlocks,
             ...proposeChangeBlocks,
             ...referencedArtifactsBlocks,

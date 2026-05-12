@@ -4,6 +4,7 @@ import { AiModel, AiProvider } from '../models/types';
 import {
     CreateChangeFn,
     CreateOrUpdateArtifactFn,
+    DescribeWarehouseTableFn,
     FindContentFn,
     FindExploresFn,
     FindFieldFn,
@@ -25,6 +26,7 @@ import {
     TrackEventFn,
     UpdateProgressFn,
     UpdatePromptFn,
+    UpdateSlackMessageFn,
 } from './aiAgentDependencies';
 
 type AnyAiModel<P = AiProvider> = P extends AiProvider ? AiModel<P> : never;
@@ -74,10 +76,12 @@ export type AiAgentDependencies = {
     runAsyncQuery: RunAsyncQueryFn;
     runSqlJob: RunSqlJobFn;
     listWarehouseTables: ListWarehouseTablesFn;
+    describeWarehouseTable: DescribeWarehouseTableFn;
     getSavedChart: GetSavedChartFn;
     getPrompt: GetPromptFn;
     sendFile: SendFileFn;
     sendSlackBlocks: SendSlackBlocksFn;
+    updateSlackMessage: UpdateSlackMessageFn;
     updatePrompt: UpdatePromptFn;
     updateProgress: UpdateProgressFn;
     storeToolCall: StoreToolCallFn;
