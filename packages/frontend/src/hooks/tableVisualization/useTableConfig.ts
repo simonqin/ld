@@ -459,18 +459,17 @@ const useTableConfig = (
 
     const updateColumnProperty = useCallback(
         (field: string, properties: Partial<ColumnProperties>) => {
-            const newProperties =
-                field in columnProperties
-                    ? { ...columnProperties[field], ...properties }
-                    : {
-                          ...properties,
-                      };
-            setColumnProperties({
-                ...columnProperties,
-                [field]: newProperties,
-            });
+            // functional setter so consecutive calls compose correctly
+
+            setColumnProperties((prev) => ({
+                ...prev,
+                [field]:
+                    field in prev
+                        ? { ...prev[field], ...properties }
+                        : { ...properties },
+            }));
         },
-        [columnProperties],
+        [],
     );
 
     const handleSetConditionalFormattings = useCallback(
