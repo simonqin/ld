@@ -35,6 +35,7 @@ import {
     formatRawRows,
     formatRawValue,
     formatRow,
+    getAccountUserTimezone,
     getAvailableFilterFieldIds,
     getColumnTimezone,
     getDashboardFilterRulesForTables,
@@ -808,12 +809,7 @@ export class AsyncQueryService extends ProjectService {
             throw new ResultsExpiredError();
         }
 
-        const { displayTimezone } = await this.resolveTimezoneContext({
-            projectUuid: queryHistory.projectUuid,
-            organizationUuid: account.organization.organizationUuid,
-            userUuid: account.user.id,
-            metricQuery: queryHistory.metricQuery,
-        });
+        const displayTimezone = queryHistory.metricQuery.timezone ?? null;
 
         const defaultedPageSize =
             pageSize ??
@@ -1160,13 +1156,7 @@ export class AsyncQueryService extends ProjectService {
             throw new ForbiddenError();
         }
 
-        const { displayTimezone } = await this.resolveTimezoneContext({
-            projectUuid: queryHistory.projectUuid,
-            organizationUuid: queryHistory.organizationUuid,
-            userUuid:
-                AsyncQueryService.getQueryHistoryActor(queryHistory).userUuid,
-            metricQuery: queryHistory.metricQuery,
-        });
+        const displayTimezone = queryHistory.metricQuery.timezone ?? null;
 
         const { status, resultsFileName, fields, columns } = queryHistory;
         const resultsStorageClient = this.getResultsStorageClientForContext(
@@ -2469,11 +2459,13 @@ export class AsyncQueryService extends ProjectService {
         projectUuid,
         organizationUuid,
         userUuid,
+        userTimezone,
         metricQuery,
     }: {
         projectUuid: string | null;
         organizationUuid: string;
         userUuid: string;
+        userTimezone: string | null;
         metricQuery: MetricQuery;
     }): Promise<{
         resolvedTimezone: string;
@@ -2486,6 +2478,7 @@ export class AsyncQueryService extends ProjectService {
         const resolvedTimezone = resolveQueryTimezone(
             metricQuery,
             projectTimezone,
+            userTimezone,
         );
         const enabled = await this.isTimezoneSupportEnabled({
             userUuid,
@@ -2506,12 +2499,7 @@ export class AsyncQueryService extends ProjectService {
         const queryTags = AsyncQueryService.buildQueryTags(query);
         const warehouseCredentialsOverrides =
             await this.deriveWarehouseCredentialsOverrides(query);
-        const { displayTimezone } = await this.resolveTimezoneContext({
-            projectUuid: query.projectUuid,
-            organizationUuid: query.organizationUuid,
-            userUuid: actor.userUuid,
-            metricQuery: query.metricQuery,
-        });
+        const displayTimezone = query.metricQuery.timezone ?? null;
 
         return {
             projectUuid: query.projectUuid ?? '',
@@ -2547,12 +2535,7 @@ export class AsyncQueryService extends ProjectService {
         const queryTags = AsyncQueryService.buildQueryTags(query);
         const warehouseCredentialsOverrides =
             await this.deriveWarehouseCredentialsOverrides(query);
-        const { displayTimezone } = await this.resolveTimezoneContext({
-            projectUuid: query.projectUuid,
-            organizationUuid: query.organizationUuid,
-            userUuid: actor.userUuid,
-            metricQuery: query.metricQuery,
-        });
+        const displayTimezone = query.metricQuery.timezone ?? null;
 
         return {
             projectUuid: query.projectUuid ?? '',
@@ -2893,6 +2876,13 @@ export class AsyncQueryService extends ProjectService {
             projectUuid,
             organizationUuid: account.organization.organizationUuid,
             userUuid: account.user.id,
+            // Pre-aggregate materializations build shared tables queried by
+            // every viewer — they must compile against the project timezone,
+            // not the triggering user's profile preference.
+            userTimezone:
+                materializationRole !== undefined
+                    ? null
+                    : getAccountUserTimezone(account),
             metricQuery,
         });
 
@@ -3131,7 +3121,11 @@ export class AsyncQueryService extends ProjectService {
                             fields: fieldsMap,
                             compiledSql: query,
                             requestParameters,
-                            metricQuery,
+                            // Persist the fully resolved timezone (chart >
+                            // user > project fallback) on the snapshot so
+                            // worker paths read it back without re-resolving
+                            // against an absent request account.
+                            metricQuery: { ...metricQuery, timezone },
                             cacheKey,
                             pivotConfiguration: pivotConfiguration ?? null,
                         });
@@ -5451,13 +5445,7 @@ export class AsyncQueryService extends ProjectService {
             },
         });
 
-        const { displayTimezone } = await this.resolveTimezoneContext({
-            projectUuid: queryHistory.projectUuid,
-            organizationUuid: queryHistory.organizationUuid,
-            userUuid:
-                AsyncQueryService.getQueryHistoryActor(queryHistory).userUuid,
-            metricQuery: queryHistory.metricQuery,
-        });
+        const displayTimezone = queryHistory.metricQuery.timezone ?? null;
 
         return {
             rows,
