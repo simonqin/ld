@@ -1,3 +1,10 @@
+## [0.2919.2](https://github.com/lightdash/lightdash/compare/0.2919.1...0.2919.2) (2026-05-12)
+
+
+### Bug Fixes
+
+* **cli:** show correct project in log when --project overrides config ([#22968](https://github.com/lightdash/lightdash/issues/22968)) ([3f464ac](https://github.com/lightdash/lightdash/commit/3f464ace47d9a02c795af70bcbff458d117ad610))
+
 ## [0.2919.1](https://github.com/lightdash/lightdash/compare/0.2919.0...0.2919.1) (2026-05-12)
 
 
