@@ -1,3 +1,16 @@
+# [0.2927.0](https://github.com/lightdash/lightdash/compare/0.2926.0...0.2927.0) (2026-05-13)
+
+
+### Bug Fixes
+
+* **ai-agents:** truncate oversized tool-call responses to prevent context overflow ([#22963](https://github.com/lightdash/lightdash/issues/22963)) ([203ed73](https://github.com/lightdash/lightdash/commit/203ed73b40504eb4f1b7454712613be9ebb72450)), closes [#21225](https://github.com/lightdash/lightdash/issues/21225) [#150](https://github.com/lightdash/lightdash/issues/150)
+* **data-apps:** engage build auto-fix loop on Vite failure ([#23012](https://github.com/lightdash/lightdash/issues/23012)) ([1b1a736](https://github.com/lightdash/lightdash/commit/1b1a736d3c38dbb221e474d7c1104a7361029d38))
+
+
+### Features
+
+* **ai:** add Anthropic context management with token-based tool use clearing ([#23011](https://github.com/lightdash/lightdash/issues/23011)) ([a322276](https://github.com/lightdash/lightdash/commit/a322276501702b2a03d44506a03162b4a338122a))
+
 # [0.2926.0](https://github.com/lightdash/lightdash/compare/0.2925.3...0.2926.0) (2026-05-13)
 
 
