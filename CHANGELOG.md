@@ -1,3 +1,10 @@
+# [0.2926.0](https://github.com/lightdash/lightdash/compare/0.2925.3...0.2926.0) (2026-05-13)
+
+
+### Features
+
+* add `write_slack_summary` tool for dedicated agent Slack summaries ([#23009](https://github.com/lightdash/lightdash/issues/23009)) ([0b2bda8](https://github.com/lightdash/lightdash/commit/0b2bda8afb71f2f93c02c2bf2515646d62b4bb41))
+
 ## [0.2925.3](https://github.com/lightdash/lightdash/compare/0.2925.2...0.2925.3) (2026-05-13)
 
 
