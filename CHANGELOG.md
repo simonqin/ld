@@ -1,3 +1,16 @@
+# [0.2925.0](https://github.com/lightdash/lightdash/compare/0.2924.2...0.2925.0) (2026-05-13)
+
+
+### Bug Fixes
+
+* **ai-agent:** persist SQL approvals in DB so they survive pod restarts + cross-pod requests ([#22993](https://github.com/lightdash/lightdash/issues/22993)) ([c79442f](https://github.com/lightdash/lightdash/commit/c79442f12280a495bcf6b44b4eb820716eda4a5b))
+
+
+### Features
+
+* **ai-agents:** add Anthropic cache control to system prompt and remove time from context ([#22987](https://github.com/lightdash/lightdash/issues/22987)) ([09e088c](https://github.com/lightdash/lightdash/commit/09e088cc2484bd960bbfa22527ad9d3c82cee543)), closes [#22128](https://github.com/lightdash/lightdash/issues/22128) [#150](https://github.com/lightdash/lightdash/issues/150)
+* **ai:** add Claude 4.6/4.7 model presets and adaptive reasoning style support ([#22975](https://github.com/lightdash/lightdash/issues/22975)) ([de9682b](https://github.com/lightdash/lightdash/commit/de9682b70b501d3c8d1649829038f89c81e0abbf)), closes [#20764](https://github.com/lightdash/lightdash/issues/20764) [#150](https://github.com/lightdash/lightdash/issues/150)
+
 ## [0.2924.2](https://github.com/lightdash/lightdash/compare/0.2924.1...0.2924.2) (2026-05-13)
 
 
