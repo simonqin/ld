@@ -1,3 +1,10 @@
+## [0.2924.1](https://github.com/lightdash/lightdash/compare/0.2924.0...0.2924.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* add pivoted/unpivoted CSV and XLSX export option for cartesian charts ([#22735](https://github.com/lightdash/lightdash/issues/22735)) ([5bb1156](https://github.com/lightdash/lightdash/commit/5bb11564cb91b62cef960c5230a92864c0afee91))
+
 # [0.2924.0](https://github.com/lightdash/lightdash/compare/0.2923.0...0.2924.0) (2026-05-12)
 
 
