@@ -1,3 +1,10 @@
+# [0.2930.0](https://github.com/lightdash/lightdash/compare/0.2929.0...0.2930.0) (2026-05-13)
+
+
+### Features
+
+* **scheduler:** notify recipients when a scheduled delivery fails ([#22962](https://github.com/lightdash/lightdash/issues/22962)) ([6d23f4f](https://github.com/lightdash/lightdash/commit/6d23f4f2f28d1da19c12248eaa6d51927263b547))
+
 # [0.2929.0](https://github.com/lightdash/lightdash/compare/0.2928.0...0.2929.0) (2026-05-13)
 
 
