@@ -1,3 +1,16 @@
+# [0.2931.0](https://github.com/lightdash/lightdash/compare/0.2930.0...0.2931.0) (2026-05-13)
+
+
+### Bug Fixes
+
+* **rename:** include bare model name in chart rename gate ([#23020](https://github.com/lightdash/lightdash/issues/23020)) ([da76f25](https://github.com/lightdash/lightdash/commit/da76f255298f2066cd7fdc45eb5ad1b6af2f1e74))
+
+
+### Features
+
+* add toggle to disable Slack link unfurls ([#23019](https://github.com/lightdash/lightdash/issues/23019)) ([ae0ed49](https://github.com/lightdash/lightdash/commit/ae0ed4915c2d82f19a040fd7cc2eae433d1e68dd))
+* include yml descriptions in app context ([#23016](https://github.com/lightdash/lightdash/issues/23016)) ([13d704a](https://github.com/lightdash/lightdash/commit/13d704a530ec7f4bb26f6f784e4656f3b9f4ab28))
+
 # [0.2930.0](https://github.com/lightdash/lightdash/compare/0.2929.0...0.2930.0) (2026-05-13)
 
 
