@@ -1,3 +1,10 @@
+# [0.2932.0](https://github.com/lightdash/lightdash/compare/0.2931.1...0.2932.0) (2026-05-13)
+
+
+### Features
+
+* **analytics:** add download activity log endpoint ([#23021](https://github.com/lightdash/lightdash/issues/23021)) ([b59c59e](https://github.com/lightdash/lightdash/commit/b59c59e3f436baef93b4d0f30cbe77afcd8a2215)), closes [#17553](https://github.com/lightdash/lightdash/issues/17553) [#22879](https://github.com/lightdash/lightdash/issues/22879)
+
 ## [0.2931.1](https://github.com/lightdash/lightdash/compare/0.2931.0...0.2931.1) (2026-05-13)
 
 
