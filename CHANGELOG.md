@@ -1,3 +1,10 @@
+## [0.2924.2](https://github.com/lightdash/lightdash/compare/0.2924.1...0.2924.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* **cli:** only count compiled external models in --combine-manifest ([#22982](https://github.com/lightdash/lightdash/issues/22982)) ([134f908](https://github.com/lightdash/lightdash/commit/134f9088a2301a714687a6ad68108cad49353d38))
+
 ## [0.2924.1](https://github.com/lightdash/lightdash/compare/0.2924.0...0.2924.1) (2026-05-13)
 
 
