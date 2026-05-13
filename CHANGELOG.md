@@ -1,3 +1,10 @@
+## [0.2925.1](https://github.com/lightdash/lightdash/compare/0.2925.0...0.2925.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* **echarts:** scope continuousDateRange to the actual X axis ([#22995](https://github.com/lightdash/lightdash/issues/22995)) ([9fa0c2c](https://github.com/lightdash/lightdash/commit/9fa0c2c26539c5f5894b3153546393263a28b8ce))
+
 # [0.2925.0](https://github.com/lightdash/lightdash/compare/0.2924.2...0.2925.0) (2026-05-13)
 
 
