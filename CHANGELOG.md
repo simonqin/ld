@@ -1,3 +1,11 @@
+## [0.2925.2](https://github.com/lightdash/lightdash/compare/0.2925.1...0.2925.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* **echarts:** re-resolve DST at each snap iteration step ([#23001](https://github.com/lightdash/lightdash/issues/23001)) ([c5b1a01](https://github.com/lightdash/lightdash/commit/c5b1a018bd69b666aaaca8e52e1d90e7b3541be1))
+* **frontend:** add ScrollArea to model selector dropdown ([#22999](https://github.com/lightdash/lightdash/issues/22999)) ([1f25ebc](https://github.com/lightdash/lightdash/commit/1f25ebc0488ab73c49581cba5312399488799b88))
+
 ## [0.2925.1](https://github.com/lightdash/lightdash/compare/0.2925.0...0.2925.1) (2026-05-13)
 
 
