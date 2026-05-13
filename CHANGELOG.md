@@ -1,3 +1,10 @@
+# [0.2928.0](https://github.com/lightdash/lightdash/compare/0.2927.2...0.2928.0) (2026-05-13)
+
+
+### Features
+
+* **unfurl:** support saved SQL Runner chart links in Slack (PROD-7166) ([#23004](https://github.com/lightdash/lightdash/issues/23004)) ([f277201](https://github.com/lightdash/lightdash/commit/f27720105a2119fa085309ea1a4d082ba44df684))
+
 ## [0.2927.2](https://github.com/lightdash/lightdash/compare/0.2927.1...0.2927.2) (2026-05-13)
 
 
