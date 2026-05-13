@@ -1,3 +1,10 @@
+## [0.2925.3](https://github.com/lightdash/lightdash/compare/0.2925.2...0.2925.3) (2026-05-13)
+
+
+### Bug Fixes
+
+* map extent starts with better default ([#22994](https://github.com/lightdash/lightdash/issues/22994)) ([cb574d9](https://github.com/lightdash/lightdash/commit/cb574d96f3dbddf47f48f899ea15fa6a50df853f))
+
 ## [0.2925.2](https://github.com/lightdash/lightdash/compare/0.2925.1...0.2925.2) (2026-05-13)
 
 
