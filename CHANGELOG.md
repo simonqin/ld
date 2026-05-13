@@ -1,3 +1,10 @@
+## [0.2931.1](https://github.com/lightdash/lightdash/compare/0.2931.0...0.2931.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* **data-apps:** double short e2b timeouts ([#23023](https://github.com/lightdash/lightdash/issues/23023)) ([adaef2d](https://github.com/lightdash/lightdash/commit/adaef2d594957c90318772da414fea40e577f65b))
+
 # [0.2931.0](https://github.com/lightdash/lightdash/compare/0.2930.0...0.2931.0) (2026-05-13)
 
 
