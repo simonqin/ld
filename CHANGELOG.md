@@ -1,3 +1,10 @@
+## [0.2927.1](https://github.com/lightdash/lightdash/compare/0.2927.0...0.2927.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* **frontend:** allow Databricks OAuth re-auth from preview projects ([#23013](https://github.com/lightdash/lightdash/issues/23013)) ([95acabe](https://github.com/lightdash/lightdash/commit/95acabe1b538fb2cc408301660b384725bdf179c)), closes [#20620](https://github.com/lightdash/lightdash/issues/20620)
+
 # [0.2927.0](https://github.com/lightdash/lightdash/compare/0.2926.0...0.2927.0) (2026-05-13)
 
 
