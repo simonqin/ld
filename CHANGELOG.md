@@ -1,3 +1,11 @@
+# [0.2929.0](https://github.com/lightdash/lightdash/compare/0.2928.0...0.2929.0) (2026-05-13)
+
+
+### Features
+
+* add data app dashboard tile (PROD-7533) ([#22971](https://github.com/lightdash/lightdash/issues/22971)) ([b22612a](https://github.com/lightdash/lightdash/commit/b22612a0b62e92b757af1730b5a6ea8e88047728))
+* **data-apps:** hint that users can leave during code generation ([#23018](https://github.com/lightdash/lightdash/issues/23018)) ([a74ff2e](https://github.com/lightdash/lightdash/commit/a74ff2e2edf5d3fe2098ac4a273c0d7c0fbc2b41))
+
 # [0.2928.0](https://github.com/lightdash/lightdash/compare/0.2927.2...0.2928.0) (2026-05-13)
 
 
