@@ -1,3 +1,10 @@
+## [0.2927.2](https://github.com/lightdash/lightdash/compare/0.2927.1...0.2927.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* **palette-picker:** compact stacked swatches with truncated palette names ([#23010](https://github.com/lightdash/lightdash/issues/23010)) ([89436cc](https://github.com/lightdash/lightdash/commit/89436cce974c999c7a2bdfcd1e20bbd8827dce73))
+
 ## [0.2927.1](https://github.com/lightdash/lightdash/compare/0.2927.0...0.2927.1) (2026-05-13)
 
 
