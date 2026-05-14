@@ -1,3 +1,10 @@
+## [0.2940.1](https://github.com/lightdash/lightdash/compare/0.2940.0...0.2940.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ai-agent:** defer artifact auto-open until thread streaming completes ([#23064](https://github.com/lightdash/lightdash/issues/23064)) ([6bfc3ce](https://github.com/lightdash/lightdash/commit/6bfc3ce5a0545f62612fd9f35fa30e657b39e72b))
+
 # [0.2940.0](https://github.com/lightdash/lightdash/compare/0.2939.0...0.2940.0) (2026-05-14)
 
 
