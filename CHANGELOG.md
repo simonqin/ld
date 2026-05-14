@@ -1,3 +1,10 @@
+# [0.2934.0](https://github.com/lightdash/lightdash/compare/0.2933.1...0.2934.0) (2026-05-14)
+
+
+### Features
+
+* **prod-7523:** show dbt model metadata in the Explore UI ([#23031](https://github.com/lightdash/lightdash/issues/23031)) ([57919ff](https://github.com/lightdash/lightdash/commit/57919ffaf6e37f1493eede7596d4ccb3af1c826a))
+
 ## [0.2933.1](https://github.com/lightdash/lightdash/compare/0.2933.0...0.2933.1) (2026-05-14)
 
 
