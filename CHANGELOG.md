@@ -1,3 +1,15 @@
+# [0.2940.0](https://github.com/lightdash/lightdash/compare/0.2939.0...0.2940.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **timezone:** skip date-trunc/extract wrap when target tz matches source ([#23060](https://github.com/lightdash/lightdash/issues/23060)) ([80c92a7](https://github.com/lightdash/lightdash/commit/80c92a71b096c4fdf1642d87da97594c6f521e1b))
+
+
+### Features
+
+* add `--project` flag to `deploy` command to override default project ([#23042](https://github.com/lightdash/lightdash/issues/23042)) ([0577f97](https://github.com/lightdash/lightdash/commit/0577f974291b2541525cf0d83a0df562f6f462e4))
+
 # [0.2939.0](https://github.com/lightdash/lightdash/compare/0.2938.0...0.2939.0) (2026-05-14)
 
 
