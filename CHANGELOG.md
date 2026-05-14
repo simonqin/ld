@@ -1,3 +1,10 @@
+# [0.2935.0](https://github.com/lightdash/lightdash/compare/0.2934.1...0.2935.0) (2026-05-14)
+
+
+### Features
+
+* **ai-agent:** overhaul agent chat experience ([#23008](https://github.com/lightdash/lightdash/issues/23008)) ([b9ad543](https://github.com/lightdash/lightdash/commit/b9ad5432c8ff671679da10837615a815fb520afd)), closes [#22989](https://github.com/lightdash/lightdash/issues/22989) [#22990](https://github.com/lightdash/lightdash/issues/22990) [#22991](https://github.com/lightdash/lightdash/issues/22991) [#22992](https://github.com/lightdash/lightdash/issues/22992)
+
 ## [0.2934.1](https://github.com/lightdash/lightdash/compare/0.2934.0...0.2934.1) (2026-05-14)
 
 
