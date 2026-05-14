@@ -1,3 +1,10 @@
+# [0.2947.0](https://github.com/lightdash/lightdash/compare/0.2946.0...0.2947.0) (2026-05-14)
+
+
+### Features
+
+* add preview project expiration tracking and UI display ([#3733](https://github.com/lightdash/lightdash/issues/3733)) ([#20936](https://github.com/lightdash/lightdash/issues/20936)) ([a02853a](https://github.com/lightdash/lightdash/commit/a02853a44f7005863070e0f9d08fc36af3909704))
+
 # [0.2946.0](https://github.com/lightdash/lightdash/compare/0.2945.1...0.2946.0) (2026-05-14)
 
 
