@@ -1,3 +1,15 @@
+# [0.2942.0](https://github.com/lightdash/lightdash/compare/0.2941.0...0.2942.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* fetch app pages in query sdk queries ([#23069](https://github.com/lightdash/lightdash/issues/23069)) ([79f0b10](https://github.com/lightdash/lightdash/commit/79f0b10d03ebc089451c7200601763b35b939357))
+
+
+### Features
+
+* clarify "required filter" copy on dashboards ([#23075](https://github.com/lightdash/lightdash/issues/23075)) ([b29e253](https://github.com/lightdash/lightdash/commit/b29e2533fc212d749407b5b6a97c0cf24b281203)), closes [#10868](https://github.com/lightdash/lightdash/issues/10868) [#9264](https://github.com/lightdash/lightdash/issues/9264) [#10868](https://github.com/lightdash/lightdash/issues/10868)
+
 # [0.2941.0](https://github.com/lightdash/lightdash/compare/0.2940.1...0.2941.0) (2026-05-14)
 
 
