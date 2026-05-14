@@ -1,3 +1,10 @@
+# [0.2943.0](https://github.com/lightdash/lightdash/compare/0.2942.0...0.2943.0) (2026-05-14)
+
+
+### Features
+
+* skip connection change notifications for preview projects ([#23080](https://github.com/lightdash/lightdash/issues/23080)) ([bdedce2](https://github.com/lightdash/lightdash/commit/bdedce26dcf726f84cef1aec2c8f3f56d3bbd130))
+
 # [0.2942.0](https://github.com/lightdash/lightdash/compare/0.2941.0...0.2942.0) (2026-05-14)
 
 
