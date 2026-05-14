@@ -1,3 +1,10 @@
+# [0.2948.0](https://github.com/lightdash/lightdash/compare/0.2947.1...0.2948.0) (2026-05-14)
+
+
+### Features
+
+* **observability:** wide-event logs for dashboard loads and project compiles ([#23086](https://github.com/lightdash/lightdash/issues/23086)) ([96a7384](https://github.com/lightdash/lightdash/commit/96a73840937ec7e8b9aab12047913965a728916f))
+
 ## [0.2947.1](https://github.com/lightdash/lightdash/compare/0.2947.0...0.2947.1) (2026-05-14)
 
 
