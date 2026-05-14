@@ -1,3 +1,16 @@
+# [0.2945.0](https://github.com/lightdash/lightdash/compare/0.2944.0...0.2945.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ai-agent:** use thinking.adaptive on Opus 4.7 with clear_thinking edit ([#23077](https://github.com/lightdash/lightdash/issues/23077)) ([de7db23](https://github.com/lightdash/lightdash/commit/de7db2389c28ae3f5b3745ec6eb14aefb65e44d7))
+
+
+### Features
+
+* **ai-agent:** data-discovery subagent for the AI analyst, behind flag ([#23030](https://github.com/lightdash/lightdash/issues/23030)) ([d98c698](https://github.com/lightdash/lightdash/commit/d98c6984625c843862c195eafecdd792588d9c06))
+* **ai-agent:** live streaming subagent progress for discoverFields ([#23070](https://github.com/lightdash/lightdash/issues/23070)) ([ed2ead1](https://github.com/lightdash/lightdash/commit/ed2ead1cea784516472cbca08ba7dfbaa4a31bc5))
+
 # [0.2944.0](https://github.com/lightdash/lightdash/compare/0.2943.0...0.2944.0) (2026-05-14)
 
 
