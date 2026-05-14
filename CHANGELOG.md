@@ -1,3 +1,10 @@
+## [0.2936.2](https://github.com/lightdash/lightdash/compare/0.2936.1...0.2936.2) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ai-agent:** reasoning row hover background respects padding ([#23051](https://github.com/lightdash/lightdash/issues/23051)) ([bc96c63](https://github.com/lightdash/lightdash/commit/bc96c63386397263e87285c9237be04bade30d52))
+
 ## [0.2936.1](https://github.com/lightdash/lightdash/compare/0.2936.0...0.2936.1) (2026-05-14)
 
 
