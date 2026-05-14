@@ -1,3 +1,10 @@
+# [0.2933.0](https://github.com/lightdash/lightdash/compare/0.2932.0...0.2933.0) (2026-05-14)
+
+
+### Features
+
+* migrate results cache flag to per-org feature flag with env fallback ([#22967](https://github.com/lightdash/lightdash/issues/22967)) ([b57b8ca](https://github.com/lightdash/lightdash/commit/b57b8ca856b2ee471fd3cbdb678c4085eee4c336))
+
 # [0.2932.0](https://github.com/lightdash/lightdash/compare/0.2931.1...0.2932.0) (2026-05-13)
 
 
