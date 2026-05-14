@@ -1,3 +1,10 @@
+## [0.2933.1](https://github.com/lightdash/lightdash/compare/0.2933.0...0.2933.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ai-agent:** persist SQL auto-approve per thread via sessionStorage ([#23027](https://github.com/lightdash/lightdash/issues/23027)) ([be1d183](https://github.com/lightdash/lightdash/commit/be1d18365e9af649cdf4ff2d7aac0efc716a07cc))
+
 # [0.2933.0](https://github.com/lightdash/lightdash/compare/0.2932.0...0.2933.0) (2026-05-14)
 
 
