@@ -1,3 +1,10 @@
+# [0.2944.0](https://github.com/lightdash/lightdash/compare/0.2943.0...0.2944.0) (2026-05-14)
+
+
+### Features
+
+* **ai-agent:** add parent_tool_call_id column to ai_agent_tool_call ([#23062](https://github.com/lightdash/lightdash/issues/23062)) ([aa8a8c1](https://github.com/lightdash/lightdash/commit/aa8a8c1311e2697f52b5bd5a25e0eb0456b3555b))
+
 # [0.2943.0](https://github.com/lightdash/lightdash/compare/0.2942.0...0.2943.0) (2026-05-14)
 
 
