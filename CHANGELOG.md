@@ -1,3 +1,10 @@
+# [0.2946.0](https://github.com/lightdash/lightdash/compare/0.2945.1...0.2946.0) (2026-05-14)
+
+
+### Features
+
+* **scheduler:** inline run-history sub-view on dashboard/chart scheduler modal ([#23076](https://github.com/lightdash/lightdash/issues/23076)) ([1f9bc60](https://github.com/lightdash/lightdash/commit/1f9bc605909dffe68a7805d08fb5ac498ac1188e))
+
 ## [0.2945.1](https://github.com/lightdash/lightdash/compare/0.2945.0...0.2945.1) (2026-05-14)
 
 
