@@ -1,3 +1,13 @@
+# [0.2938.0](https://github.com/lightdash/lightdash/compare/0.2937.0...0.2938.0) (2026-05-14)
+
+
+### Features
+
+* **ai-agent:** streaming UX polish — reasoning row, live chip, user bubble ([#23056](https://github.com/lightdash/lightdash/issues/23056)) ([861bc36](https://github.com/lightdash/lightdash/commit/861bc36984040ba32b213890d0b50373ab7f5f19))
+* **backend:** wire project_memberships into service-account CASL + project-access endpoints ([#23003](https://github.com/lightdash/lightdash/issues/23003)) ([501a94c](https://github.com/lightdash/lightdash/commit/501a94ca665fec23ed7419ff81264a662b403d76)), closes [#22996](https://github.com/lightdash/lightdash/issues/22996)
+* **common:** add SYSTEM_MEMBER service-account scope ([#22996](https://github.com/lightdash/lightdash/issues/22996)) ([652ab9a](https://github.com/lightdash/lightdash/commit/652ab9a68275f6eb4f232590449c450b51d5b7b7))
+* **frontend:** project-scoped service accounts UX ([#23015](https://github.com/lightdash/lightdash/issues/23015)) ([0ec9357](https://github.com/lightdash/lightdash/commit/0ec9357a997ce5478234b2daf38d27527a0a1ff4))
+
 # [0.2937.0](https://github.com/lightdash/lightdash/compare/0.2936.3...0.2937.0) (2026-05-14)
 
 
