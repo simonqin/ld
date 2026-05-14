@@ -1,3 +1,10 @@
+# [0.2941.0](https://github.com/lightdash/lightdash/compare/0.2940.1...0.2941.0) (2026-05-14)
+
+
+### Features
+
+* Allow minimizing AI chat to homescreen while active ([#22966](https://github.com/lightdash/lightdash/issues/22966)) ([f5a7898](https://github.com/lightdash/lightdash/commit/f5a7898bdada11fae189905ae2b823e8e4821080))
+
 ## [0.2940.1](https://github.com/lightdash/lightdash/compare/0.2940.0...0.2940.1) (2026-05-14)
 
 
