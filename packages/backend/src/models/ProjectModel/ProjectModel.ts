@@ -33,6 +33,7 @@ import {
     ProjectType,
     sensitiveCredentialsFieldNames,
     sensitiveDbtCredentialsFieldNames,
+    ServiceAccountProjectGrant,
     SnowflakeAuthenticationType,
     SpaceMemberRole,
     SpaceSummary,
@@ -86,6 +87,7 @@ import {
     ProjectTableName,
     type DbCachedExplore,
 } from '../../database/entities/projects';
+import { RolesTableName } from '../../database/entities/roles';
 import {
     DbSavedChart,
     InsertChart,
@@ -113,6 +115,7 @@ import {
     AiAgentUserAccessTableName,
     type DbAiAgent,
 } from '../../ee/database/entities/aiAgent';
+import { ServiceAccountsTableName } from '../../ee/database/entities/serviceAccounts';
 import Logger from '../../logging/logger';
 import { wrapSentryTransaction, wrapSentryTransactionSync } from '../../utils';
 import { EncryptionUtil } from '../../utils/EncryptionUtil/EncryptionUtil';
@@ -1639,8 +1642,7 @@ export class ProjectModel {
         } catch (error: AnyType) {
             if (
                 error instanceof DatabaseError &&
-                error.constraint ===
-                    'project_memberships_project_id_user_id_unique'
+                error.constraint === 'project_memberships_pkey'
             ) {
                 throw new AlreadyExistsError(
                     `This user email ${email} already has access to this project`,
@@ -1864,6 +1866,234 @@ export class ProjectModel {
             `,
             { projectUuid, userUuid },
         );
+    }
+
+    /**
+     * Insert a (service account, project) grant.
+     *
+     * Accepts either a system role (`role`) or a custom role (`roleUuid`) —
+     * exactly one. The discriminated union is enforced by the caller
+     * (`ServiceAccountService.create` validates role-uuid ownership in bulk
+     * before reaching the DB), so this layer only enforces the structural
+     * invariants that are cheap to check here:
+     *  - cross-org grants are rejected (returns ParameterError, surfaces as 400)
+     *  - duplicate grants raise AlreadyExistsError (409 at the API)
+     */
+    async createServiceAccountProjectAccess(
+        projectUuid: string,
+        serviceAccountUuid: string,
+        grant: { role?: ProjectMemberRole; roleUuid?: string },
+    ): Promise<void> {
+        // Structural XOR check. Callers must pass exactly one of role /
+        // roleUuid — service layer already enforces this for API requests,
+        // but a programming-bug call into the model should fail fast.
+        const hasRole = grant.role !== undefined;
+        const hasRoleUuid = grant.roleUuid !== undefined;
+        if (hasRole === hasRoleUuid) {
+            throw new ParameterError(
+                'Grant must specify exactly one of role or roleUuid',
+            );
+        }
+        // `projects.organization_id` is the int link; `service_accounts`
+        // uses `organization_uuid`. Resolve both to a uuid via a join through
+        // `organizations` so the cross-org comparison is uuid-vs-uuid.
+        const [project] = await this.database(ProjectTableName)
+            .leftJoin(
+                OrganizationTableName,
+                `${ProjectTableName}.organization_id`,
+                `${OrganizationTableName}.organization_id`,
+            )
+            .select<
+                {
+                    project_id: number;
+                    organization_uuid: string;
+                }[]
+            >(
+                `${ProjectTableName}.project_id`,
+                `${OrganizationTableName}.organization_uuid`,
+            )
+            .where(`${ProjectTableName}.project_uuid`, projectUuid);
+        if (!project) {
+            throw new NotFoundError(
+                `Project with uuid ${projectUuid} not found`,
+            );
+        }
+
+        const [sa] = await this.database(ServiceAccountsTableName)
+            .leftJoin(
+                UserTableName,
+                `${UserTableName}.user_uuid`,
+                `${ServiceAccountsTableName}.service_account_user_uuid`,
+            )
+            .select<
+                Array<{
+                    user_id: number;
+                    organization_uuid: string;
+                }>
+            >(
+                `${UserTableName}.user_id`,
+                `${ServiceAccountsTableName}.organization_uuid`,
+            )
+            .where(
+                `${ServiceAccountsTableName}.service_account_uuid`,
+                serviceAccountUuid,
+            );
+        if (!sa) {
+            throw new NotFoundError(
+                `Service account with uuid ${serviceAccountUuid} not found`,
+            );
+        }
+        if (sa.organization_uuid !== project.organization_uuid) {
+            throw new ParameterError(
+                'Service account and project must be in the same organization',
+            );
+        }
+
+        try {
+            // The legacy `role` column is NOT NULL. When `role_uuid` is set,
+            // CASL resolution at request time prefers the custom role, so
+            // the `role` value is a structural placeholder only. Matches the
+            // convention used by `project_group_access` for custom roles
+            // (Viewer as the safe-by-default fallback).
+            await this.database(ProjectMembershipsTableName).insert({
+                project_id: project.project_id,
+                user_id: sa.user_id,
+                role: hasRoleUuid
+                    ? ProjectMemberRole.VIEWER
+                    : (grant.role as ProjectMemberRole),
+                role_uuid: grant.roleUuid ?? null,
+            });
+        } catch (error: AnyType) {
+            if (
+                error instanceof DatabaseError &&
+                error.constraint === 'project_memberships_pkey'
+            ) {
+                throw new AlreadyExistsError(
+                    `Service account ${serviceAccountUuid} already has access to project ${projectUuid}`,
+                );
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Validate that every `roleUuid` in the input exists and belongs to the
+     * given organization. Returns the set of `roleUuid`s in the input that
+     * are missing or owned by a different org — callers should reject if
+     * the returned set is non-empty.
+     *
+     * Used during service-account create to bulk-validate
+     * `projectAccess[*].roleUuid` before opening a write transaction. One
+     * query for the whole batch avoids per-grant N+1s and a partial-success
+     * window.
+     */
+    async findInvalidCustomRoleUuids(
+        roleUuids: string[],
+        organizationUuid: string,
+    ): Promise<string[]> {
+        if (roleUuids.length === 0) return [];
+        const rows = await this.database(RolesTableName)
+            .select<{ role_uuid: string }[]>('role_uuid')
+            .whereIn('role_uuid', roleUuids)
+            .andWhere('organization_uuid', organizationUuid);
+        const valid = new Set(rows.map((r) => r.role_uuid));
+        return roleUuids.filter((u) => !valid.has(u));
+    }
+
+    /**
+     * Per-service-account list of project grants.
+     *
+     * Used by the org SA list's hover preview: one query returns every
+     * `(project, role)` the SA can use. Powers the inline role-edit and
+     * revoke actions in the UI without any client-side fan-out.
+     */
+    async getServiceAccountProjectGrants(
+        serviceAccountUuid: string,
+    ): Promise<ServiceAccountProjectGrant[]> {
+        type Row = {
+            project_uuid: string;
+            project_name: string;
+            role: ProjectMemberRole;
+            role_uuid: string | null;
+            role_name: string | null;
+        };
+        const rows = await this.database(ProjectMembershipsTableName)
+            .innerJoin(
+                UserTableName,
+                `${ProjectMembershipsTableName}.user_id`,
+                `${UserTableName}.user_id`,
+            )
+            .innerJoin(
+                ServiceAccountsTableName,
+                `${ServiceAccountsTableName}.service_account_user_uuid`,
+                `${UserTableName}.user_uuid`,
+            )
+            .innerJoin(
+                ProjectTableName,
+                `${ProjectMembershipsTableName}.project_id`,
+                `${ProjectTableName}.project_id`,
+            )
+            // LEFT join: most grants are system roles (no row in `roles`).
+            // Custom-role grants have role_uuid set and we project the
+            // role's display name so the UI doesn't need a follow-up lookup.
+            .leftJoin(
+                RolesTableName,
+                `${ProjectMembershipsTableName}.role_uuid`,
+                `${RolesTableName}.role_uuid`,
+            )
+            .select<Row[]>(
+                `${ProjectTableName}.project_uuid`,
+                `${ProjectTableName}.name as project_name`,
+                `${ProjectMembershipsTableName}.role`,
+                `${ProjectMembershipsTableName}.role_uuid`,
+                `${RolesTableName}.name as role_name`,
+            )
+            .where(
+                `${ServiceAccountsTableName}.service_account_uuid`,
+                serviceAccountUuid,
+            );
+
+        return rows.map((r) => {
+            if (r.role_uuid && r.role_name) {
+                return {
+                    projectUuid: r.project_uuid,
+                    projectName: r.project_name,
+                    roleUuid: r.role_uuid,
+                    roleName: r.role_name,
+                };
+            }
+            return {
+                projectUuid: r.project_uuid,
+                projectName: r.project_name,
+                role: r.role,
+            };
+        });
+    }
+
+    /**
+     * Counts of `project_memberships` rows per SA, batched for the org SA
+     * list. Returns a map keyed by `users.user_uuid` (the SA's dedicated
+     * user row) so the caller can zip counts into the SA list response
+     * without an N+1 fan-out. SAs with zero grants are absent from the
+     * map; callers default missing keys to 0.
+     */
+    async getProjectAccessCountsByServiceAccountUserUuids(
+        userUuids: string[],
+    ): Promise<Map<string, number>> {
+        if (userUuids.length === 0) return new Map();
+        const rows = await this.database(ProjectMembershipsTableName)
+            .innerJoin(
+                UserTableName,
+                `${ProjectMembershipsTableName}.user_id`,
+                `${UserTableName}.user_id`,
+            )
+            .select<{ user_uuid: string; count: string }[]>(
+                `${UserTableName}.user_uuid`,
+                this.database.raw('count(*) as count'),
+            )
+            .whereIn(`${UserTableName}.user_uuid`, userUuids)
+            .groupBy(`${UserTableName}.user_uuid`);
+        return new Map(rows.map((r) => [r.user_uuid, Number(r.count)]));
     }
 
     async getProjectGroupAccesses(projectUuid: string) {
