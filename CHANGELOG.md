@@ -1,3 +1,10 @@
+## [0.2936.1](https://github.com/lightdash/lightdash/compare/0.2936.0...0.2936.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ai-agent:** render emoji shortcodes in AI agent bubbles ([#23050](https://github.com/lightdash/lightdash/issues/23050)) ([8f59d94](https://github.com/lightdash/lightdash/commit/8f59d941527e1e9b870b5574f5e1816efb68b8a9))
+
 # [0.2936.0](https://github.com/lightdash/lightdash/compare/0.2935.0...0.2936.0) (2026-05-14)
 
 
