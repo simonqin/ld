@@ -1,3 +1,10 @@
+# [0.2937.0](https://github.com/lightdash/lightdash/compare/0.2936.3...0.2937.0) (2026-05-14)
+
+
+### Features
+
+* add Homebrew install option for macOS users in CLI connect flow ([#23053](https://github.com/lightdash/lightdash/issues/23053)) ([6fe0cf3](https://github.com/lightdash/lightdash/commit/6fe0cf383c7aba137a2424445b0f311b107b1b61))
+
 ## [0.2936.3](https://github.com/lightdash/lightdash/compare/0.2936.2...0.2936.3) (2026-05-14)
 
 
