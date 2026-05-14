@@ -1,3 +1,10 @@
+## [0.2934.1](https://github.com/lightdash/lightdash/compare/0.2934.0...0.2934.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **table:** align rich text cell to full cell width ([#23041](https://github.com/lightdash/lightdash/issues/23041)) ([e2ebf35](https://github.com/lightdash/lightdash/commit/e2ebf35b97d4d796cf78421d360685e86cc4a82d))
+
 # [0.2934.0](https://github.com/lightdash/lightdash/compare/0.2933.1...0.2934.0) (2026-05-14)
 
 
