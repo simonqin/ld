@@ -1,3 +1,10 @@
+## [0.2945.1](https://github.com/lightdash/lightdash/compare/0.2945.0...0.2945.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **filters:** clear stale autocomplete results on force-refresh (PROD-7747) ([#23085](https://github.com/lightdash/lightdash/issues/23085)) ([b890912](https://github.com/lightdash/lightdash/commit/b89091223b07999a6f8e91d96a998b633a744773))
+
 # [0.2945.0](https://github.com/lightdash/lightdash/compare/0.2944.0...0.2945.0) (2026-05-14)
 
 
