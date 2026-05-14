@@ -1,3 +1,10 @@
+## [0.2947.1](https://github.com/lightdash/lightdash/compare/0.2947.0...0.2947.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **mcp:** allow icons to be embedded cross-origin ([#23081](https://github.com/lightdash/lightdash/issues/23081)) ([8724a15](https://github.com/lightdash/lightdash/commit/8724a153f018a30468b99bb20a3b0a7cc423d23f))
+
 # [0.2947.0](https://github.com/lightdash/lightdash/compare/0.2946.0...0.2947.0) (2026-05-14)
 
 
