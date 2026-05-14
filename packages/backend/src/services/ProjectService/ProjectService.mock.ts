@@ -344,6 +344,7 @@ export const projectWithSensitiveFields: Project = {
     createdByUserUuid: sessionAccount.user.id,
     hasDefaultUserSpaces: false,
     colorPaletteUuid: null,
+    expiresAt: null,
 };
 
 export const projectSummary: ProjectSummary = {
@@ -361,6 +362,7 @@ export const defaultProject: OrganizationProject = {
     createdAt: new Date('2024-01-01T00:00:00Z'),
     upstreamProjectUuid: null,
     warehouseType: WarehouseTypes.POSTGRES,
+    expiresAt: null,
 };
 
 export const spacesWithSavedCharts: Space[] = [

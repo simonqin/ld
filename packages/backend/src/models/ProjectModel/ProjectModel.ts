@@ -367,6 +367,7 @@ export class ProjectModel {
                 'projects.created_at',
                 `projects.copied_from_project_uuid`,
                 `projects.created_by_user_uuid`,
+                'projects.expires_at',
                 `${WarehouseCredentialTableName}.warehouse_type`,
                 this.database.raw(
                     "TRIM(CONCAT(users.first_name, ' ', users.last_name)) as created_by_user_name",
@@ -407,6 +408,7 @@ export class ProjectModel {
                 created_by_user_name,
                 copied_from_project_uuid,
                 warehouse_type,
+                expires_at,
             }) => ({
                 name,
                 projectUuid: project_uuid,
@@ -419,6 +421,7 @@ export class ProjectModel {
                     warehouse_type !== null
                         ? (warehouse_type as WarehouseTypes)
                         : undefined,
+                expiresAt: expires_at ?? null,
             }),
         );
     }
@@ -487,11 +490,13 @@ export class ProjectModel {
         userUuid: string,
         organizationUuid: string,
         data: CreateProject,
+        expiresAt?: Date | null,
     ): Promise<string> {
         return this.createWithOptionalCredentials(
             userUuid,
             organizationUuid,
             data,
+            expiresAt,
         );
     }
 
@@ -499,6 +504,7 @@ export class ProjectModel {
         userUuid: string,
         organizationUuid: string,
         data: CreateProjectOptionalCredentials,
+        expiresAt?: Date | null,
     ): Promise<string> {
         const orgs = await this.database('organizations')
             .where('organization_uuid', organizationUuid)
@@ -547,6 +553,9 @@ export class ProjectModel {
                     created_by_user_uuid: userUuid,
                     organization_warehouse_credentials_uuid:
                         data.organizationWarehouseCredentialsUuid ?? null,
+                    ...(expiresAt !== undefined
+                        ? { expires_at: expiresAt }
+                        : {}),
                 })
                 .returning('*');
 
@@ -731,6 +740,7 @@ export class ProjectModel {
                   has_default_user_spaces: boolean;
                   project_defaults: ProjectDefaults | null;
                   color_palette_uuid: string | null;
+                  expires_at: Date | null;
               }
             | {
                   name: string;
@@ -753,6 +763,7 @@ export class ProjectModel {
                   has_default_user_spaces: boolean;
                   project_defaults: ProjectDefaults | null;
                   color_palette_uuid: string | null;
+                  expires_at: Date | null;
               }
         )[];
         return wrapSentryTransaction(
@@ -834,6 +845,9 @@ export class ProjectModel {
                         this.database
                             .ref('color_palette_uuid')
                             .withSchema(ProjectTableName),
+                        this.database
+                            .ref('expires_at')
+                            .withSchema(ProjectTableName),
                     ])
                     .select<QueryResult>()
                     .where('projects.project_uuid', projectUuid);
@@ -885,6 +899,7 @@ export class ProjectModel {
                     hasDefaultUserSpaces: project.has_default_user_spaces,
                     projectDefaults: project.project_defaults ?? undefined,
                     colorPaletteUuid: project.color_palette_uuid ?? null,
+                    expiresAt: project.expires_at ?? null,
                 };
 
                 // If project uses organization warehouse credentials, load them
@@ -1094,6 +1109,7 @@ export class ProjectModel {
                 project.organizationWarehouseCredentialsUuid,
             hasDefaultUserSpaces: project.hasDefaultUserSpaces,
             colorPaletteUuid: project.colorPaletteUuid ?? null,
+            expiresAt: project.expiresAt,
         };
     }
 
