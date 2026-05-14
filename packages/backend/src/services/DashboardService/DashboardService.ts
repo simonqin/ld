@@ -31,6 +31,8 @@ import {
     PossibleAbilities,
     SchedulerAndTargets,
     SchedulerFormat,
+    SchedulerRun,
+    SchedulerRunStatus,
     SessionUser,
     TogglePinnedItemInfo,
     UpdateDashboard,
@@ -1479,6 +1481,53 @@ export class DashboardService
         }
 
         return this.schedulerModel.attachLatestRunToSchedulers(schedulers);
+    }
+
+    async getSchedulerRuns(
+        user: SessionUser,
+        dashboardUuid: string,
+        schedulerUuid: string,
+        paginateArgs?: KnexPaginateArgs,
+        searchQuery?: string,
+        sort?: { column: string; direction: 'asc' | 'desc' },
+        filters?: {
+            statuses?: SchedulerRunStatus[];
+            destinations?: string[];
+        },
+    ): Promise<KnexPaginatedData<SchedulerRun[]>> {
+        const scheduler = await this.schedulerModel.getScheduler(schedulerUuid);
+        const dashboard =
+            await this.dashboardModel.getByIdOrSlug(dashboardUuid);
+        const auditedAbility = this.createAuditedAbility(user);
+        // Authorize before revealing whether the scheduler belongs to this
+        // dashboard, so unauthorized callers can't distinguish 404 (wrong
+        // dashboard) from 403 (right dashboard, no access).
+        if (
+            auditedAbility.cannot(
+                'manage',
+                subject('ScheduledDeliveries', {
+                    organizationUuid: dashboard.organizationUuid,
+                    projectUuid: dashboard.projectUuid,
+                    userUuid: scheduler.createdBy,
+                }),
+            )
+        ) {
+            throw new ForbiddenError();
+        }
+        if (scheduler.dashboardUuid !== dashboardUuid) {
+            throw new NotFoundError('Scheduler not found');
+        }
+        return this.schedulerModel.getProjectSchedulerRuns({
+            projectUuid: dashboard.projectUuid,
+            paginateArgs,
+            searchQuery,
+            sort,
+            filters: {
+                schedulerUuids: [schedulerUuid],
+                statuses: filters?.statuses,
+                destinations: filters?.destinations,
+            },
+        });
     }
 
     async createScheduler(
