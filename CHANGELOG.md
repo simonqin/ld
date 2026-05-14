@@ -1,3 +1,16 @@
+# [0.2939.0](https://github.com/lightdash/lightdash/compare/0.2938.0...0.2939.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **mcp:** shrink chart-app bundle by 68% via deep import ([#23057](https://github.com/lightdash/lightdash/issues/23057)) ([a782d48](https://github.com/lightdash/lightdash/commit/a782d48f0b256fc0ed16557c83b78f1d13f53ec7))
+* **prod-7487:** preserve filter tile targets when duplicating a chart ([#23054](https://github.com/lightdash/lightdash/issues/23054)) ([b02c15a](https://github.com/lightdash/lightdash/commit/b02c15a800316c9957bb4afe06b62c637ca8f7b6))
+
+
+### Features
+
+* **mcp:** pre-select project via X-Lightdash-Project header ([#23055](https://github.com/lightdash/lightdash/issues/23055)) ([1f3fdd3](https://github.com/lightdash/lightdash/commit/1f3fdd30b7f3a61f851098169ef0fe3d2459985f))
+
 # [0.2938.0](https://github.com/lightdash/lightdash/compare/0.2937.0...0.2938.0) (2026-05-14)
 
 
