@@ -1,3 +1,10 @@
+## [0.2936.3](https://github.com/lightdash/lightdash/compare/0.2936.2...0.2936.3) (2026-05-14)
+
+
+### Bug Fixes
+
+* **sort-popover:** keep dragged sort row inside popover ([#23048](https://github.com/lightdash/lightdash/issues/23048)) ([5953939](https://github.com/lightdash/lightdash/commit/5953939b2c421d5e144fa0e776b6b47a65a66020)), closes [#20020](https://github.com/lightdash/lightdash/issues/20020)
+
 ## [0.2936.2](https://github.com/lightdash/lightdash/compare/0.2936.1...0.2936.2) (2026-05-14)
 
 
